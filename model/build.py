@@ -225,45 +225,67 @@ bm = bmesh.new(); vs = [bm.verts.new(V(*p)) for p in [(0, -TT+.05, .02), (TL, -T
 bm.faces.new(vs); bm.to_mesh(fr); bm.free()
 ro = finish(fr, 'table_ruler', RULER, 'table')
 plane_uv(ro, lambda x, y, z: (x/TL, (y+TT)/TT))
-# legs (posts measured at x 22 / 94), table height 76
-FLOOR = -76.0
-for lx, nm in ((22.0, 'L'), (94.0, 'R')):
-    box(f'leg_{nm}_post_lo', lx-2.6, lx+2.6, FLOOR+3.5, -40, -24.9, -28.9, FRAME, 'table', bevel=.5)
-    box(f'leg_{nm}_post_hi', lx-2.1, lx+2.1, -42, -9, -25.3, -28.5, FRAME, 'table', bevel=.45)
-    for i in range(6): cyl(f'leg_{nm}_hole{i}', (lx, -14.5-i*3.6, -24.9), 'z', .42, .1, GREYD)
-    # bracket: trapezoid in the (z,y) plane, thickness along x
-    bm = bmesh.new(); prof = [(-5.0, -4.0), (-48.5, -4.0), (-30.0, -13.0), (-23.5, -13.0)]
-    f1 = [bm.verts.new(V(lx-2.2, y, z)) for z, y in prof]; f2 = [bm.verts.new(V(lx+2.2, y, z)) for z, y in prof]
+# legs, crossbar, pedal — measured on photo 2 (floor from the rubber feet: table top 75 cm above the floor)
+FLOOR = -75.0
+POST_Z = -32.0
+def slab(name, cx, cy, cz, w, d, h, r, m, part=None, rot=0., tilt=0., bevel=0.):
+    """rounded rectangle in the table x–z plane, thickness h along y, centred on (cx,cy,cz), rotated about the vertical"""
+    o2 = rpoly([(-w/2, -d/2), (w/2, -d/2), (w/2, d/2), (-w/2, d/2)], r, 6)
+    bm = bmesh.new()
+    top = [bm.verts.new(V(x, h/2, z)) for x, z in o2]; bot = [bm.verts.new(V(x, -h/2, z)) for x, z in o2]
+    bm.faces.new(top); bm.faces.new(list(reversed(bot)))
+    n = len(o2)
+    for i in range(n): bm.faces.new([top[i], bot[i], bot[(i+1) % n], top[(i+1) % n]])
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces); me = bpy.data.meshes.new(name); bm.to_mesh(me); bm.free()
+    o = finish(me, name, m, part, bevel=bevel, seg=3)
+    o.location = V(cx, cy, cz); o.rotation_euler = (tilt, 0, rot)
+    return o
+for lx, nm in ((23.6, 'L'), (95.8, 'R')):
+    # foot: runs front→back, rubber feet at both ends
+    box(f'leg_{nm}_foot', lx-2.6, lx+2.6, FLOOR+1.4, FLOOR+5.0, 2.0, -46.5, FRAME, 'table', bevel=1.2)
+    for fz in (.5, -45.0):
+        cyl(f'leg_{nm}_rubber{fz}', (lx, FLOOR+.75, fz), 'y', 2.5, 1.5, RUBBER, 'table', r2=2.2)
+    # post: outer lower tube + inner upper tube with height-adjust holes
+    box(f'leg_{nm}_post_lo', lx-2.6, lx+2.6, FLOOR+4.5, -40.0, POST_Z+2.1, POST_Z-2.1, FRAME, 'table', bevel=.5)
+    box(f'leg_{nm}_post_hi', lx-2.1, lx+2.1, -42.0, -11.0, POST_Z+1.7, POST_Z-1.7, FRAME, 'table', bevel=.45)
+    for i in range(7): cyl(f'leg_{nm}_hole{i}', (lx, -15.0-i*3.5, POST_Z+1.72), 'z', .42, .06, GREYD)
+    for by in (-38.5, -41.5): cyl(f'leg_{nm}_clamp_bolt{by}', (lx, by, POST_Z+2.15), 'z', .5, .3, STEEL)
+    # top bracket under the table (trapezoid along the depth)
+    bm = bmesh.new(); prof = [(-6.0, -4.0), (-50.0, -4.0), (-34.5, -12.5), (-29.5, -12.5)]
+    f1 = [bm.verts.new(V(lx-2.4, y, z)) for z, y in prof]; f2 = [bm.verts.new(V(lx+2.4, y, z)) for z, y in prof]
     bm.faces.new(f1); bm.faces.new(list(reversed(f2)))
     for i in range(4): bm.faces.new([f1[i], f1[(i+1) % 4], f2[(i+1) % 4], f2[i]])
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces); me = bpy.data.meshes.new('br'); bm.to_mesh(me); bm.free()
     finish(me, f'leg_{nm}_bracket', FRAME, 'table', bevel=.4)
-    box(f'leg_{nm}_foot', lx-2.6, lx+2.6, FLOOR+1.6, FLOOR+5.0, 6.0, -60.0, FRAME, 'table', bevel=1.0)
-    for fz in (3.5, -57.5): cyl(f'leg_{nm}_rubber{fz}', (lx, FLOOR+.8, fz), 'y', 2.4, 1.6, RUBBER, 'table', r2=2.1)
-    for by in (-6.5, -8.8): cyl(f'leg_{nm}_bolt{by}', (lx+2.25, by, -14.0), 'x', .55, .3, STEEL)
-box('crossbar', 22, 94, -50, -40, -26.0, -27.6, FRAME, 'table', bevel=.4)
+    for bz in (-12.0, -44.0): cyl(f'leg_{nm}_top_bolt{bz}', (lx+2.45, -6.2, bz), 'x', .55, .3, STEEL)
+# crossbar: flat plate bolted to the front faces of the posts, 17–26 cm above the floor
+box('crossbar', 23.6, 95.8, -58.0, -49.0, POST_Z+2.9, POST_Z+2.1, FRAME, 'table', bevel=.3)
+for bx in (26.2, 93.2):
+    for by in (-51.2, -55.8): cyl(f'crossbar_bolt{bx}{by}', (bx, by, POST_Z+3.0), 'z', .5, .35, STEEL)
+# pedal bar: flat slotted bar lying on the feet, from the front of the left foot to the right foot
+A, Bb = Vector((23.6, -11.2)), Vector((95.8, -6.8)); d = Bb-A
+rot = math.atan2(-d.y, d.x)                     # table z → Blender -Y
+mid = (A+Bb)/2
+slab('pedal_bar', mid.x, FLOOR+5.4, mid.y, d.length, 5.0, .8, .6, FRAME, 'pedal', rot=rot, bevel=.2)
+for s in (-.33, .3):
+    p_ = A + d*(.5+s)
+    slab(f'pedal_bar_slot{s}', p_.x, FLOOR+5.83, p_.y, 14.0, .9, .05, .44, GREYD, None, rot=rot)
+# pedal: 24 × 26 cm white frame with black rubber top, resting on the bar
+PC = (50.5, FLOOR+7.6, -14.7); prot = math.atan2(-2.5, 22.8)
+slab('pedal', PC[0], PC[1], PC[2], 24.0, 26.5, 2.6, 2.6, FRAME, 'pedal', rot=prot, tilt=-.05, bevel=.7)
+slab('pedal_rubber', PC[0], PC[1]+1.35, PC[2], 18.5, 21.0, .35, 1.0, RUBBER, 'pedal', rot=prot, tilt=-.05)
+slab('pedal_hinge', PC[0], FLOOR+6.1, PC[2]+4.0, 8.0, 3.0, 1.2, .5, GREYL, 'pedal', rot=prot)
+# rod from the back-right corner of the pedal up to the pedal sensor under the table
+R0, R1 = (58.6, FLOOR+8.8, -26.4), (50.8, -14.4, -19.6)
+rod_between('pedal_rod', R0, R1, .3, STEEL, 'pedal')
+cyl('pedal_rod_clevis', R0, 'y', .55, 1.6, STEEL, 'pedal')
+cyl('pedal_turnbuckle', tuple((a+b)/2 for a, b in zip(R0, R1)), 'y', .5, 2.6, STEEL, 'pedal')
+box('pedal_sensor', 46.0, 56.0, -14.2, -11.6, -15.0, -24.0, GREYL, 'pedal', bevel=.6)
 box('drawer', 3.0, 21.0, -12.8, -4.0, -2.0, -34.0, LAMIN, 'table', bevel=.8)
 box('drawer_lip', 7.0, 17.0, -6.2, -5.0, -1.4, -2.0, GREYL, 'table', bevel=.3)
 # oil pan under the bed (grey, ribbed)
 box('oil_pan', 37.0, 80.0, -11.5, -4.0, -12.5, -29.5, CAST, None, bevel=1.2)
 for i in range(9): box(f'oil_pan_rib{i}', 38.5+i*4.6, 39.7+i*4.6, -12.6, -6.0, -12.0, -29.0, CAST, None, bevel=.3)
-# pedal on the diagonal slotted bar
-A, Bb = Vector((22.0, -60.0)), Vector((94.0, -8.0))
-d = (Bb-A); ang = math.atan2(d.y, d.x)
-L = d.length
-bar = box('pedal_bar', 0, L, FLOOR+3.0, FLOOR+4.4, 2.6, -2.6, FRAME, 'pedal', bevel=.6)
-bar.location = V(22.0, 0, -60.0) + Vector((0, 0, 0)); bar.rotation_euler = (0, 0, ang)
-ped = rbox('pedal', 0, 0, 0, 27, 30, 2.8, 2.2, FRAME, 'pedal', bevel=.6)
-ped.rotation_euler = (math.pi/2-0.12, 0, ang)
-ped.location = V(44.0, FLOOR+6.0, -24.0)
-pr = rbox('pedal_rubber', 0, 0, 1.45, 21, 24, .5, 1.2, RUBBER, 'pedal'); pr.parent = ped
-rod_between('pedal_rod', (49.0, FLOOR+7.0, -30.0), (43.0, -6.0, -22.0), .3, STEEL, 'pedal')
-cyl('pedal_turnbuckle', (47.6, -26.0, -28.0), 'y', .45, 2.2, STEEL, 'pedal')
-box('pedal_sensor', 38.0, 48.0, -8.5, -4.0, -18.0, -25.0, GREYL, 'pedal', bevel=.8)
-# knee lifter (under table, right of the bed)
-rod_between('knee_lifter_rod', (84.0, -5.0, -14.0), (82.0, -19.0, -4.0), .5, STEEL, 'knee_lifter')
-kl = rbox('knee_lifter_pad', 0, 0, 0, 9, 4.2, 2.0, 1.2, GREYD, 'knee_lifter', bevel=.4); kl.location = V(81.5, -20.5, -3.2)
-box('knee_lifter_bracket', 78, 92, -6.0, -4.0, -8.0, -18.0, GREYL, 'knee_lifter', bevel=.4)
 # head rest
 cyl('head_rest', (74.8, 3.6, -37.5), 'y', .95, 7.2, GREYD, 'table')
 cyl('head_rest_cap', (74.8, 7.4, -37.5), 'y', 1.25, .7, RUBBER, 'table')

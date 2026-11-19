@@ -1,4 +1,4 @@
-# Stanowisko JACK A7
+# JACK A7
 
 Interaktywny model 3D stębnówki **JACK A7 (A7-DH)** z pomocą w diagnozowaniu problemów i doborze ustawień.
 

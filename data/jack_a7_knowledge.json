@@ -1,323 +1,2328 @@
 {
  "machine": {
   "model": "JACK A7 – stębnówka 1-igłowa (ścieg 301) z silnikiem Direct Drive (serwo AC wbudowane w głowicę), cyfrowym (krokowym) transportem i automatycznym obcinaczem nici",
-  "variant_notes": "Rodzina A7 występuje w wariantach (wg dealera IIGM, brak oficjalnej karty JACK): A7-D – materiały lekkie i średnie, igły DBx1 11–18, ścieg max 5 mm, 4000 obr/min, skok igielnicy 31 mm, wysokość ząbków 0,8 mm; A7-D-7 – materiały średnie/ciężkie (firany, zasłony, włókniny), DBx1 11–18, ścieg max 7 mm, 3500 obr/min; A7-DH (zapisywany też A7-D-H) – wersja ciężka (H = heavy): denim, tekstylia domowe, kapcie jednorazowe; igły DPx5 (135x5) 18–21, ścieg max 7 mm (jedna tabela IIGM podaje 5 mm – rozbieżność), 3500 obr/min, skok igielnicy 35 mm, ząbki 1,2 mm. „D” oznacza wersję z obcinaczem/automatyką, a nie samo „direct drive” (direct drive mają wszystkie A7). Wszystkie: podnoszenie stopki ręcznie 5 mm / automatycznie 9 mm / kolanem 13 mm (IIGM). Polska instrukcja (Impall) dla bazowego A7 podaje: max 5000 ściegów/min, ścieg max 5 mm, igły DBx1 9–18 (standard 14), podnoszenie stopki standard 7 mm / max 12 mm, kolanem standard 10 mm z regulacją do 13 mm. JAK SPRAWDZIĆ SWÓJ WARIANT: tabliczka znamionowa z tyłu ramienia; ile maksymalnie da się ustawić długości ściegu na panelu (7,0 mm → wersja -7 lub DH); parametr P91 „maksymalny ścieg” (zakres 0–70, tj. 0–7,0 mm); rodzaj igły w igielnicy (DPx5 ma grubszą kolbę 2,0 mm niż DBx1 1,62 mm – NIE są zamienne). Etykieta serwa (550 W, 5000 obr/min) dotyczy silnika/sterownika – maks. prędkość głowicy ogranicza parametr P01. KODY BŁĘDÓW: pochodzą z angielskiej instrukcji sterownika A7 (ManualsLib, 10 stron, tekst wyekstrahowany maszynowo i częściowo pomieszany) – opisy kodów są pewne, ale przypisanie części działań naprawczych do kodów zostało zrekonstruowane i oznaczone. Nie znaleziono kodów E-xx ani Err-02/09/19/22–29 dla A7. Numery i zakresy parametrów P również z tej instrukcji; wartości domyślne części parametrów nieczytelne w źródle – sprawdź na wyświetlaczu.",
+  "variant_notes": "Rodzina A7 występuje w wariantach (wg dealera IIGM, brak oficjalnej karty JACK): A7-D – materiały lekkie i średnie, igły DBx1 11–18, ścieg max 5 mm, 4000 obr/min, skok igielnicy 31 mm, wysokość ząbków 0,8 mm; A7-D-7 – materiały średnie/ciężkie (firany, zasłony, włókniny), DBx1 11–18, ścieg max 7 mm, 3500 obr/min; A7-DH (zapisywany też A7-D-H) – wersja ciężka (H = heavy): denim, tekstylia domowe, kapcie jednorazowe; igły DPx5 (135x5) 18–21, ścieg max 7 mm (jedna tabela IIGM podaje 5 mm – rozbieżność), 3500 obr/min, skok igielnicy 35 mm, ząbki 1,2 mm. „D” oznacza wersję z obcinaczem/automatyką, a nie samo „direct drive” (direct drive mają wszystkie A7). Wszystkie: podnoszenie stopki ręcznie 5 mm / automatycznie 9 mm (IIGM). Polska instrukcja (Impall) dla bazowego A7 podaje: max 5000 ściegów/min, ścieg max 5 mm, igły DBx1 9–18 (standard 14), podnoszenie stopki standard 7 mm / max 12 mm. JAK SPRAWDZIĆ SWÓJ WARIANT: tabliczka znamionowa z tyłu ramienia; ile maksymalnie da się ustawić długości ściegu na panelu (7,0 mm → wersja -7 lub DH); parametr P91 „maksymalny ścieg” (zakres 0–70, tj. 0–7,0 mm); rodzaj igły w igielnicy (DPx5 ma grubszą kolbę 2,0 mm niż DBx1 1,62 mm – NIE są zamienne). Etykieta serwa (550 W, 5000 obr/min) dotyczy silnika/sterownika – maks. prędkość głowicy ogranicza parametr P01. KODY BŁĘDÓW: pochodzą z angielskiej instrukcji sterownika A7 (ManualsLib, 10 stron, tekst wyekstrahowany maszynowo i częściowo pomieszany) – opisy kodów są pewne, ale przypisanie części działań naprawczych do kodów zostało zrekonstruowane i oznaczone. Nie znaleziono kodów E-xx ani Err-02/09/19/22–29 dla A7. Numery i zakresy parametrów P również z tej instrukcji; wartości domyślne części parametrów nieczytelne w źródle – sprawdź na wyświetlaczu.",
   "specs": [
-   {"k": "Typ ściegu", "v": "Stębnowy dwunitkowy (301), 1 igła"},
-   {"k": "Napęd", "v": "Direct Drive – serwo AC wbudowane w głowicę; zasilanie AC 220 V ±20%, 50/60 Hz, moc max 550 W"},
-   {"k": "Prędkość maksymalna", "v": "Wg polskiej instrukcji 5000 ściegów/min (etykieta serwa 5000 obr/min); wg dealera A7-D 4000, A7-D-7 i A7-DH 3500 obr/min. Prędkość szycia swobodnego ustawia P01 (domyślnie 3800)."},
-   {"k": "Długość ściegu", "v": "Elektroniczna (silnik krokowy), ustawiana na panelu co 0,1 mm; max 5 mm (A7/A7-D) lub 7 mm (A7-D-7, A7-DH); limit w P91"},
-   {"k": "System igieł", "v": "DBx1 (16x231 / 1738) nr 9–18 (Nm 65–110), standard 14 (Nm 90); A7-DH: DPx5 (135x5) nr 18–21 (Nm 110–130)"},
-   {"k": "Podnoszenie stopki", "v": "Dźwignia ręczna: standard 7 mm (wg PL instrukcji; IIGM: 5 mm); automatyczne (elektromagnes): ok. 9 mm; kolanem: standard 10 mm, regulacja śrubą do 13 mm (po ustawieniu >10 mm sprawdź, czy igielnica w dolnym położeniu nie uderza w stopkę)"},
-   {"k": "Smarowanie", "v": "Automatyczne z zamkniętej miski olejowej (system mikro-olejenia); olej do maszyn szwalniczych „biały 10” (olej biały ISO VG 10, np. typu Juki New Defrix No.1 / Esso Teresso 10 – odpowiedniki (praktyka ogólna)); poziom między dolną a górną kreską wskaźnika; czujnik niskiego poziomu (P34, alarm Err-20)"},
-   {"k": "Okienko oleju", "v": "W okienku kontrolnym na ramieniu ma być widoczne rozbryzgiwanie oleju podczas pracy; instrukcja zaznacza, że rozbryzg NIE świadczy o ilości oleju w misce – poziom sprawdzaj na wskaźniku z kreskami"},
-   {"k": "Szpulka / chwytacz", "v": "Chwytacz rotacyjny poziomej osi (standard stębnówki 1-igłowej), szpulka standardowa typu „Juki DDL” ok. Ø21 mm (praktyka ogólna – sprawdź z oryginałem; w A7-DH chwytacz/szpulka mogą być większe)"},
-   {"k": "Obcinacz nici", "v": "Automatyczny (elektromagnes), końcówka nici po obcięciu ok. 3,5 mm (dealer); docisk nici na starcie (nipper)"},
-   {"k": "Funkcje elektroniczne", "v": "4 trajektorie transportu (ząbków), czujnik grubości materiału, rygle początkowe/końcowe, zagęszczanie ściegu, szew W, szycie odcinkowe A–D, programy wzorów, licznik sztuk/ściegów, komunikaty głosowe, port USB"},
-   {"k": "Warunki pracy", "v": "Temperatura 0–45°C, wilgotność 30–95% bez kondensacji; uziemienie obowiązkowe; z dala od spawarek"},
-   {"k": "Docieranie", "v": "Maszyna nowa lub długo nieużywana: pierwsze ok. 10 min pracy przy 1800–2200 obr/min, aby olej się rozprowadził"}
+   {
+    "k": "Typ ściegu",
+    "v": "Stębnowy dwunitkowy (301), 1 igła"
+   },
+   {
+    "k": "Napęd",
+    "v": "Direct Drive – serwo AC wbudowane w głowicę; zasilanie AC 220 V ±20%, 50/60 Hz, moc max 550 W"
+   },
+   {
+    "k": "Prędkość maksymalna",
+    "v": "Wg polskiej instrukcji 5000 ściegów/min (etykieta serwa 5000 obr/min); wg dealera A7-D 4000, A7-D-7 i A7-DH 3500 obr/min. Prędkość szycia swobodnego ustawia P01 (domyślnie 3800)."
+   },
+   {
+    "k": "Długość ściegu",
+    "v": "Elektroniczna (silnik krokowy), ustawiana na panelu co 0,1 mm; max 5 mm (A7/A7-D) lub 7 mm (A7-D-7, A7-DH); limit w P91"
+   },
+   {
+    "k": "System igieł",
+    "v": "DBx1 (16x231 / 1738) nr 9–18 (Nm 65–110), standard 14 (Nm 90); A7-DH: DPx5 (135x5) nr 18–21 (Nm 110–130)"
+   },
+   {
+    "k": "Podnoszenie stopki",
+    "v": "Dźwignia ręczna: standard 7 mm (wg PL instrukcji; IIGM: 5 mm); automatyczne (elektromagnes): ok. 9 mm"
+   },
+   {
+    "k": "Smarowanie",
+    "v": "Automatyczne z zamkniętej miski olejowej (system mikro-olejenia); olej do maszyn szwalniczych „biały 10” (olej biały ISO VG 10, np. typu Juki New Defrix No.1 / Esso Teresso 10 – odpowiedniki (praktyka ogólna)); poziom między dolną a górną kreską wskaźnika; czujnik niskiego poziomu (P34, alarm Err-20)"
+   },
+   {
+    "k": "Okienko oleju",
+    "v": "W okienku kontrolnym na ramieniu ma być widoczne rozbryzgiwanie oleju podczas pracy; instrukcja zaznacza, że rozbryzg NIE świadczy o ilości oleju w misce – poziom sprawdzaj na wskaźniku z kreskami"
+   },
+   {
+    "k": "Szpulka / chwytacz",
+    "v": "Chwytacz rotacyjny poziomej osi (standard stębnówki 1-igłowej), szpulka standardowa typu „Juki DDL” ok. Ø21 mm (praktyka ogólna – sprawdź z oryginałem; w A7-DH chwytacz/szpulka mogą być większe)"
+   },
+   {
+    "k": "Obcinacz nici",
+    "v": "Automatyczny (elektromagnes), końcówka nici po obcięciu ok. 3,5 mm (dealer); docisk nici na starcie (nipper)"
+   },
+   {
+    "k": "Funkcje elektroniczne",
+    "v": "4 trajektorie transportu (ząbków), czujnik grubości materiału, rygle początkowe/końcowe, zagęszczanie ściegu, szew W, szycie odcinkowe A–D, programy wzorów, licznik sztuk/ściegów, komunikaty głosowe, port USB"
+   },
+   {
+    "k": "Warunki pracy",
+    "v": "Temperatura 0–45°C, wilgotność 30–95% bez kondensacji; uziemienie obowiązkowe; z dala od spawarek"
+   },
+   {
+    "k": "Docieranie",
+    "v": "Maszyna nowa lub długo nieużywana: pierwsze ok. 10 min pracy przy 1800–2200 obr/min, aby olej się rozprowadził"
+   }
   ]
  },
  "sources": [
-  {"title": "JACK A7 – Instrukcja obsługi maszyny szwalniczej (PL, dostawca Impall Łódź)", "url": "https://szyjposwojemu.pl/pl/p/file/a7ab884b2d44582b8a5f063e9b642e9f/jack-A7-instrukcja.pdf"},
-  {"title": "JACK A7 Operation Manual (sterownik/panel, 10 stron) – ManualsLib", "url": "https://www.manualslib.com/manual/3115546/Jack-A7.html"},
-  {"title": "JACK A7 – lista parametrów systemu (str. 6)", "url": "https://www.manualslib.com/manual/3115546/Jack-A7.html?page=6"},
-  {"title": "JACK A7 – kody błędów (str. 9–10)", "url": "https://www.manualslib.com/manual/3115546/Jack-A7.html?page=9"},
-  {"title": "IIGM – JACK A7 digital feeding lockstitch (tabela A7-D / A7-D-7 / A7-DH)", "url": "https://www.iigm.com/a7-digital-feeding-lockstitch-single-needle-sewing-machine.html"},
-  {"title": "IIGM – JACK A7 (tabela A7-D / A7-D-7 / A7-D-H)", "url": "https://www.iigm.com/a7-digital-feeding-lockstitch-sewing-machine.html"},
-  {"title": "JACK A Series – instrukcja (porównawczo: dane techniczne rodziny A)", "url": "https://www.manualslib.com/manual/1811911/Jack-A-Series.html"}
+  {
+   "title": "JACK A7 – Instrukcja obsługi maszyny szwalniczej (PL, dostawca Impall Łódź)",
+   "url": "https://szyjposwojemu.pl/pl/p/file/a7ab884b2d44582b8a5f063e9b642e9f/jack-A7-instrukcja.pdf"
+  },
+  {
+   "title": "JACK A7 Operation Manual (sterownik/panel, 10 stron) – ManualsLib",
+   "url": "https://www.manualslib.com/manual/3115546/Jack-A7.html"
+  },
+  {
+   "title": "JACK A7 – lista parametrów systemu (str. 6)",
+   "url": "https://www.manualslib.com/manual/3115546/Jack-A7.html?page=6"
+  },
+  {
+   "title": "JACK A7 – kody błędów (str. 9–10)",
+   "url": "https://www.manualslib.com/manual/3115546/Jack-A7.html?page=9"
+  },
+  {
+   "title": "IIGM – JACK A7 digital feeding lockstitch (tabela A7-D / A7-D-7 / A7-DH)",
+   "url": "https://www.iigm.com/a7-digital-feeding-lockstitch-single-needle-sewing-machine.html"
+  },
+  {
+   "title": "IIGM – JACK A7 (tabela A7-D / A7-D-7 / A7-D-H)",
+   "url": "https://www.iigm.com/a7-digital-feeding-lockstitch-sewing-machine.html"
+  },
+  {
+   "title": "JACK A Series – instrukcja (porównawczo: dane techniczne rodziny A)",
+   "url": "https://www.manualslib.com/manual/1811911/Jack-A-Series.html"
+  }
  ],
  "panel_buttons": [
-  {"id": "stitch_length", "name": "Długość ściegu", "icon_hint": "„+ ⫼ –” z napisem mm", "short": "„+” wydłuża, „–” skraca ścieg o 0,1 mm na każde naciśnięcie", "long": "Przytrzymanie zmienia długość płynnie (ciągłe zwiększanie/zmniejszanie). Maksimum ogranicza P91."},
-  {"id": "start_backtack", "name": "Rygiel początkowy (A/B)", "icon_hint": "ukośna linia z literami A i B", "short": "1× – rygiel początkowy pojedynczy, 2× – podwójny, 3× – wyłączony (świeci odpowiednia ikona). Liczbę ściegów w odcinkach A i B ustawia się w zakresie 1–F (1–15 ściegów).", "long": "Brak osobnej funkcji w instrukcji."},
-  {"id": "end_backtack", "name": "Rygiel końcowy (C/D)", "icon_hint": "ukośna linia z literami C i D", "short": "1× – rygiel końcowy pojedynczy, 2× – podwójny, 3× – wyłączony. Liczba ściegów C i D: 1–F (1–15).", "long": "Brak osobnej funkcji w instrukcji."},
-  {"id": "needle_position", "name": "Pozycja zatrzymania igły (góra/dół)", "icon_hint": "igła ze strzałkami góra/dół", "short": "Przełącza zatrzymanie igły w górze lub w dole (np. dół do obracania materiału na narożnikach).", "long": "Wg instrukcji ang. – włącza/wyłącza funkcję stopki (podnoszenia)."},
-  {"id": "nipper_autocycle", "name": "Docisk nici (nipper) / automatyczne szycie cyklu", "icon_hint": "nić w zacisku + kółko", "short": "Włącza/wyłącza nipper – przytrzymanie końca nici igłowej przy pierwszych ściegach (zapobiega wyciąganiu nici z igły i „ptasiemu gniazdu” na starcie).", "long": "Włącza/wyłącza automatyczne odszycie cyklu (maszyna szyje zaprogramowany odcinek sama po jednym wciśnięciu pedału)."},
-  {"id": "foot_lift", "name": "Podnoszenie stopki po obcięciu / po zatrzymaniu", "icon_hint": "nożyczki + stopka ze strzałką w górę", "short": "Włącza/wyłącza automatyczne podniesienie stopki po obcięciu nici.", "long": "Włącza/wyłącza podnoszenie stopki po każdym zatrzymaniu szycia (w trakcie szwu)."},
-  {"id": "trim", "name": "Szycie swobodne / automatyczny obcinacz", "icon_hint": "nożyczki", "short": "Wybiera tryb szycia swobodnego.", "long": "Włącza/wyłącza automatyczne obcinanie nici (ikona nożyczek na wyświetlaczu świeci, gdy aktywne). Obcięcie wyzwala się wciśnięciem pedału piętą."},
-  {"id": "w_seam_multi", "name": "Szew W (rygiel ciągły) / szycie odcinkowe A~D", "icon_hint": "„W/N” oraz „A~D” z łamaną linią", "short": "Włącza ryglowanie typu W (szew wzmacniający tam i z powrotem).", "long": "Włącza programowanie/szycie wg zaprogramowanych odcinków o stałej liczbie ściegów (do kilku sekcji A–D). W trybie stałych ściegów długie naciśnięcie „<” włącza/wyłącza szycie jednym wciśnięciem pedału. (Instrukcja ang. w tym miejscu jest pomieszana – sprawdź ikony na LCD.)"},
-  {"id": "condense", "name": "Zagęszczanie ściegu (lock / tight seam)", "icon_hint": "owal/ścieg z gęstymi kreskami na początku i końcu", "short": "Kolejne naciśnięcia: zagęszczenie na początku, na końcu, wyłączenie. Zamiast rygla wstecznego maszyna szyje kilka bardzo krótkich ściegów – estetyczne zakończenie np. na cienkich tkaninach (liczbę ściegów i długość ustawiają P74–P77, P86, P88).", "long": "Brak w instrukcji."},
-  {"id": "pattern", "name": "Szycie wzorów", "icon_hint": "igła z linią / wzór", "short": "Przełącza między trybem szycia wzoru a edycją wzoru.", "long": "Brak w instrukcji."},
-  {"id": "feed_track", "name": "Trajektoria transportu (4 tryby)", "icon_hint": "elipsa ruchu ząbków, cyfry 1–4", "short": "Każde naciśnięcie wybiera kolejną z 4 trajektorii ruchu ząbków: 1 – standard, 2 – materiały śliskie, 3 – cienkie i miękkie, 4 – ciężkie.", "long": "Brak w instrukcji."},
-  {"id": "sensing", "name": "Czujnik grubości materiału (sensing)", "icon_hint": "stopka nad warstwami / fala", "short": "Włącza/wyłącza czujnik grubości – przy nagłym pogrubieniu (np. krzyżujące się szwy) maszyna zwalnia, zmienia trajektorię i kompensuje długość ściegu wg ustawień H03–H07.", "long": "Wejście w ustawienia grubości: H01 (cienka część – uczenie), H02 (gruba część – uczenie), H03–H07 (liczba ściegów, prędkość, kompensacja ściegu, czułość, trajektoria)."},
-  {"id": "voice", "name": "Głos / powitanie", "icon_hint": "głośnik / „speaking”", "short": "Włącza/wyłącza powitanie głosowe. Gdy na wyświetlaczu jest kod błędu – odtwarza głosową podpowiedź rozwiązania.", "long": "Włącza/wyłącza wszystkie komunikaty głosowe (wyciszenie). Głośność P98, tryb P97, język P99."},
-  {"id": "speed_plus", "name": "Speed + (prędkość w górę)", "icon_hint": "„+” Speed+", "short": "Na ekranie głównym zwiększa prędkość maksymalną o 50 obr/min; w trybie parametrów zwiększa wartość.", "long": "Z innymi klawiszami – kombinacje serwisowe (np. podgląd wersji oprogramowania)."},
-  {"id": "speed_minus", "name": "Speed – (prędkość w dół)", "icon_hint": "„–” Speed–", "short": "Na ekranie głównym zmniejsza prędkość maksymalną o 50 obr/min; w trybie parametrów zmniejsza wartość.", "long": "Jak wyżej – kombinacje serwisowe."},
-  {"id": "left", "name": "W lewo „<”", "icon_hint": "strzałka w lewo", "short": "Przesuwa wybór parametru/cyfry w lewo; przełącza licznik sztuk/ściegów.", "long": "W trybie stałych ściegów włącza/wyłącza szycie jednym wciśnięciem (one-shot)."},
-  {"id": "right", "name": "W prawo „>”", "icon_hint": "strzałka w prawo", "short": "Przesuwa wybór parametru/cyfry w prawo; przełącza licznik sztuk/ściegów.", "long": "Brak w instrukcji."},
-  {"id": "p", "name": "P – parametry", "icon_hint": "litera P w kółku", "short": "Wejście w tryb parametrów użytkownika (ze stanu gotowości); ponowne naciśnięcie po zmianie zapisuje i wychodzi.", "long": "Zapis ustawień (cyfra/numer miga). Włączenie zasilania z przytrzymanym P – tryb parametrów serwisowych (tylko dla technika)."},
-  {"id": "reset", "name": "Reset (恢复出厂设置 – przywrócenie ustawień fabrycznych)", "icon_hint": "przycisk Reset", "short": "Brak działania przy krótkim naciśnięciu.", "long": "Przytrzymaj ok. 5 s – powrót do ustawień fabrycznych (kasuje własne ustawienia prędkości, rygli, trybów!). Instrukcja zaleca reset jako pierwszy krok przy wielu błędach Err."}
+  {
+   "id": "stitch_length",
+   "name": "Długość ściegu",
+   "icon_hint": "„+ ⫼ –” z napisem mm",
+   "short": "„+” wydłuża, „–” skraca ścieg o 0,1 mm na każde naciśnięcie",
+   "long": "Przytrzymanie zmienia długość płynnie (ciągłe zwiększanie/zmniejszanie). Maksimum ogranicza P91."
+  },
+  {
+   "id": "start_backtack",
+   "name": "Rygiel początkowy (A/B)",
+   "icon_hint": "ukośna linia z literami A i B",
+   "short": "1× – rygiel początkowy pojedynczy, 2× – podwójny, 3× – wyłączony (świeci odpowiednia ikona). Liczbę ściegów w odcinkach A i B ustawia się w zakresie 1–F (1–15 ściegów).",
+   "long": "Brak osobnej funkcji w instrukcji."
+  },
+  {
+   "id": "end_backtack",
+   "name": "Rygiel końcowy (C/D)",
+   "icon_hint": "ukośna linia z literami C i D",
+   "short": "1× – rygiel końcowy pojedynczy, 2× – podwójny, 3× – wyłączony. Liczba ściegów C i D: 1–F (1–15).",
+   "long": "Brak osobnej funkcji w instrukcji."
+  },
+  {
+   "id": "needle_position",
+   "name": "Pozycja zatrzymania igły (góra/dół)",
+   "icon_hint": "igła ze strzałkami góra/dół",
+   "short": "Przełącza zatrzymanie igły w górze lub w dole (np. dół do obracania materiału na narożnikach).",
+   "long": "Wg instrukcji ang. – włącza/wyłącza funkcję stopki (podnoszenia)."
+  },
+  {
+   "id": "nipper_autocycle",
+   "name": "Docisk nici (nipper) / automatyczne szycie cyklu",
+   "icon_hint": "nić w zacisku + kółko",
+   "short": "Włącza/wyłącza nipper – przytrzymanie końca nici igłowej przy pierwszych ściegach (zapobiega wyciąganiu nici z igły i „ptasiemu gniazdu” na starcie).",
+   "long": "Włącza/wyłącza automatyczne odszycie cyklu (maszyna szyje zaprogramowany odcinek sama po jednym wciśnięciu pedału)."
+  },
+  {
+   "id": "foot_lift",
+   "name": "Podnoszenie stopki po obcięciu / po zatrzymaniu",
+   "icon_hint": "nożyczki + stopka ze strzałką w górę",
+   "short": "Włącza/wyłącza automatyczne podniesienie stopki po obcięciu nici.",
+   "long": "Włącza/wyłącza podnoszenie stopki po każdym zatrzymaniu szycia (w trakcie szwu)."
+  },
+  {
+   "id": "trim",
+   "name": "Szycie swobodne / automatyczny obcinacz",
+   "icon_hint": "nożyczki",
+   "short": "Wybiera tryb szycia swobodnego.",
+   "long": "Włącza/wyłącza automatyczne obcinanie nici (ikona nożyczek na wyświetlaczu świeci, gdy aktywne). Obcięcie wyzwala się wciśnięciem pedału piętą."
+  },
+  {
+   "id": "w_seam_multi",
+   "name": "Szew W (rygiel ciągły) / szycie odcinkowe A~D",
+   "icon_hint": "„W/N” oraz „A~D” z łamaną linią",
+   "short": "Włącza ryglowanie typu W (szew wzmacniający tam i z powrotem).",
+   "long": "Włącza programowanie/szycie wg zaprogramowanych odcinków o stałej liczbie ściegów (do kilku sekcji A–D). W trybie stałych ściegów długie naciśnięcie „<” włącza/wyłącza szycie jednym wciśnięciem pedału. (Instrukcja ang. w tym miejscu jest pomieszana – sprawdź ikony na LCD.)"
+  },
+  {
+   "id": "condense",
+   "name": "Zagęszczanie ściegu (lock / tight seam)",
+   "icon_hint": "owal/ścieg z gęstymi kreskami na początku i końcu",
+   "short": "Kolejne naciśnięcia: zagęszczenie na początku, na końcu, wyłączenie. Zamiast rygla wstecznego maszyna szyje kilka bardzo krótkich ściegów – estetyczne zakończenie np. na cienkich tkaninach (liczbę ściegów i długość ustawiają P74–P77, P86, P88).",
+   "long": "Brak w instrukcji."
+  },
+  {
+   "id": "pattern",
+   "name": "Szycie wzorów",
+   "icon_hint": "igła z linią / wzór",
+   "short": "Przełącza między trybem szycia wzoru a edycją wzoru.",
+   "long": "Brak w instrukcji."
+  },
+  {
+   "id": "feed_track",
+   "name": "Trajektoria transportu (4 tryby)",
+   "icon_hint": "elipsa ruchu ząbków, cyfry 1–4",
+   "short": "Każde naciśnięcie wybiera kolejną z 4 trajektorii ruchu ząbków: 1 – standard, 2 – materiały śliskie, 3 – cienkie i miękkie, 4 – ciężkie.",
+   "long": "Brak w instrukcji."
+  },
+  {
+   "id": "sensing",
+   "name": "Czujnik grubości materiału (sensing)",
+   "icon_hint": "stopka nad warstwami / fala",
+   "short": "Włącza/wyłącza czujnik grubości – przy nagłym pogrubieniu (np. krzyżujące się szwy) maszyna zwalnia, zmienia trajektorię i kompensuje długość ściegu wg ustawień H03–H07.",
+   "long": "Wejście w ustawienia grubości: H01 (cienka część – uczenie), H02 (gruba część – uczenie), H03–H07 (liczba ściegów, prędkość, kompensacja ściegu, czułość, trajektoria)."
+  },
+  {
+   "id": "voice",
+   "name": "Głos / powitanie",
+   "icon_hint": "głośnik / „speaking”",
+   "short": "Włącza/wyłącza powitanie głosowe. Gdy na wyświetlaczu jest kod błędu – odtwarza głosową podpowiedź rozwiązania.",
+   "long": "Włącza/wyłącza wszystkie komunikaty głosowe (wyciszenie). Głośność P98, tryb P97, język P99."
+  },
+  {
+   "id": "speed_plus",
+   "name": "Speed + (prędkość w górę)",
+   "icon_hint": "„+” Speed+",
+   "short": "Na ekranie głównym zwiększa prędkość maksymalną o 50 obr/min; w trybie parametrów zwiększa wartość.",
+   "long": "Z innymi klawiszami – kombinacje serwisowe (np. podgląd wersji oprogramowania)."
+  },
+  {
+   "id": "speed_minus",
+   "name": "Speed – (prędkość w dół)",
+   "icon_hint": "„–” Speed–",
+   "short": "Na ekranie głównym zmniejsza prędkość maksymalną o 50 obr/min; w trybie parametrów zmniejsza wartość.",
+   "long": "Jak wyżej – kombinacje serwisowe."
+  },
+  {
+   "id": "left",
+   "name": "W lewo „<”",
+   "icon_hint": "strzałka w lewo",
+   "short": "Przesuwa wybór parametru/cyfry w lewo; przełącza licznik sztuk/ściegów.",
+   "long": "W trybie stałych ściegów włącza/wyłącza szycie jednym wciśnięciem (one-shot)."
+  },
+  {
+   "id": "right",
+   "name": "W prawo „>”",
+   "icon_hint": "strzałka w prawo",
+   "short": "Przesuwa wybór parametru/cyfry w prawo; przełącza licznik sztuk/ściegów.",
+   "long": "Brak w instrukcji."
+  },
+  {
+   "id": "p",
+   "name": "P – parametry",
+   "icon_hint": "litera P w kółku",
+   "short": "Wejście w tryb parametrów użytkownika (ze stanu gotowości); ponowne naciśnięcie po zmianie zapisuje i wychodzi.",
+   "long": "Zapis ustawień (cyfra/numer miga). Włączenie zasilania z przytrzymanym P – tryb parametrów serwisowych (tylko dla technika)."
+  },
+  {
+   "id": "reset",
+   "name": "Reset (恢复出厂设置 – przywrócenie ustawień fabrycznych)",
+   "icon_hint": "przycisk Reset",
+   "short": "Brak działania przy krótkim naciśnięciu.",
+   "long": "Przytrzymaj ok. 5 s – powrót do ustawień fabrycznych (kasuje własne ustawienia prędkości, rygli, trybów!). Instrukcja zaleca reset jako pierwszy krok przy wielu błędach Err."
+  }
  ],
  "parameters": {
   "how_to_enter": "Parametry użytkownika: przy włączonej maszynie w stanie gotowości (nie szyjąc) naciśnij krótko P. Klawiszami „<” „>” przesuwasz numer parametru/cyfrę (wybrana miga), klawiszami „+” „–” (Speed+/Speed–) zmieniasz wartość – wyświetlacz miga przy zmianie. Zapis: naciśnij P (wg instrukcji ang. krótkie P zapisuje, długie P wychodzi do ekranu głównego; wg PL – po zmianie wciśnięcie P zapisuje, ponowne wychodzi). Parametry serwisowe: włącz zasilanie trzymając wciśnięty P – NIE zmieniaj ich bez technika (kąty silnika, czujniki). Tryb monitora (M01–M49, odczyt prędkości, napięcia szyny, historii błędów) i podgląd wersji (h – panel, A – sterownik, V5 – głos) – kombinacja klawisza z P lub +/–. Przed zmianami zanotuj wartości – Reset (5 s) przywraca fabryczne. UWAGA: numery i zakresy z angielskiej instrukcji A7, tekst częściowo pomieszany; wartości domyślne oznaczone „?” są nieczytelne w źródle.",
   "list": [
-   {"code": "P01", "name": "Maksymalna prędkość szycia swobodnego", "range": "200–5000 obr/min", "default": "3800", "tip": "Początkującym i na grube materiały 2000–3000. Szybciej zmienisz prędkość klawiszami Speed± (co 50 obr/min)."},
-   {"code": "P02", "name": "Siła lekkiego uniesienia stopki na starcie", "range": "1–100", "default": "?", "tip": "Pomaga przy grubych warstwach na początku szwu."},
-   {"code": "P03", "name": "Pozycja zatrzymania igły (góra/dół)", "range": "0/1", "default": "?", "tip": "To samo co przycisk igły góra/dół. Znaczenie 0/1 różni się między wersjami – sprawdź, obserwując igłę po zatrzymaniu."},
-   {"code": "P04", "name": "Prędkość rygla początkowego", "range": "200–3000", "default": "1800", "tip": "Gdy ściegi rygla „nie trafiają w siebie” – obniż do 1200–1500."},
-   {"code": "P05", "name": "Prędkość rygla końcowego", "range": "200–3000", "default": "1800", "tip": "Jak P04."},
-   {"code": "P06", "name": "Prędkość szwu W (ciągłego ryglowania)", "range": "200–3000", "default": "1800", "tip": ""},
-   {"code": "P07", "name": "Prędkość szycia odcinkowego (multi-seam)", "range": "200–4000", "default": "3700", "tip": ""},
-   {"code": "P08", "name": "Mikrouniesienie stopki podczas szycia (przełącznik)", "range": "0/1", "default": "?", "tip": "Może pomóc na grubych/lepkich materiałach (ekoskóra)."},
-   {"code": "P09", "name": "Miękki start (soft start) – włącz/wyłącz", "range": "0/1", "default": "?", "tip": "Włącz (1), gdy nić wyskakuje z igły lub plącze się na starcie albo przy cienkich tkaninach."},
-   {"code": "P10", "name": "Liczba ściegów miękkiego startu", "range": "1–9", "default": "?", "tip": "Zwykle 2–3."},
-   {"code": "P11", "name": "Prędkość miękkiego startu", "range": "100–800", "default": "400", "tip": ""},
-   {"code": "P12", "name": "Funkcja klawisza półściegu / wielofunkcyjnego", "range": "-8–8", "default": "?", "tip": ""},
-   {"code": "P13", "name": "Maks. prędkość szycia wstecz", "range": "200–4000", "default": "3200", "tip": ""},
-   {"code": "P14", "name": "Prędkość ściegu kompensacyjnego (półścieg)", "range": "100–800", "default": "200", "tip": ""},
-   {"code": "P15", "name": "Tryb przycisku dościegu (0 wył., 1 ciągły, 2 pół ściegu, 3 jeden ścieg)", "range": "0–3", "default": "?", "tip": "Dotyczy przycisku na głowicy (jeśli zamontowany)."},
-   {"code": "P16", "name": "Czujnik grubości – punkt zerowy", "range": "0–9999", "default": "?", "tip": "Ustawiany automatycznie przy kalibracji – nie zmieniaj ręcznie."},
-   {"code": "P17", "name": "Wysokość grubego materiału (zapis z H02)", "range": "0–9999", "default": "?", "tip": "Ustaw przez uczenie H02 (długie naciśnięcie przycisku sensing), nie ręcznie."},
-   {"code": "P25", "name": "Wysokość cienkiego materiału (zapis z H01)", "range": "AD", "default": "?", "tip": "Ustaw przez uczenie H01."},
-   {"code": "P18", "name": "Grube miejsce – liczba ściegów (H03)", "range": "0–50", "default": "5", "tip": "Ile ściegów maszyna szyje w trybie „grubym” po wykryciu zgrubienia."},
-   {"code": "P19", "name": "Grube miejsce – prędkość (H04)", "range": "200–4000", "default": "2000", "tip": "Przy łamaniu igieł na szwach krzyżowych obniż do 1200–1500."},
-   {"code": "P20", "name": "Grube miejsce – kompensacja długości ściegu (H05)", "range": "0–50 (×0,1 mm)", "default": "5", "tip": "Wydłuża ścieg na zgrubieniu, by nie był krótszy niż na płaskim."},
-   {"code": "P21", "name": "Czułość czujnika grubości (H06)", "range": "0–50", "default": "?", "tip": "Za czuły – zwalnia bez powodu; za mało – nie reaguje na szwy."},
-   {"code": "P22", "name": "Trajektoria transportu w grubym miejscu (H07)", "range": "1–4", "default": "4", "tip": "Domyślnie tor 4 (ciężkie). Uwaga: jedno ze źródeł opisuje P22 inaczej – zweryfikuj na panelu."},
-   {"code": "P23", "name": "Pedał – pozycja obcięcia nici 1", "range": "0–4095", "default": "1100", "tip": "Ustawienia pedału – zmieniaj tylko, gdy obcinanie piętą jest zbyt łatwe/trudne."},
-   {"code": "P24", "name": "Pedał – pozycja obcięcia nici 2 (z podniesieniem stopki)", "range": "0–4095", "default": "550", "tip": ""},
-   {"code": "P27", "name": "Siła obcinania nici", "range": "10–100", "default": "?", "tip": "Gdy grube nici nie są docinane – zwiększ (najpierw sprawdź noże!)."},
-   {"code": "P28–P31", "name": "Kąty zacisku nici (nipper) dla rygla/szwu W i zagęszczania", "range": "0–359°", "default": "130/320/130/340", "tip": "Serwisowe."},
-   {"code": "P34", "name": "Czujnik poziomu oleju – włącz/wyłącz", "range": "0/1", "default": "?", "tip": "Nie wyłączaj, by pozbyć się Err-20 – dolej oleju."},
-   {"code": "P35–P37", "name": "Prędkość 1., 2., 3. ściegu po starcie", "range": "0–3000", "default": "800 / 1500 / ?", "tip": "Niższe wartości = łagodniejszy start, mniej wyciągania nici z igły."},
-   {"code": "P40", "name": "Pedał – pozycja półpiętki (podniesienie stopki)", "range": "0–4095", "default": "900", "tip": "Czułość pedału – serwisowe; mechanicznie czułość regulujesz sprężyną i otworem cięgna (patrz problem z pedałem)."},
-   {"code": "P41", "name": "Pedał – położenie neutralne", "range": "0–4095", "default": "1600", "tip": ""},
-   {"code": "P42/P43", "name": "Pedał – początek/koniec strefy wolnych obrotów", "range": "0–4095", "default": "300 / 600", "tip": "Większy zakres = łatwiej szyć powoli."},
-   {"code": "P44", "name": "Pedał – maksymalna wartość analogowa", "range": "0–4095", "default": "4000", "tip": ""},
-   {"code": "P47", "name": "Cofnięcie (kąt) po obcięciu nici", "range": "200–360", "default": "359", "tip": "Serwisowe."},
-   {"code": "P48", "name": "Podniesienie stopki wcześniej przy obcinaniu", "range": "0/1", "default": "0", "tip": ""},
-   {"code": "P49", "name": "Prędkość obcinania", "range": "100–500", "default": "250", "tip": "Przy wyciąganiu nici z igły po obcięciu nie podnoś tej wartości."},
-   {"code": "P50", "name": "Czas pełnego zasilenia elektromagnesu stopki", "range": "100–500 ms", "default": "200", "tip": ""},
-   {"code": "P53", "name": "Funkcja podnoszenia stopki – przełącznik", "range": "0/1", "default": "1", "tip": ""},
-   {"code": "P56", "name": "Szukanie pozycji igły po włączeniu", "range": "0/1", "default": "1", "tip": ""},
-   {"code": "P57", "name": "Czas ochrony elektromagnesu stopki (auto-opuszczenie)", "range": "1–60 s", "default": "10", "tip": "Stopka sama opadnie po tym czasie – chroni elektromagnes przed przegrzaniem."},
-   {"code": "P58", "name": "Kąt górnego zatrzymania igły", "range": "0–359", "default": "275", "tip": "Serwisowe – gdy igła staje za nisko/za wysoko po obcięciu."},
-   {"code": "P59", "name": "Kąt dolnego zatrzymania igły (względem górnego)", "range": "0–359", "default": "160", "tip": "Serwisowe."},
-   {"code": "P61", "name": "Kąt elektryczny silnika", "range": "0–1000", "default": "500", "tip": "Wyłącznie serwis (Err-01/08/12/21)."},
-   {"code": "P62", "name": "Tryb pracy (0 normalny, 1 łatwy, 2 test, 3 autotest)", "range": "0–3", "default": "0", "tip": "Zostaw 0."},
-   {"code": "P66", "name": "Wyłącznik bezpieczeństwa (przechył głowicy)", "range": "0/1", "default": "1", "tip": "Nie wyłączaj."},
-   {"code": "P68", "name": "Limit prędkości szycia swobodnego", "range": "200–5000", "default": "3800", "tip": ""},
-   {"code": "P72", "name": "Funkcja ochrony przed łamaniem igły", "range": "0/1", "default": "1", "tip": "Zostaw włączoną."},
-   {"code": "P74/P75", "name": "Zagęszczanie początkowe – prędkość / liczba ściegów", "range": "100–2500 / 0–12", "default": "1000 / 2", "tip": ""},
-   {"code": "P76/P77", "name": "Zagęszczanie końcowe – prędkość / liczba ściegów", "range": "100–2500 / 0–12", "default": "1800 / 2", "tip": ""},
-   {"code": "P86/P88", "name": "Długość ściegu zagęszczenia początkowego / końcowego", "range": "0–50 (×0,1 mm)", "default": "8 / 5", "tip": "0,5–0,8 mm."},
-   {"code": "P84", "name": "Prędkość szycia wzorów", "range": "200–3000", "default": "2000", "tip": ""},
-   {"code": "P91", "name": "Maksymalna długość ściegu", "range": "0–70 (×0,1 mm)", "default": "50 (5,0 mm)", "tip": "Wartość 70 wskazuje głowicę 7 mm (A7-D-7 / A7-DH). Nie ustawiaj więcej, niż pozwala mechanika."},
-   {"code": "P97", "name": "Tryb głosu (0 powitanie+klawisze, 1 tylko powitanie, 2 tylko klawisze)", "range": "0–2", "default": "0", "tip": ""},
-   {"code": "P98", "name": "Głośność komunikatów", "range": "0–7", "default": "7", "tip": ""},
-   {"code": "P99", "name": "Wybór głosu/języka (0 wył.)", "range": "0–2", "default": "1", "tip": "0 = całkowite wyciszenie."},
-   {"code": "P112/P114/P116/P118", "name": "Kompensacja ściegu do przodu dla toru 1/2/3/4", "range": "?", "default": "?", "tip": "Kalibracja: ścieg 5 mm, szyj na kartce A4, odległość między dziurkami ma wynosić 4,9–5,1 mm. Wejście w parametr obniża prędkość do 200 obr/min."},
-   {"code": "P113/P115/P117/P119", "name": "Kompensacja ściegu wstecznego dla toru 1/2/3/4", "range": "?", "default": "?", "tip": "Gdy rygiel nie pokrywa się ze ściegiem do przodu: szyj kawałek do przodu, przytrzymaj dźwignię wsteczną i koryguj aż ściegi wsteczne trafiają w otwory (min. 11 ściegów)."},
-   {"code": "P123", "name": "Kalibracja zera silnika krokowego transportu", "range": "?", "default": "?", "tip": "Gdy długość ściegu jest nierówna/niezgodna z panelem: ścieg 5 mm, szyj na papierze A4, koryguj aż kolejne ściegi są równe (prędkość 200 obr/min w trybie kalibracji). Najlepiej z technikiem."}
+   {
+    "code": "P01",
+    "name": "Maksymalna prędkość szycia swobodnego",
+    "range": "200–5000 obr/min",
+    "default": "3800",
+    "tip": "Początkującym i na grube materiały 2000–3000. Szybciej zmienisz prędkość klawiszami Speed± (co 50 obr/min)."
+   },
+   {
+    "code": "P02",
+    "name": "Siła lekkiego uniesienia stopki na starcie",
+    "range": "1–100",
+    "default": "?",
+    "tip": "Pomaga przy grubych warstwach na początku szwu."
+   },
+   {
+    "code": "P03",
+    "name": "Pozycja zatrzymania igły (góra/dół)",
+    "range": "0/1",
+    "default": "?",
+    "tip": "To samo co przycisk igły góra/dół. Znaczenie 0/1 różni się między wersjami – sprawdź, obserwując igłę po zatrzymaniu."
+   },
+   {
+    "code": "P04",
+    "name": "Prędkość rygla początkowego",
+    "range": "200–3000",
+    "default": "1800",
+    "tip": "Gdy ściegi rygla „nie trafiają w siebie” – obniż do 1200–1500."
+   },
+   {
+    "code": "P05",
+    "name": "Prędkość rygla końcowego",
+    "range": "200–3000",
+    "default": "1800",
+    "tip": "Jak P04."
+   },
+   {
+    "code": "P06",
+    "name": "Prędkość szwu W (ciągłego ryglowania)",
+    "range": "200–3000",
+    "default": "1800",
+    "tip": ""
+   },
+   {
+    "code": "P07",
+    "name": "Prędkość szycia odcinkowego (multi-seam)",
+    "range": "200–4000",
+    "default": "3700",
+    "tip": ""
+   },
+   {
+    "code": "P08",
+    "name": "Mikrouniesienie stopki podczas szycia (przełącznik)",
+    "range": "0/1",
+    "default": "?",
+    "tip": "Może pomóc na grubych/lepkich materiałach (ekoskóra)."
+   },
+   {
+    "code": "P09",
+    "name": "Miękki start (soft start) – włącz/wyłącz",
+    "range": "0/1",
+    "default": "?",
+    "tip": "Włącz (1), gdy nić wyskakuje z igły lub plącze się na starcie albo przy cienkich tkaninach."
+   },
+   {
+    "code": "P10",
+    "name": "Liczba ściegów miękkiego startu",
+    "range": "1–9",
+    "default": "?",
+    "tip": "Zwykle 2–3."
+   },
+   {
+    "code": "P11",
+    "name": "Prędkość miękkiego startu",
+    "range": "100–800",
+    "default": "400",
+    "tip": ""
+   },
+   {
+    "code": "P12",
+    "name": "Funkcja klawisza półściegu / wielofunkcyjnego",
+    "range": "-8–8",
+    "default": "?",
+    "tip": ""
+   },
+   {
+    "code": "P13",
+    "name": "Maks. prędkość szycia wstecz",
+    "range": "200–4000",
+    "default": "3200",
+    "tip": ""
+   },
+   {
+    "code": "P14",
+    "name": "Prędkość ściegu kompensacyjnego (półścieg)",
+    "range": "100–800",
+    "default": "200",
+    "tip": ""
+   },
+   {
+    "code": "P15",
+    "name": "Tryb przycisku dościegu (0 wył., 1 ciągły, 2 pół ściegu, 3 jeden ścieg)",
+    "range": "0–3",
+    "default": "?",
+    "tip": "Dotyczy przycisku na głowicy (jeśli zamontowany)."
+   },
+   {
+    "code": "P16",
+    "name": "Czujnik grubości – punkt zerowy",
+    "range": "0–9999",
+    "default": "?",
+    "tip": "Ustawiany automatycznie przy kalibracji – nie zmieniaj ręcznie."
+   },
+   {
+    "code": "P17",
+    "name": "Wysokość grubego materiału (zapis z H02)",
+    "range": "0–9999",
+    "default": "?",
+    "tip": "Ustaw przez uczenie H02 (długie naciśnięcie przycisku sensing), nie ręcznie."
+   },
+   {
+    "code": "P25",
+    "name": "Wysokość cienkiego materiału (zapis z H01)",
+    "range": "AD",
+    "default": "?",
+    "tip": "Ustaw przez uczenie H01."
+   },
+   {
+    "code": "P18",
+    "name": "Grube miejsce – liczba ściegów (H03)",
+    "range": "0–50",
+    "default": "5",
+    "tip": "Ile ściegów maszyna szyje w trybie „grubym” po wykryciu zgrubienia."
+   },
+   {
+    "code": "P19",
+    "name": "Grube miejsce – prędkość (H04)",
+    "range": "200–4000",
+    "default": "2000",
+    "tip": "Przy łamaniu igieł na szwach krzyżowych obniż do 1200–1500."
+   },
+   {
+    "code": "P20",
+    "name": "Grube miejsce – kompensacja długości ściegu (H05)",
+    "range": "0–50 (×0,1 mm)",
+    "default": "5",
+    "tip": "Wydłuża ścieg na zgrubieniu, by nie był krótszy niż na płaskim."
+   },
+   {
+    "code": "P21",
+    "name": "Czułość czujnika grubości (H06)",
+    "range": "0–50",
+    "default": "?",
+    "tip": "Za czuły – zwalnia bez powodu; za mało – nie reaguje na szwy."
+   },
+   {
+    "code": "P22",
+    "name": "Trajektoria transportu w grubym miejscu (H07)",
+    "range": "1–4",
+    "default": "4",
+    "tip": "Domyślnie tor 4 (ciężkie). Uwaga: jedno ze źródeł opisuje P22 inaczej – zweryfikuj na panelu."
+   },
+   {
+    "code": "P23",
+    "name": "Pedał – pozycja obcięcia nici 1",
+    "range": "0–4095",
+    "default": "1100",
+    "tip": "Ustawienia pedału – zmieniaj tylko, gdy obcinanie piętą jest zbyt łatwe/trudne."
+   },
+   {
+    "code": "P24",
+    "name": "Pedał – pozycja obcięcia nici 2 (z podniesieniem stopki)",
+    "range": "0–4095",
+    "default": "550",
+    "tip": ""
+   },
+   {
+    "code": "P27",
+    "name": "Siła obcinania nici",
+    "range": "10–100",
+    "default": "?",
+    "tip": "Gdy grube nici nie są docinane – zwiększ (najpierw sprawdź noże!)."
+   },
+   {
+    "code": "P28–P31",
+    "name": "Kąty zacisku nici (nipper) dla rygla/szwu W i zagęszczania",
+    "range": "0–359°",
+    "default": "130/320/130/340",
+    "tip": "Serwisowe."
+   },
+   {
+    "code": "P34",
+    "name": "Czujnik poziomu oleju – włącz/wyłącz",
+    "range": "0/1",
+    "default": "?",
+    "tip": "Nie wyłączaj, by pozbyć się Err-20 – dolej oleju."
+   },
+   {
+    "code": "P35–P37",
+    "name": "Prędkość 1., 2., 3. ściegu po starcie",
+    "range": "0–3000",
+    "default": "800 / 1500 / ?",
+    "tip": "Niższe wartości = łagodniejszy start, mniej wyciągania nici z igły."
+   },
+   {
+    "code": "P40",
+    "name": "Pedał – pozycja półpiętki (podniesienie stopki)",
+    "range": "0–4095",
+    "default": "900",
+    "tip": "Czułość pedału – serwisowe; mechanicznie czułość regulujesz sprężyną i otworem cięgna (patrz problem z pedałem)."
+   },
+   {
+    "code": "P41",
+    "name": "Pedał – położenie neutralne",
+    "range": "0–4095",
+    "default": "1600",
+    "tip": ""
+   },
+   {
+    "code": "P42/P43",
+    "name": "Pedał – początek/koniec strefy wolnych obrotów",
+    "range": "0–4095",
+    "default": "300 / 600",
+    "tip": "Większy zakres = łatwiej szyć powoli."
+   },
+   {
+    "code": "P44",
+    "name": "Pedał – maksymalna wartość analogowa",
+    "range": "0–4095",
+    "default": "4000",
+    "tip": ""
+   },
+   {
+    "code": "P47",
+    "name": "Cofnięcie (kąt) po obcięciu nici",
+    "range": "200–360",
+    "default": "359",
+    "tip": "Serwisowe."
+   },
+   {
+    "code": "P48",
+    "name": "Podniesienie stopki wcześniej przy obcinaniu",
+    "range": "0/1",
+    "default": "0",
+    "tip": ""
+   },
+   {
+    "code": "P49",
+    "name": "Prędkość obcinania",
+    "range": "100–500",
+    "default": "250",
+    "tip": "Przy wyciąganiu nici z igły po obcięciu nie podnoś tej wartości."
+   },
+   {
+    "code": "P50",
+    "name": "Czas pełnego zasilenia elektromagnesu stopki",
+    "range": "100–500 ms",
+    "default": "200",
+    "tip": ""
+   },
+   {
+    "code": "P53",
+    "name": "Funkcja podnoszenia stopki – przełącznik",
+    "range": "0/1",
+    "default": "1",
+    "tip": ""
+   },
+   {
+    "code": "P56",
+    "name": "Szukanie pozycji igły po włączeniu",
+    "range": "0/1",
+    "default": "1",
+    "tip": ""
+   },
+   {
+    "code": "P57",
+    "name": "Czas ochrony elektromagnesu stopki (auto-opuszczenie)",
+    "range": "1–60 s",
+    "default": "10",
+    "tip": "Stopka sama opadnie po tym czasie – chroni elektromagnes przed przegrzaniem."
+   },
+   {
+    "code": "P58",
+    "name": "Kąt górnego zatrzymania igły",
+    "range": "0–359",
+    "default": "275",
+    "tip": "Serwisowe – gdy igła staje za nisko/za wysoko po obcięciu."
+   },
+   {
+    "code": "P59",
+    "name": "Kąt dolnego zatrzymania igły (względem górnego)",
+    "range": "0–359",
+    "default": "160",
+    "tip": "Serwisowe."
+   },
+   {
+    "code": "P61",
+    "name": "Kąt elektryczny silnika",
+    "range": "0–1000",
+    "default": "500",
+    "tip": "Wyłącznie serwis (Err-01/08/12/21)."
+   },
+   {
+    "code": "P62",
+    "name": "Tryb pracy (0 normalny, 1 łatwy, 2 test, 3 autotest)",
+    "range": "0–3",
+    "default": "0",
+    "tip": "Zostaw 0."
+   },
+   {
+    "code": "P66",
+    "name": "Wyłącznik bezpieczeństwa (przechył głowicy)",
+    "range": "0/1",
+    "default": "1",
+    "tip": "Nie wyłączaj."
+   },
+   {
+    "code": "P68",
+    "name": "Limit prędkości szycia swobodnego",
+    "range": "200–5000",
+    "default": "3800",
+    "tip": ""
+   },
+   {
+    "code": "P72",
+    "name": "Funkcja ochrony przed łamaniem igły",
+    "range": "0/1",
+    "default": "1",
+    "tip": "Zostaw włączoną."
+   },
+   {
+    "code": "P74/P75",
+    "name": "Zagęszczanie początkowe – prędkość / liczba ściegów",
+    "range": "100–2500 / 0–12",
+    "default": "1000 / 2",
+    "tip": ""
+   },
+   {
+    "code": "P76/P77",
+    "name": "Zagęszczanie końcowe – prędkość / liczba ściegów",
+    "range": "100–2500 / 0–12",
+    "default": "1800 / 2",
+    "tip": ""
+   },
+   {
+    "code": "P86/P88",
+    "name": "Długość ściegu zagęszczenia początkowego / końcowego",
+    "range": "0–50 (×0,1 mm)",
+    "default": "8 / 5",
+    "tip": "0,5–0,8 mm."
+   },
+   {
+    "code": "P84",
+    "name": "Prędkość szycia wzorów",
+    "range": "200–3000",
+    "default": "2000",
+    "tip": ""
+   },
+   {
+    "code": "P91",
+    "name": "Maksymalna długość ściegu",
+    "range": "0–70 (×0,1 mm)",
+    "default": "50 (5,0 mm)",
+    "tip": "Wartość 70 wskazuje głowicę 7 mm (A7-D-7 / A7-DH). Nie ustawiaj więcej, niż pozwala mechanika."
+   },
+   {
+    "code": "P97",
+    "name": "Tryb głosu (0 powitanie+klawisze, 1 tylko powitanie, 2 tylko klawisze)",
+    "range": "0–2",
+    "default": "0",
+    "tip": ""
+   },
+   {
+    "code": "P98",
+    "name": "Głośność komunikatów",
+    "range": "0–7",
+    "default": "7",
+    "tip": ""
+   },
+   {
+    "code": "P99",
+    "name": "Wybór głosu/języka (0 wył.)",
+    "range": "0–2",
+    "default": "1",
+    "tip": "0 = całkowite wyciszenie."
+   },
+   {
+    "code": "P112/P114/P116/P118",
+    "name": "Kompensacja ściegu do przodu dla toru 1/2/3/4",
+    "range": "?",
+    "default": "?",
+    "tip": "Kalibracja: ścieg 5 mm, szyj na kartce A4, odległość między dziurkami ma wynosić 4,9–5,1 mm. Wejście w parametr obniża prędkość do 200 obr/min."
+   },
+   {
+    "code": "P113/P115/P117/P119",
+    "name": "Kompensacja ściegu wstecznego dla toru 1/2/3/4",
+    "range": "?",
+    "default": "?",
+    "tip": "Gdy rygiel nie pokrywa się ze ściegiem do przodu: szyj kawałek do przodu, przytrzymaj dźwignię wsteczną i koryguj aż ściegi wsteczne trafiają w otwory (min. 11 ściegów)."
+   },
+   {
+    "code": "P123",
+    "name": "Kalibracja zera silnika krokowego transportu",
+    "range": "?",
+    "default": "?",
+    "tip": "Gdy długość ściegu jest nierówna/niezgodna z panelem: ścieg 5 mm, szyj na papierze A4, koryguj aż kolejne ściegi są równe (prędkość 200 obr/min w trybie kalibracji). Najlepiej z technikiem."
+   }
   ]
  },
  "errors": [
-  {"code": "Err-01", "meaning": "Przetężenie sprzętowe silnika wału głównego", "fix": "Wyłącz zasilanie, odczekaj 30 s, włącz ponownie. Sprawdź, czy głowica obraca się lekko ręcznie (brak zablokowania). Jeśli powraca – kontrola kąta P61, enkodera i sterownika przez serwis (tel. serwisu JACK z instrukcji: 4008876858 – Chiny; w PL kontakt z dealerem)."},
-  {"code": "Err-03", "meaning": "Za niskie napięcie zasilania", "fix": "Odłącz zasilanie, sprawdź napięcie w gniazdku (musi być > 176 V), nie używaj długich przedłużaczy/rozgałęźników. Po ustabilizowaniu włącz ponownie; jeśli trwa – serwis."},
-  {"code": "Err-04", "meaning": "Przepięcie przy wyłączonym silniku (postój)", "fix": "Odłącz zasilanie, sprawdź, czy napięcie < 264 V. Włącz po normalizacji; jeśli trwa – serwis."},
-  {"code": "Err-05", "meaning": "Przepięcie podczas pracy", "fix": "Jak Err-04 (napięcie < 264 V). Częste hamowanie przy dużej prędkości może je wywoływać – zgłoś serwisowi, jeśli się powtarza."},
-  {"code": "Err-06", "meaning": "Awaria obwodu elektromagnesów (obcinacz, stopka, rygiel, nipper)", "fix": "Wyłącz zasilanie, sprawdź wtyczki i przewody elektromagnesów (luźne/uszkodzone). Test: odłącz 14-pinową wtyczkę głowicy – jeśli błąd znika, usterka w elektromagnesie; jeśli nie – w sterowniku. Serwis. (przypisanie działań zrekonstruowane)"},
-  {"code": "Err-07", "meaning": "Awaria obwodu pomiaru prądu", "fix": "Wyłącz na 30 s i włącz kilka razy; jeśli często wraca – serwis (sterownik). (przypisanie zrekonstruowane)"},
-  {"code": "Err-08", "meaning": "Zablokowanie silnika wału głównego", "fix": "Wyłącz zasilanie. Sprawdź, czy coś nie owinęło się wokół głowicy, czy w chwytaczu nie ma resztek nici (najczęstsza przyczyna!), czy nie zablokował się mimośród/transport. Obróć kołem ręcznym – musi chodzić lekko. Sprawdź wtyczkę zasilania silnika. Dalej – serwis (P61)."},
-  {"code": "Err-10", "meaning": "Błąd komunikacji panelu ze sterownikiem", "fix": "Wyłącz zasilanie, sprawdź kabel panelu i kabel regulatora prędkości (pedału) – czy nie jest luźny, odłączony, przetarty. Jeśli trwa – serwis."},
-  {"code": "Err-11", "meaning": "Błąd sygnału zatrzymania głowicy (pozycji igły)", "fix": "Brak opisu w źródle. Wyłącz na 30 s, sprawdź złącze enkodera; serwis."},
-  {"code": "Err-12", "meaning": "Błąd wykrywania kąta początkowego silnika", "fix": "Wyłącz i włącz 2–3 razy; serwis sprawdza P61."},
-  {"code": "Err-13", "meaning": "Błąd pozycji zerowej silnika (enkoder)", "fix": "Wyłącz zasilanie, sprawdź osadzenie wtyczki enkodera, podłącz ponownie i uruchom; w razie potrzeby wymiana enkodera – serwis. (przypisanie zrekonstruowane)"},
-  {"code": "Err-14", "meaning": "Błąd odczytu/zapisu pamięci EEPROM sterownika", "fix": "Wyłącz na 30 s, włącz. Ewentualnie Reset (5 s). Jeśli trwa – serwis. (przypisanie zrekonstruowane)"},
-  {"code": "Err-15", "meaning": "Zabezpieczenie przed nadmierną prędkością silnika", "fix": "Brak opisu w źródle. Wyłącz na 30 s, przywróć ustawienia fabryczne; serwis."},
-  {"code": "Err-16", "meaning": "Obroty silnika w odwrotnym kierunku", "fix": "Brak opisu w źródle. Nie obracaj kołem ręcznym od siebie podczas włączania; wyłącz/włącz; serwis."},
-  {"code": "Err-17", "meaning": "Błąd restartu sterownika głównego", "fix": "Wyłącz na 30 s i włącz; jeśli trwa – serwis. (przypisanie zrekonstruowane)"},
-  {"code": "Err-18", "meaning": "Przeciążenie silnika wału głównego", "fix": "Sprawdź, czy silnik nie jest blokowany (zbyt gruby materiał, nić w chwytaczu, za niski poziom oleju, brud). Zmniejsz prędkość na grubych warstwach. Serwis, jeśli powraca."},
-  {"code": "Err-20", "meaning": "Alarm braku oleju (sprawdzany co 8 godzin)", "fix": "Sprawdź poziom oleju i dolej olej biały 10 do poziomu między kreskami. Jeśli olej jest, a alarm trwa – czujnik poziomu/serwis. Nie wyłączaj czujnika P34."},
-  {"code": "Err-21", "meaning": "Zablokowanie silnika wału głównego", "fix": "1) Sprawdź głowicę: ciała obce, resztki nici w chwytaczu, zablokowany mimośród. 2) Wyłącz i sprawdź wtyczkę zasilania silnika (luźna/uszkodzona). 3) Serwis sprawdza P61. 4) Restart; jeśli trwa – serwis."},
-  {"code": "Err-30", "meaning": "Alarm silnika krokowego (transportu/rygla)", "fix": "Sprawdź, czy silnik krokowy, wahacz i ząbki transportu nie są zablokowane (nić, brud pod płytką). Restart. Uszkodzony enkoder silnika krokowego – wymiana (serwis)."},
-  {"code": "Err-31", "meaning": "Błąd pozycji zerowej silnika krokowego", "fix": "Wyłącz na 30 s i włącz. Sprawdź, czy transport/wahacz nie są zablokowane. Restart; serwis."},
-  {"code": "Err-32", "meaning": "Przetężenie sprzętowe silnika krokowego (faza A)", "fix": "Wyłącz na 30 s i włącz; jeśli trwa – serwis (sterownik)."},
-  {"code": "Err-33", "meaning": "Błąd pętli prądowej silnika krokowego (faza B)", "fix": "Wyłącz na 30 s i włącz; jeśli trwa – serwis."},
-  {"code": "Err-34", "meaning": "Błąd sygnału Halla silnika krokowego", "fix": "Sprawdź enkoder krokowy i sterownik, wymiana uszkodzonych, restart po 30 s; serwis. (przypisanie zrekonstruowane)"},
-  {"code": "Err-35", "meaning": "Awaria (element nie nazwany w źródle)", "fix": "Restart po 30 s; serwis. (opis niepełny w źródle)"},
-  {"code": "Alarm licznika ściegów", "meaning": "Osiągnięto ustawiony limit licznika ściegów (np. przypomnienie o wymianie szpulki)", "fix": "Naciśnij wskazany klawisz, by skasować alarm i wyzerować licznik; ustawienia P104–P111."},
-  {"code": "Alarm licznika obcięć", "meaning": "Osiągnięto limit licznika obcięć/sztuk", "fix": "Skasuj klawiszem i wyzeruj licznik."},
-  {"code": "Alarm zaniku zasilania", "meaning": "Nieprawidłowe wyłączenie/zanik zasilania", "fix": "Odczekaj 30 s i włącz wyłącznik ponownie."},
-  {"code": "Alarm wyłącznika bezpieczeństwa", "meaning": "Głowica przechylona / nie w pozycji roboczej", "fix": "Opuść głowicę do pozycji roboczej (czujnik przechyłu)."},
-  {"code": "Alarm regulatora prędkości", "meaning": "Usterka regulatora prędkości (czujnik pedału)", "fix": "Odłącz zasilanie, sprawdź, czy wtyczka regulatora prędkości nie jest poluzowana."},
-  {"code": "Alarm pozycji silnika krokowego", "meaning": "Silnik krokowy poza pozycją", "fix": "Sprawdzenie pozycji montażu silnika krokowego – kalibracja P123 (serwis)."},
-  {"code": "Blokada hasłem", "meaning": "Maszyna osiągnęła ustawiony limit czasu pracy (blokada dealera/leasingu)", "fix": "Kontakt ze sprzedawcą/serwisem w celu odblokowania."}
+  {
+   "code": "Err-01",
+   "meaning": "Przetężenie sprzętowe silnika wału głównego",
+   "fix": "Wyłącz zasilanie, odczekaj 30 s, włącz ponownie. Sprawdź, czy głowica obraca się lekko ręcznie (brak zablokowania). Jeśli powraca – kontrola kąta P61, enkodera i sterownika przez serwis (tel. serwisu JACK z instrukcji: 4008876858 – Chiny; w PL kontakt z dealerem)."
+  },
+  {
+   "code": "Err-03",
+   "meaning": "Za niskie napięcie zasilania",
+   "fix": "Odłącz zasilanie, sprawdź napięcie w gniazdku (musi być > 176 V), nie używaj długich przedłużaczy/rozgałęźników. Po ustabilizowaniu włącz ponownie; jeśli trwa – serwis."
+  },
+  {
+   "code": "Err-04",
+   "meaning": "Przepięcie przy wyłączonym silniku (postój)",
+   "fix": "Odłącz zasilanie, sprawdź, czy napięcie < 264 V. Włącz po normalizacji; jeśli trwa – serwis."
+  },
+  {
+   "code": "Err-05",
+   "meaning": "Przepięcie podczas pracy",
+   "fix": "Jak Err-04 (napięcie < 264 V). Częste hamowanie przy dużej prędkości może je wywoływać – zgłoś serwisowi, jeśli się powtarza."
+  },
+  {
+   "code": "Err-06",
+   "meaning": "Awaria obwodu elektromagnesów (obcinacz, stopka, rygiel, nipper)",
+   "fix": "Wyłącz zasilanie, sprawdź wtyczki i przewody elektromagnesów (luźne/uszkodzone). Test: odłącz 14-pinową wtyczkę głowicy – jeśli błąd znika, usterka w elektromagnesie; jeśli nie – w sterowniku. Serwis. (przypisanie działań zrekonstruowane)"
+  },
+  {
+   "code": "Err-07",
+   "meaning": "Awaria obwodu pomiaru prądu",
+   "fix": "Wyłącz na 30 s i włącz kilka razy; jeśli często wraca – serwis (sterownik). (przypisanie zrekonstruowane)"
+  },
+  {
+   "code": "Err-08",
+   "meaning": "Zablokowanie silnika wału głównego",
+   "fix": "Wyłącz zasilanie. Sprawdź, czy coś nie owinęło się wokół głowicy, czy w chwytaczu nie ma resztek nici (najczęstsza przyczyna!), czy nie zablokował się mimośród/transport. Obróć kołem ręcznym – musi chodzić lekko. Sprawdź wtyczkę zasilania silnika. Dalej – serwis (P61)."
+  },
+  {
+   "code": "Err-10",
+   "meaning": "Błąd komunikacji panelu ze sterownikiem",
+   "fix": "Wyłącz zasilanie, sprawdź kabel panelu i kabel regulatora prędkości (pedału) – czy nie jest luźny, odłączony, przetarty. Jeśli trwa – serwis."
+  },
+  {
+   "code": "Err-11",
+   "meaning": "Błąd sygnału zatrzymania głowicy (pozycji igły)",
+   "fix": "Brak opisu w źródle. Wyłącz na 30 s, sprawdź złącze enkodera; serwis."
+  },
+  {
+   "code": "Err-12",
+   "meaning": "Błąd wykrywania kąta początkowego silnika",
+   "fix": "Wyłącz i włącz 2–3 razy; serwis sprawdza P61."
+  },
+  {
+   "code": "Err-13",
+   "meaning": "Błąd pozycji zerowej silnika (enkoder)",
+   "fix": "Wyłącz zasilanie, sprawdź osadzenie wtyczki enkodera, podłącz ponownie i uruchom; w razie potrzeby wymiana enkodera – serwis. (przypisanie zrekonstruowane)"
+  },
+  {
+   "code": "Err-14",
+   "meaning": "Błąd odczytu/zapisu pamięci EEPROM sterownika",
+   "fix": "Wyłącz na 30 s, włącz. Ewentualnie Reset (5 s). Jeśli trwa – serwis. (przypisanie zrekonstruowane)"
+  },
+  {
+   "code": "Err-15",
+   "meaning": "Zabezpieczenie przed nadmierną prędkością silnika",
+   "fix": "Brak opisu w źródle. Wyłącz na 30 s, przywróć ustawienia fabryczne; serwis."
+  },
+  {
+   "code": "Err-16",
+   "meaning": "Obroty silnika w odwrotnym kierunku",
+   "fix": "Brak opisu w źródle. Nie obracaj kołem ręcznym od siebie podczas włączania; wyłącz/włącz; serwis."
+  },
+  {
+   "code": "Err-17",
+   "meaning": "Błąd restartu sterownika głównego",
+   "fix": "Wyłącz na 30 s i włącz; jeśli trwa – serwis. (przypisanie zrekonstruowane)"
+  },
+  {
+   "code": "Err-18",
+   "meaning": "Przeciążenie silnika wału głównego",
+   "fix": "Sprawdź, czy silnik nie jest blokowany (zbyt gruby materiał, nić w chwytaczu, za niski poziom oleju, brud). Zmniejsz prędkość na grubych warstwach. Serwis, jeśli powraca."
+  },
+  {
+   "code": "Err-20",
+   "meaning": "Alarm braku oleju (sprawdzany co 8 godzin)",
+   "fix": "Sprawdź poziom oleju i dolej olej biały 10 do poziomu między kreskami. Jeśli olej jest, a alarm trwa – czujnik poziomu/serwis. Nie wyłączaj czujnika P34."
+  },
+  {
+   "code": "Err-21",
+   "meaning": "Zablokowanie silnika wału głównego",
+   "fix": "1) Sprawdź głowicę: ciała obce, resztki nici w chwytaczu, zablokowany mimośród. 2) Wyłącz i sprawdź wtyczkę zasilania silnika (luźna/uszkodzona). 3) Serwis sprawdza P61. 4) Restart; jeśli trwa – serwis."
+  },
+  {
+   "code": "Err-30",
+   "meaning": "Alarm silnika krokowego (transportu/rygla)",
+   "fix": "Sprawdź, czy silnik krokowy, wahacz i ząbki transportu nie są zablokowane (nić, brud pod płytką). Restart. Uszkodzony enkoder silnika krokowego – wymiana (serwis)."
+  },
+  {
+   "code": "Err-31",
+   "meaning": "Błąd pozycji zerowej silnika krokowego",
+   "fix": "Wyłącz na 30 s i włącz. Sprawdź, czy transport/wahacz nie są zablokowane. Restart; serwis."
+  },
+  {
+   "code": "Err-32",
+   "meaning": "Przetężenie sprzętowe silnika krokowego (faza A)",
+   "fix": "Wyłącz na 30 s i włącz; jeśli trwa – serwis (sterownik)."
+  },
+  {
+   "code": "Err-33",
+   "meaning": "Błąd pętli prądowej silnika krokowego (faza B)",
+   "fix": "Wyłącz na 30 s i włącz; jeśli trwa – serwis."
+  },
+  {
+   "code": "Err-34",
+   "meaning": "Błąd sygnału Halla silnika krokowego",
+   "fix": "Sprawdź enkoder krokowy i sterownik, wymiana uszkodzonych, restart po 30 s; serwis. (przypisanie zrekonstruowane)"
+  },
+  {
+   "code": "Err-35",
+   "meaning": "Awaria (element nie nazwany w źródle)",
+   "fix": "Restart po 30 s; serwis. (opis niepełny w źródle)"
+  },
+  {
+   "code": "Alarm licznika ściegów",
+   "meaning": "Osiągnięto ustawiony limit licznika ściegów (np. przypomnienie o wymianie szpulki)",
+   "fix": "Naciśnij wskazany klawisz, by skasować alarm i wyzerować licznik; ustawienia P104–P111."
+  },
+  {
+   "code": "Alarm licznika obcięć",
+   "meaning": "Osiągnięto limit licznika obcięć/sztuk",
+   "fix": "Skasuj klawiszem i wyzeruj licznik."
+  },
+  {
+   "code": "Alarm zaniku zasilania",
+   "meaning": "Nieprawidłowe wyłączenie/zanik zasilania",
+   "fix": "Odczekaj 30 s i włącz wyłącznik ponownie."
+  },
+  {
+   "code": "Alarm wyłącznika bezpieczeństwa",
+   "meaning": "Głowica przechylona / nie w pozycji roboczej",
+   "fix": "Opuść głowicę do pozycji roboczej (czujnik przechyłu)."
+  },
+  {
+   "code": "Alarm regulatora prędkości",
+   "meaning": "Usterka regulatora prędkości (czujnik pedału)",
+   "fix": "Odłącz zasilanie, sprawdź, czy wtyczka regulatora prędkości nie jest poluzowana."
+  },
+  {
+   "code": "Alarm pozycji silnika krokowego",
+   "meaning": "Silnik krokowy poza pozycją",
+   "fix": "Sprawdzenie pozycji montażu silnika krokowego – kalibracja P123 (serwis)."
+  },
+  {
+   "code": "Blokada hasłem",
+   "meaning": "Maszyna osiągnęła ustawiony limit czasu pracy (blokada dealera/leasingu)",
+   "fix": "Kontakt ze sprzedawcą/serwisem w celu odblokowania."
+  }
  ],
  "fabrics": [
-  {"id": "szyfon_jedwab", "name": "Szyfon, jedwab, organza, podszewka", "needle": "DBx1 nr 9–10 (Nm 65–70), ostrze okrągłe R lub SPI", "thread": "Poliester rdzeniowy/mikro tex 16–20 (nr 150–180), ewent. tex 24 (nr 120)", "stitch_mm": "1,8–2,2", "speed": "2000–3000 obr/min (soft start włączony)", "foot_pressure": "Niski – zmniejsz docisk, aż materiał przestaje się „falować”, ale jeszcze się nie ślizga", "upper_tension": "Niskie; wyważ tak, by splot był w środku – na śliskich tkaninach przy za dużym naprężeniu szew się marszczy", "feed_mode": "2 – materiały śliskie (lub 3 dla bardzo cienkich)", "notes": "Włącz nipper i zagęszczanie zamiast rygla wstecznego; płytka/stopka z małym otworem ogranicza wciąganie materiału; przy wciąganiu podłóż bibułkę. (praktyka ogólna)"},
-  {"id": "bluzki_lekkie", "name": "Bluzki: wiskoza, poliester lekki, batyst", "needle": "DBx1 nr 10–11 (Nm 70–75)", "thread": "Poliester tex 24 (nr 120)", "stitch_mm": "2,0–2,5", "speed": "3000–3500 obr/min", "foot_pressure": "Niski–średni", "upper_tension": "Niskie–średnie", "feed_mode": "1 – standard (2 przy śliskich/przesuwających się warstwach)", "notes": "Sticker maszyny: tryb standardowy do bluzek, odzieży codziennej. (praktyka ogólna)"},
-  {"id": "bawelna_koszulowa", "name": "Bawełna koszulowa (popelina, oxford)", "needle": "DBx1 nr 11–12 (Nm 75–80)", "thread": "Poliester rdzeniowy tex 24–30 (nr 120–100)", "stitch_mm": "2,2–2,8 (stębnowania 2,5–3)", "speed": "3500–4000 obr/min", "foot_pressure": "Średni-niski", "upper_tension": "Średnie – splot w środku grubości tkaniny", "feed_mode": "1 – standard", "notes": "Przy marszczeniu szwów (puckering) skróć ścieg, zmniejsz naprężenie i docisk, użyj cieńszej nici. (praktyka ogólna)"},
-  {"id": "dzianina_jersey", "name": "Dzianina, jersey, odzież sportowa, bielizna", "needle": "DBx1 SUK / FFG (ostrze kulkowe) nr 9–12 (Nm 65–80)", "thread": "Poliester rdzeniowy tex 24–30; do elastycznych – nić teksturowana na szpulkę", "stitch_mm": "2,5–3,0", "speed": "2500–3500 obr/min", "foot_pressure": "Niski – za duży docisk rozciąga dzianinę („fala”)", "upper_tension": "Niższe niż na tkaninach – szew musi się rozciągać razem z dzianiną", "feed_mode": "3 – materiały cienkie i miękkie", "notes": "Ostra igła na dzianinie = oczka/dziury i przepuszczanie ściegów. Stębnówka nie daje szwu elastycznego – do szwów konstrukcyjnych dzianiny lepszy overlock/coverlock. (praktyka ogólna)"},
-  {"id": "odziez_robocza", "name": "Drelich, kanwa, odzież robocza", "needle": "DBx1 nr 14–16 (Nm 90–100)", "thread": "Poliester rdzeniowy tex 35–40 (nr 80–75)", "stitch_mm": "3,0–3,5", "speed": "3000–3500 obr/min", "foot_pressure": "Średni–wysoki", "upper_tension": "Średnie–wyższe", "feed_mode": "1 – standard; na zgrubieniach 4", "notes": "Włącz czujnik grubości przy kieszeniach i szwach krzyżowych. (praktyka ogólna)"},
-  {"id": "denim", "name": "Denim / jeans", "needle": "DBx1 nr 16–18 (Nm 100–110); denim > 14 oz – wersja A7-DH z DPx5 nr 18–21", "thread": "Poliester rdzeniowy tex 40–60 (nr 75–50), na stębnowania ozdobne tex 70–80 (nr 40–30) – grube nici wymagają większej igły", "stitch_mm": "3,0–4,0 (stębnowania 3,5–4)", "speed": "2500–3500 obr/min; zgrubienia 1500 (P19)", "foot_pressure": "Wysoki", "upper_tension": "Wyższe, a szpulkę dociągnij lekko – przy grubej nici górnej splot łatwo „ucieka” na spód", "feed_mode": "4 – materiały ciężkie + czujnik grubości (H01/H02)", "notes": "Na szwach krzyżowych zwolnij lub użyj podkładki wyrównującej (hump jumper) za stopką. Na DBx1 nie przekraczaj nr 18 (zakres maszyny). (praktyka ogólna)"},
-  {"id": "welna_plaszczowa", "name": "Wełna płaszczowa, sukno, tweed, kurtki", "needle": "DBx1 nr 14–16 (Nm 90–100)", "thread": "Poliester rdzeniowy tex 30–40 (nr 100–80)", "stitch_mm": "3,0–3,5", "speed": "2500–3000 obr/min", "foot_pressure": "Średni – za mocny odciska stopkę i przesuwa warstwy", "upper_tension": "Średnie", "feed_mode": "4 – ciężkie (na pojedynczej warstwie 1 – standard)", "notes": "Sticker: tryb ciężki do płaszczy, kurtek, swetrów. Przy przesuwaniu warstw – mniejszy docisk, krótszy ścieg. (praktyka ogólna)"},
-  {"id": "skora_ekoskora", "name": "Skóra naturalna i ekoskóra (PU/PVC)", "needle": "Skóra: DBx1 z ostrzem tnącym (LR/LL/S/D) nr 14–18; ekoskóra: DBx1 R lub cienkie ostrze tnące nr 14–16", "thread": "Poliester/nylon bondowany tex 40–70 (nr 75–40)", "stitch_mm": "3,0–4,0 (za krótki ścieg perforuje i rozrywa materiał)", "speed": "1500–2500 obr/min", "foot_pressure": "Średni; stopka teflonowa lub rolkowa przy lepkiej ekoskórze", "upper_tension": "Średnie–wyższe; dobierz na próbce – każdy przebity otwór zostaje", "feed_mode": "4 – ciężkie (cienka ekoskóra: 1)", "notes": "Unikaj prucia. Zamiast rygla wstecznego użyj zagęszczania lub pozostaw nici do zawiązania. Materiał lepi się do stopki – mikrouniesienie P08 lub stopka teflonowa. Zwykła stopka z ząbkami dolnymi może ślizgać się na licu. (praktyka ogólna)"},
-  {"id": "wielowarstwowe", "name": "Wielowarstwowe, szwy krzyżowe, paski, brzegi", "needle": "DBx1 nr 16–18 (Nm 100–110); powyżej – A7-DH DPx5 nr 19–21", "thread": "tex 40–60 (nr 75–50)", "stitch_mm": "3,5–5,0", "speed": "1500–2500 obr/min; w zgrubieniu 1200–1500", "foot_pressure": "Wysoki", "upper_tension": "Wyższe", "feed_mode": "4 – ciężkie + czujnik grubości", "notes": "Naucz maszynę grubości (H01 cienka, H02 gruba część). Wjeżdżaj na zgrubienie powoli, pomóż kołem ręcznym. Igła wygina się, gdy ciągniesz materiał – tylko prowadź. (praktyka ogólna)"}
+  {
+   "id": "szyfon_jedwab",
+   "name": "Szyfon, jedwab, organza, podszewka",
+   "needle": "DBx1 nr 9–10 (Nm 65–70), ostrze okrągłe R lub SPI",
+   "thread": "Poliester rdzeniowy/mikro tex 16–20 (nr 150–180), ewent. tex 24 (nr 120)",
+   "stitch_mm": "1,8–2,2",
+   "speed": "2000–3000 obr/min (soft start włączony)",
+   "foot_pressure": "Niski – zmniejsz docisk, aż materiał przestaje się „falować”, ale jeszcze się nie ślizga",
+   "upper_tension": "Niskie; wyważ tak, by splot był w środku – na śliskich tkaninach przy za dużym naprężeniu szew się marszczy",
+   "feed_mode": "2 – materiały śliskie (lub 3 dla bardzo cienkich)",
+   "notes": "Włącz nipper i zagęszczanie zamiast rygla wstecznego; płytka/stopka z małym otworem ogranicza wciąganie materiału; przy wciąganiu podłóż bibułkę. (praktyka ogólna)"
+  },
+  {
+   "id": "bluzki_lekkie",
+   "name": "Bluzki: wiskoza, poliester lekki, batyst",
+   "needle": "DBx1 nr 10–11 (Nm 70–75)",
+   "thread": "Poliester tex 24 (nr 120)",
+   "stitch_mm": "2,0–2,5",
+   "speed": "3000–3500 obr/min",
+   "foot_pressure": "Niski–średni",
+   "upper_tension": "Niskie–średnie",
+   "feed_mode": "1 – standard (2 przy śliskich/przesuwających się warstwach)",
+   "notes": "Sticker maszyny: tryb standardowy do bluzek, odzieży codziennej. (praktyka ogólna)"
+  },
+  {
+   "id": "bawelna_koszulowa",
+   "name": "Bawełna koszulowa (popelina, oxford)",
+   "needle": "DBx1 nr 11–12 (Nm 75–80)",
+   "thread": "Poliester rdzeniowy tex 24–30 (nr 120–100)",
+   "stitch_mm": "2,2–2,8 (stębnowania 2,5–3)",
+   "speed": "3500–4000 obr/min",
+   "foot_pressure": "Średni-niski",
+   "upper_tension": "Średnie – splot w środku grubości tkaniny",
+   "feed_mode": "1 – standard",
+   "notes": "Przy marszczeniu szwów (puckering) skróć ścieg, zmniejsz naprężenie i docisk, użyj cieńszej nici. (praktyka ogólna)"
+  },
+  {
+   "id": "dzianina_jersey",
+   "name": "Dzianina, jersey, odzież sportowa, bielizna",
+   "needle": "DBx1 SUK / FFG (ostrze kulkowe) nr 9–12 (Nm 65–80)",
+   "thread": "Poliester rdzeniowy tex 24–30; do elastycznych – nić teksturowana na szpulkę",
+   "stitch_mm": "2,5–3,0",
+   "speed": "2500–3500 obr/min",
+   "foot_pressure": "Niski – za duży docisk rozciąga dzianinę („fala”)",
+   "upper_tension": "Niższe niż na tkaninach – szew musi się rozciągać razem z dzianiną",
+   "feed_mode": "3 – materiały cienkie i miękkie",
+   "notes": "Ostra igła na dzianinie = oczka/dziury i przepuszczanie ściegów. Stębnówka nie daje szwu elastycznego – do szwów konstrukcyjnych dzianiny lepszy overlock/coverlock. (praktyka ogólna)"
+  },
+  {
+   "id": "odziez_robocza",
+   "name": "Drelich, kanwa, odzież robocza",
+   "needle": "DBx1 nr 14–16 (Nm 90–100)",
+   "thread": "Poliester rdzeniowy tex 35–40 (nr 80–75)",
+   "stitch_mm": "3,0–3,5",
+   "speed": "3000–3500 obr/min",
+   "foot_pressure": "Średni–wysoki",
+   "upper_tension": "Średnie–wyższe",
+   "feed_mode": "1 – standard; na zgrubieniach 4",
+   "notes": "Włącz czujnik grubości przy kieszeniach i szwach krzyżowych. (praktyka ogólna)"
+  },
+  {
+   "id": "denim",
+   "name": "Denim / jeans",
+   "needle": "DBx1 nr 16–18 (Nm 100–110); denim > 14 oz – wersja A7-DH z DPx5 nr 18–21",
+   "thread": "Poliester rdzeniowy tex 40–60 (nr 75–50), na stębnowania ozdobne tex 70–80 (nr 40–30) – grube nici wymagają większej igły",
+   "stitch_mm": "3,0–4,0 (stębnowania 3,5–4)",
+   "speed": "2500–3500 obr/min; zgrubienia 1500 (P19)",
+   "foot_pressure": "Wysoki",
+   "upper_tension": "Wyższe, a szpulkę dociągnij lekko – przy grubej nici górnej splot łatwo „ucieka” na spód",
+   "feed_mode": "4 – materiały ciężkie + czujnik grubości (H01/H02)",
+   "notes": "Na szwach krzyżowych zwolnij lub użyj podkładki wyrównującej (hump jumper) za stopką. Na DBx1 nie przekraczaj nr 18 (zakres maszyny). (praktyka ogólna)"
+  },
+  {
+   "id": "welna_plaszczowa",
+   "name": "Wełna płaszczowa, sukno, tweed, kurtki",
+   "needle": "DBx1 nr 14–16 (Nm 90–100)",
+   "thread": "Poliester rdzeniowy tex 30–40 (nr 100–80)",
+   "stitch_mm": "3,0–3,5",
+   "speed": "2500–3000 obr/min",
+   "foot_pressure": "Średni – za mocny odciska stopkę i przesuwa warstwy",
+   "upper_tension": "Średnie",
+   "feed_mode": "4 – ciężkie (na pojedynczej warstwie 1 – standard)",
+   "notes": "Sticker: tryb ciężki do płaszczy, kurtek, swetrów. Przy przesuwaniu warstw – mniejszy docisk, krótszy ścieg. (praktyka ogólna)"
+  },
+  {
+   "id": "skora_ekoskora",
+   "name": "Skóra naturalna i ekoskóra (PU/PVC)",
+   "needle": "Skóra: DBx1 z ostrzem tnącym (LR/LL/S/D) nr 14–18; ekoskóra: DBx1 R lub cienkie ostrze tnące nr 14–16",
+   "thread": "Poliester/nylon bondowany tex 40–70 (nr 75–40)",
+   "stitch_mm": "3,0–4,0 (za krótki ścieg perforuje i rozrywa materiał)",
+   "speed": "1500–2500 obr/min",
+   "foot_pressure": "Średni; stopka teflonowa lub rolkowa przy lepkiej ekoskórze",
+   "upper_tension": "Średnie–wyższe; dobierz na próbce – każdy przebity otwór zostaje",
+   "feed_mode": "4 – ciężkie (cienka ekoskóra: 1)",
+   "notes": "Unikaj prucia. Zamiast rygla wstecznego użyj zagęszczania lub pozostaw nici do zawiązania. Materiał lepi się do stopki – mikrouniesienie P08 lub stopka teflonowa. Zwykła stopka z ząbkami dolnymi może ślizgać się na licu. (praktyka ogólna)"
+  },
+  {
+   "id": "wielowarstwowe",
+   "name": "Wielowarstwowe, szwy krzyżowe, paski, brzegi",
+   "needle": "DBx1 nr 16–18 (Nm 100–110); powyżej – A7-DH DPx5 nr 19–21",
+   "thread": "tex 40–60 (nr 75–50)",
+   "stitch_mm": "3,5–5,0",
+   "speed": "1500–2500 obr/min; w zgrubieniu 1200–1500",
+   "foot_pressure": "Wysoki",
+   "upper_tension": "Wyższe",
+   "feed_mode": "4 – ciężkie + czujnik grubości",
+   "notes": "Naucz maszynę grubości (H01 cienka, H02 gruba część). Wjeżdżaj na zgrubienie powoli, pomóż kołem ręcznym. Igła wygina się, gdy ciągniesz materiał – tylko prowadź. (praktyka ogólna)"
+  }
  ],
  "feed_modes": [
-  {"id": "1", "name": "Materiały standardowe (tor 1)", "what": "Standardowa eliptyczna trajektoria ząbków; wg instrukcji zmniejsza ślizganie się materiału.", "use": "Materiały lekkie i średnie: bluzki, odzież robocza, odzież codzienna."},
-  {"id": "2", "name": "Materiały śliskie (tor 2)", "what": "Trajektoria poprawiająca dociągnięcie (zaciągnięcie) nici i zapobiegająca marszczeniu oraz przesuwaniu się warstw.", "use": "Odzież damska, piżamy, podszewki, satyna, szyfon."},
-  {"id": "3", "name": "Materiały cienkie i miękkie (tor 3)", "what": "Trajektoria zmniejszająca ciągnięcie nici i obciążenie igły – ogranicza wyginanie/łamanie igły i osłabianie nici.", "use": "Odzież sportowa, bielizna, sukienki, dzianiny."},
-  {"id": "4", "name": "Materiały ciężkie (tor 4)", "what": "Trajektoria dla grubych materiałów, wielu warstw i szwów krzyżowych – mocniejszy, pewniejszy transport, zapobiega łamaniu igieł. Domyślny tor po wykryciu zgrubienia przez czujnik grubości (P22).", "use": "Płaszcze, kurtki, jeansy, swetry."}
+  {
+   "id": "1",
+   "name": "Materiały standardowe (tor 1)",
+   "what": "Standardowa eliptyczna trajektoria ząbków; wg instrukcji zmniejsza ślizganie się materiału.",
+   "use": "Materiały lekkie i średnie: bluzki, odzież robocza, odzież codzienna."
+  },
+  {
+   "id": "2",
+   "name": "Materiały śliskie (tor 2)",
+   "what": "Trajektoria poprawiająca dociągnięcie (zaciągnięcie) nici i zapobiegająca marszczeniu oraz przesuwaniu się warstw.",
+   "use": "Odzież damska, piżamy, podszewki, satyna, szyfon."
+  },
+  {
+   "id": "3",
+   "name": "Materiały cienkie i miękkie (tor 3)",
+   "what": "Trajektoria zmniejszająca ciągnięcie nici i obciążenie igły – ogranicza wyginanie/łamanie igły i osłabianie nici.",
+   "use": "Odzież sportowa, bielizna, sukienki, dzianiny."
+  },
+  {
+   "id": "4",
+   "name": "Materiały ciężkie (tor 4)",
+   "what": "Trajektoria dla grubych materiałów, wielu warstw i szwów krzyżowych – mocniejszy, pewniejszy transport, zapobiega łamaniu igieł. Domyślny tor po wykryciu zgrubienia przez czujnik grubości (P22).",
+   "use": "Płaszcze, kurtki, jeansy, swetry."
+  }
  ],
  "problems": [
-  {"id": "petelki_spod", "title": "Pętelki od spodu materiału", "symptoms": "Na spodniej stronie szwu nić górna tworzy luźne pętle lub „gniazdka”; od góry ścieg wygląda prawie poprawnie.", "category": "scieg", "diagnose_question": "Czy nawlekałeś maszynę przy opuszczonej stopce?", "causes": [
-   {"cause": "Nić górna nie weszła między talerzyki naprężacza (nawlekanie przy opuszczonej stopce lub nić „wyskoczyła”) – naprężenie górne praktycznie zerowe", "likelihood": "wysokie", "parts": ["tension_assembly", "presser_foot"], "fix_steps": ["Wyłącz zasilanie lub upewnij się, że pedał nie jest wciśnięty.", "Podnieś stopkę dźwignią ręczną (talerzyki się rozwierają).", "Wyciągnij nić i nawlecz ponownie całą drogę od stojaka – przeciągnij nić między talerzykami z lekkim oporem w dół, aż wyczujesz, że „siedzi” głęboko.", "Opuść stopkę i pociągnij nić przy igle – musi być wyraźny opór. Jeśli nie ma – nić nie jest w talerzykach.", "Zrób próbę na skrawku."]},
-   {"cause": "Nić ominęła dźwignię podciągacza nici lub sprężynkę kompensacyjną", "likelihood": "wysokie", "parts": ["take_up_lever", "check_spring"], "fix_steps": ["Obróć koło ręczne do siebie, aby podciągacz był w górnym położeniu.", "Sprawdź, czy nić przechodzi przez oczko podciągacza (od prawej do lewej) i jest zaczepiona o sprężynkę kompensacyjną.", "Nawlecz ponownie wg kolejności nawlekania."]},
-   {"cause": "Za słabe naprężenie nici górnej względem dolnej", "likelihood": "srednie", "parts": ["tension_assembly"], "fix_steps": ["Pokrętło naprężacza głównego obróć zgodnie z ruchem wskazówek zegara o 1/4 obrotu (90°).", "Przeszyj 10 cm próbki i obejrzyj obie strony.", "Powtarzaj co 1/4 obrotu, aż splot schowa się w środku tkaniny."]},
-   {"cause": "Za mocne naprężenie nici dolnej (bębenek)", "likelihood": "srednie", "parts": ["bobbin_case"], "fix_steps": ["Wykonaj test opadania bębenka (patrz sekcja wyważenia).", "Jeśli bębenek nie opada wcale – poluzuj śrubkę sprężyny bębenka (przeciwnie do ruchu wskazówek zegara) o 1/8 obrotu (45°) i powtórz test."]},
-   {"cause": "Szorstki/zadziorowany chwytacz lub płytka – nić zaczepia i nie jest dociągana", "likelihood": "niskie", "parts": ["hook", "needle_plate"], "fix_steps": ["Oczyść chwytacz z kłaczków i resztek nici.", "Sprawdź palcem/nitką krawędzie otworu płytki i nosek chwytacza – zadziory wygładź drobnym papierem (1200+) lub wymień część (technik)."]}
-  ]},
-  {"id": "petelki_gora", "title": "Pętelki od góry materiału", "symptoms": "Na wierzchniej stronie widać luźne pętelki nici dolnej lub szew jest „kropkowany” nicią dolną.", "category": "scieg", "diagnose_question": "Czy nić dolna przechodzi pod sprężynką bębenka i stawia opór przy wyciąganiu?", "causes": [
-   {"cause": "Nić dolna nie przechodzi pod sprężyną naprężacza bębenka (wypadła ze szczeliny)", "likelihood": "wysokie", "parts": ["bobbin_case", "bobbin"], "fix_steps": ["Wyłącz zasilanie, wyjmij bębenek.", "Przeciągnij nić przez szczelinę bębenka i pod sprężynką aż wyjdzie otworem/wycięciem na końcu sprężynki.", "Pociągnij nić – szpulka ma się obracać zgodnie z ruchem wskazówek zegara i nić musi stawiać równy, lekki opór."]},
-   {"cause": "Za słabe naprężenie nici dolnej", "likelihood": "wysokie", "parts": ["bobbin_case"], "fix_steps": ["Test opadania: bębenek ze szpulką trzymany za nić opada sam bez szarpnięcia – za luźno.", "Dokręć śrubkę sprężyny bębenka zgodnie z ruchem wskazówek zegara o 1/8 obrotu (45°), maksymalnie 1/4 obrotu naraz.", "Powtórz test opadania i próbę szycia."]},
-   {"cause": "Za mocne naprężenie nici górnej (ściąga nić dolną do góry)", "likelihood": "srednie", "parts": ["tension_assembly"], "fix_steps": ["Poluzuj pokrętło naprężacza przeciwnie do ruchu wskazówek zegara o 1/4 obrotu.", "Próba – jeśli szew się marszczy, a nić górna jest napięta jak struna, poluzuj dalej."]},
-   {"cause": "Szpulka źle nawinięta (luźno, nierówno) lub nie pasuje do bębenka / bębenek zabrudzony", "likelihood": "srednie", "parts": ["bobbin", "bobbin_case", "bobbin_winder"], "fix_steps": ["Sprawdź, czy nawój jest twardy i równy – miękki nawój daje skoki naprężenia.", "Oczyść bębenek pod sprężyną z kłaczków (pędzelek, kartka papieru przeciągnięta pod sprężyną).", "Używaj oryginalnych szpulek do tego bębenka (nie mieszaj aluminiowych i stalowych bez korekty naprężenia)."]}
-  ]},
-  {"id": "nic_dolna_na_wierzchu", "title": "Nić dolna widoczna na wierzchu", "symptoms": "Splot nici leży na górnej powierzchni materiału – na wierzchu widać punkciki/kreski nici dolnej (szczególnie przy kontrastowych kolorach).", "category": "scieg", "diagnose_question": "Czy nić górna jest wyraźnie napięta, a szew lekko marszczy materiał?", "causes": [
-   {"cause": "Naprężenie górne za duże w stosunku do dolnego", "likelihood": "wysokie", "parts": ["tension_assembly"], "fix_steps": ["Poluzuj naprężacz górny o 1/4 obrotu (przeciwnie do ruchu wskazówek zegara).", "Przeszyj próbkę i obejrzyj; powtarzaj aż splot zniknie w środku materiału.", "Jeśli przy luźnym górnym nadal widać nić dolną – przejdź do regulacji bębenka."]},
-   {"cause": "Naprężenie dolne za małe", "likelihood": "wysokie", "parts": ["bobbin_case"], "fix_steps": ["Test opadania bębenka.", "Dokręć śrubkę bębenka o 1/8 obrotu (45°) zgodnie z ruchem wskazówek zegara.", "Ponownie wyważ górnym naprężaczem."]},
-   {"cause": "Nić dolna grubsza niż górna lub różny rodzaj nici", "likelihood": "srednie", "parts": ["bobbin"], "fix_steps": ["Użyj w szpulce nici tej samej grubości (lub cieńszej o jeden numer) co nić górna.", "Po zmianie nici ponownie wyważ naprężenia."]},
-   {"cause": "Za duży skok/naprężenie sprężynki kompensacyjnej przy grubej nici górnej", "likelihood": "niskie", "parts": ["check_spring"], "fix_steps": ["Zmniejsz skok sprężynki (poluzuj śrubę, pokrętło przeciwnie do ruchu wskazówek zegara) – wg instrukcji.", "Zwykle dla materiałów średnich skok 6–8 mm, naprężenie sprężynki 0,1–0,5 N (praktyka ogólna)."]}
-  ]},
-  {"id": "nic_gorna_na_spodzie", "title": "Nić górna przeciągana na spód", "symptoms": "Na spodzie nić górna leży na powierzchni (proste odcinki nici górnej, splot widoczny od spodu), od góry ścieg płaski i luźny.", "category": "scieg", "diagnose_question": "Czy po pociągnięciu nici przy igle (stopka opuszczona) czujesz wyraźny opór?", "causes": [
-   {"cause": "Naprężenie górne za słabe (lub nić poza talerzykami)", "likelihood": "wysokie", "parts": ["tension_assembly", "pretension"], "fix_steps": ["Sprawdź nawleczenie przez naprężacz wstępny i główny (przy podniesionej stopce).", "Dokręć naprężacz główny o 1/4 obrotu zgodnie z ruchem wskazówek zegara.", "Próba; powtarzaj aż splot wejdzie w środek tkaniny."]},
-   {"cause": "Naprężenie dolne za duże", "likelihood": "srednie", "parts": ["bobbin_case"], "fix_steps": ["Test opadania – bębenek nie zsuwa się nawet przy potrząśnięciu = za mocno.", "Poluzuj śrubkę bębenka o 1/8 obrotu (45°) przeciwnie do ruchu wskazówek zegara.", "Ponownie wyważ górnym."]},
-   {"cause": "Brud/kłaczki lub nitka pod sprężyną bębenka", "likelihood": "srednie", "parts": ["bobbin_case"], "fix_steps": ["Wyczyść szczelinę pod sprężyną bębenka (kartka, pędzelek, sprężone powietrze).", "Nie odkręcaj śrubki do końca – sprężyna i śrubka są małe i łatwo je zgubić."]},
-   {"cause": "Mechanizm luzowania naprężacza (elektromagnes/cięgno od stopki) nie zamyka talerzyków", "likelihood": "niskie", "parts": ["tension_assembly", "knee_lifter"], "fix_steps": ["Przy opuszczonej stopce talerzyki muszą być zamknięte – sprawdź, czy kolanownik nie jest lekko wciśnięty (oparte kolano!).", "Sprawdź, czy nie jest włączone podnoszenie stopki po zatrzymaniu, które blokuje elektromagnes.", "Jeśli talerzyki nie zamykają się – technik (regulacja luzownika)."]}
-  ]},
-  {"id": "scieg_nierowny", "title": "Ścieg nierówny po obu stronach / naprężenie „pływa”", "symptoms": "Raz pętelki od spodu, raz od góry; splot wędruje; ściegi różnej ścisłości na długości szwu.", "category": "scieg", "diagnose_question": "Czy nić odwija się ze szpuli na stojaku swobodnie, bez szarpnięć?", "causes": [
-   {"cause": "Nić szarpie się na stojaku (prowadnik nie nad szpulą, nić owinięta wokół szpuli, stożek przewrócony)", "likelihood": "wysokie", "parts": ["thread_stand"], "fix_steps": ["Ustaw ramię stojaka tak, aby prowadnik był dokładnie nad środkiem stożka, ok. 2–3 razy wysokości szpuli nad nią.", "Postaw stożek pionowo na talerzyku, zdejmij siatkę/naklejkę zaczepiającą nić.", "Sprawdź, czy nić nie owinęła się wokół trzpienia."]},
-   {"cause": "Brud, wosk lub kłaczki między talerzykami naprężacza", "likelihood": "srednie", "parts": ["tension_assembly", "pretension"], "fix_steps": ["Podnieś stopkę, przeciągnij między talerzykami kawałek gęstego płótna lub nić nasączoną odrobiną spirytusu (bez oleju!).", "Sprawdź, czy talerzyki obracają się i nie mają rowków wyciętych przez nić – rowek = wymiana talerzyków."]},
-   {"cause": "Nierówno/miękko nawinięta szpulka lub odkształcona szpulka", "likelihood": "srednie", "parts": ["bobbin", "bobbin_winder"], "fix_steps": ["Nawiń nową szpulkę równo i twardo (patrz nawijanie).", "Wymień szpulki pogięte, porysowane lub z zadziorami."]},
-   {"cause": "Niska jakość nici (zmienna grubość, supełki) albo nić skręcona", "likelihood": "srednie", "parts": ["thread_stand"], "fix_steps": ["Spróbuj innej, markowej nici poliestrowej rdzeniowej.", "Ta sama nić i grubość na górze i w szpulce."]},
-   {"cause": "Igła nieodpowiednia, tępa lub źle założona", "likelihood": "srednie", "parts": ["needle"], "fix_steps": ["Wymień igłę na nową, właściwego rozmiaru do nici (nić musi mieścić się w długim rowku).", "Załóż do oporu, długi rowek w lewo, wycięcie (oczko szybki) w prawo – w stronę chwytacza."]},
-   {"cause": "Zbyt duża prędkość na danym materiale / sprężynka kompensacyjna źle ustawiona", "likelihood": "niskie", "parts": ["check_spring", "control_panel"], "fix_steps": ["Zmniejsz prędkość klawiszem Speed– o 300–500 obr/min i porównaj.", "Ustaw skok i siłę sprężynki kompensacyjnej wg instrukcji (technik)."]}
-  ]},
-  {"id": "ptasie_gniazdo", "title": "Plątanie nici pod materiałem („ptasie gniazdo”)", "symptoms": "Pod materiałem tworzy się kłąb nici górnej, materiał blokuje się, często na początku szwu.", "category": "nic", "diagnose_question": "Czy gniazdo powstaje tylko na pierwszych ściegach?", "causes": [
-   {"cause": "Brak naprężenia górnego – nić poza talerzykami lub ominięty podciągacz (najczęstsze!)", "likelihood": "wysokie", "parts": ["tension_assembly", "take_up_lever", "check_spring"], "fix_steps": ["Wyłącz zasilanie, wytnij kłąb nici spod materiału (nie wyrywaj!).", "Podnieś stopkę, przewlecz od nowa całą nić górną wg kolejności nawlekania.", "Sprawdź opór nici przy igle przy opuszczonej stopce."]},
-   {"cause": "Start szwu bez przytrzymania nici / zbyt krótka końcówka nici – nić wciągana pod płytkę", "likelihood": "wysokie", "parts": ["needle_plate", "control_panel"], "fix_steps": ["Włącz nipper (przycisk docisku nici) i miękki start (P09=1, P10=2–3).", "Przy starcie bez nippera przytrzymaj obie nici palcem za stopką przez 2–3 ściegi.", "Zaczynaj szycie z igłą wbitą w materiał."]},
-   {"cause": "Szycie bez materiału lub z materiałem nieopuszczoną stopką", "likelihood": "srednie", "parts": ["presser_foot"], "fix_steps": ["Zawsze opuszczaj stopkę na materiał przed startem.", "Nie uruchamiaj maszyny bez materiału pod stopką z nawleczoną nicią."]},
-   {"cause": "Nić zaplątana w chwytaczu / zła szpulka lub bębenek źle osadzony", "likelihood": "srednie", "parts": ["hook", "bobbin_case", "bobbin"], "fix_steps": ["Wyjmij bębenek, oczyść chwytacz z resztek nici (pęseta, pędzelek).", "Włóż bębenek do kliknięcia zatrzasku."]},
-   {"cause": "Za duży otwór płytki do cienkiego materiału – materiał wciągany", "likelihood": "niskie", "parts": ["needle_plate", "feed_dog"], "fix_steps": ["Na cienkich tkaninach użyj płytki/stopki z małym otworem i trybu 2 lub 3.", "Podłóż bibułkę na początku szwu."]}
-  ]},
-  {"id": "przepuszczanie_sciegow", "title": "Przepuszczanie ściegów (opuszczone ściegi)", "symptoms": "W szwie co jakiś czas brakuje splotu – dłuższy „ścieg” z samej nici górnej; częściej na dzianinie, grubych szwach lub przy dużej prędkości.", "category": "scieg", "diagnose_question": "Czy po wymianie igły na nową problem znika?", "causes": [
-   {"cause": "Igła tępa, wygięta, źle założona (rowek nie w lewo, nie do oporu) lub zły system igły", "likelihood": "wysokie", "parts": ["needle", "needle_bar"], "fix_steps": ["Ustaw igielnicę w górnym położeniu kołem ręcznym.", "Poluzuj śrubę zacisku igły, wyjmij igłę.", "Włóż nową igłę DBx1 (A7-DH: DPx5) do oporu, długim rowkiem w lewo, wycięciem w prawo w stronę chwytacza.", "Dokręć śrubę i przewlecz igłę od lewej do prawej."]},
-   {"cause": "Igła zbyt cienka do nici lub nieodpowiednie ostrze do materiału (np. ostre na dzianinie)", "likelihood": "wysokie", "parts": ["needle"], "fix_steps": ["Dobierz igłę do nici (patrz tabela materiałów) – nić ma się chować w długim rowku.", "Na dzianinach i elastycznych: ostrze kulkowe SUK/FFG."]},
-   {"cause": "Materiał unosi się z igłą (za mały docisk stopki lub flagowanie) – pętla nie tworzy się", "likelihood": "srednie", "parts": ["presser_foot", "presser_pressure_screw"], "fix_steps": ["Zwiększ docisk stopki śrubą dociskową (zgodnie z ruchem wskazówek zegara) o 1–2 obroty.", "Sprawdź, czy stopka leży płasko na płytce."]},
-   {"cause": "Za duża prędkość na trudnym materiale", "likelihood": "srednie", "parts": ["control_panel"], "fix_steps": ["Zmniejsz prędkość (Speed– lub P01) o 500–1000 obr/min.", "Na zgrubieniach włącz czujnik grubości (automatyczne zwolnienie)."]},
-   {"cause": "Rozregulowanie czasu chwytacza, wysokości igielnicy lub za duża szczelina chwytacz–igła (często po złamaniu igły/uderzeniu)", "likelihood": "niskie", "parts": ["hook", "needle_bar"], "fix_steps": ["Sprawdź, czy przepuszczanie wystąpiło po złamaniu igły – jeśli tak, prawie na pewno przestawiony chwytacz.", "Wezwij technika: wysokość igielnicy wg znaczników A/B na igielnicy względem dolnej tulei, nosek chwytacza w osi igły przy wznoszeniu igły, szczelina nosek–igła ok. 0,04–0,1 mm (praktyka ogólna; instrukcja: za mała szczelina niszczy nosek, za duża – przepuszczanie ściegów)."]}
-  ]},
-  {"id": "zrywanie_nici_gornej", "title": "Zrywanie się nici górnej", "symptoms": "Nić igłowa pęka – czasem na starcie, czasem w trakcie szwu; postrzępione końce.", "category": "nic", "diagnose_question": "Czy koniec zerwanej nici jest postrzępiony (przetarcie) czy równo ucięty?", "causes": [
-   {"cause": "Błędne nawleczenie (nić owinięta wokół prowadnika, poza sprężynką, podwójnie w talerzykach)", "likelihood": "wysokie", "parts": ["arm_thread_guide", "tension_assembly", "check_spring", "take_up_lever"], "fix_steps": ["Wyciągnij nić i nawlecz całość od stojaka krok po kroku.", "Sprawdź, czy nić nie zaplątała się wokół stojaka lub szpuli."]},
-   {"cause": "Za duże naprężenie górne", "likelihood": "wysokie", "parts": ["tension_assembly", "pretension"], "fix_steps": ["Poluzuj naprężacz główny o 1/4 obrotu, następnie wstępny.", "Wyważ ścieg ponownie."]},
-   {"cause": "Igła za cienka do nici, tępa lub z zadziorem w uszku; źle założona", "likelihood": "wysokie", "parts": ["needle"], "fix_steps": ["Wymień igłę na nową, o 1–2 numery grubszą przy grubej nici.", "Sprawdź założenie: rowek w lewo, nawlekanie od lewej do prawej."]},
-   {"cause": "Zadziory na płytce, chwytaczu, prowadnikach (często po uderzeniu igłą)", "likelihood": "srednie", "parts": ["needle_plate", "hook", "needle_bar_guide"], "fix_steps": ["Przesuń palcem/nicią po otworze płytki i nosku chwytacza.", "Wygładź papierem 1200+ lub wymień część."]},
-   {"cause": "Słaba nić / nić przegrzewa się przy dużej prędkości (syntetyki)", "likelihood": "srednie", "parts": ["needle", "control_panel"], "fix_steps": ["Zmień nić na lepszą (poliester rdzeniowy).", "Zmniejsz prędkość; przy grubych syntetykach rozważ chłodzenie igły silikonem do nici."]},
-   {"cause": "Nić rwie się na starcie – za mocny start, nipper/soft start wyłączony", "likelihood": "niskie", "parts": ["control_panel"], "fix_steps": ["Włącz miękki start (P09), obniż prędkość pierwszych ściegów (P35/P36)."]}
-  ]},
-  {"id": "zrywanie_nici_dolnej", "title": "Zrywanie się nici dolnej", "symptoms": "Pęka nić ze szpulki; szew urywa się od spodu.", "category": "nic", "diagnose_question": "Czy szpulka obraca się w bębenku lekko i równo?", "causes": [
-   {"cause": "Za mocne naprężenie bębenka lub zła droga nici w bębenku", "likelihood": "wysokie", "parts": ["bobbin_case"], "fix_steps": ["Nawlecz bębenek ponownie (szczelina → pod sprężynę → wycięcie).", "Test opadania; poluzuj śrubkę o 1/8 obrotu, jeśli bębenek nie opada."]},
-   {"cause": "Szpulka nawinięta za pełno, nierówno lub zbyt mocno; pogięta szpulka", "likelihood": "wysokie", "parts": ["bobbin", "bobbin_winder"], "fix_steps": ["Nawijaj do ok. 80% średnicy (0,5–1 mm od brzegu).", "Wymień pogiętą szpulkę."]},
-   {"cause": "Zadziory w bębenku, na sprężynie lub w otworze płytki", "likelihood": "srednie", "parts": ["bobbin_case", "needle_plate"], "fix_steps": ["Obejrzyj krawędzie przez lupę, wygładź lub wymień bębenek/płytkę."]},
-   {"cause": "Kłaczki i resztki nici w chwytaczu", "likelihood": "srednie", "parts": ["hook"], "fix_steps": ["Wyjmij bębenek, wyczyść chwytacz pędzelkiem i pęsetą; sprawdź, czy nie ma owiniętej nici pod bębenkiem."]}
-  ]},
-  {"id": "lamanie_igly", "title": "Łamanie lub wyginanie igły", "symptoms": "Igła pęka, uderza w płytkę/chwytacz (głośny trzask), wygina się na grubych miejscach.", "category": "igla", "diagnose_question": "Czy pomagasz maszynie, ciągnąc materiał ręką do siebie?", "causes": [
-   {"cause": "Ciągnięcie/pchanie materiału ręką – igła odgina się i uderza w płytkę", "likelihood": "wysokie", "parts": ["needle", "needle_plate", "feed_dog"], "fix_steps": ["Tylko prowadź materiał – transport ma go przesuwać sam.", "Na grubych materiałach włącz tryb 4 i czujnik grubości."]},
-   {"cause": "Igła za cienka do grubości/twardości materiału lub nici", "likelihood": "wysokie", "parts": ["needle"], "fix_steps": ["Zmień na grubszą (denim nr 16–18; DH: DPx5 19–21).", "Nie przekraczaj zakresu systemu igieł maszyny."]},
-   {"cause": "Za duża prędkość na zgrubieniach i szwach krzyżowych", "likelihood": "srednie", "parts": ["control_panel"], "fix_steps": ["Włącz czujnik grubości i naucz H01/H02; prędkość w zgrubieniu P19 zmniejsz do 1200–1500.", "Wjeżdżaj na zgrubienie powoli albo kołem ręcznym."]},
-   {"cause": "Igła źle założona (nie do oporu, obrócona) lub luźna śruba zacisku", "likelihood": "srednie", "parts": ["needle", "needle_bar"], "fix_steps": ["Załóż igłę od nowa do oporu, rowkiem w lewo, dokręć śrubę."]},
-   {"cause": "Szpilki w materiale, guziki, zamki pod igłą", "likelihood": "srednie", "parts": ["needle"], "fix_steps": ["Usuwaj szpilki przed stopką; zawsze zmieniaj igłę po uderzeniu w metal i sprawdź, czy nie ma zadziorów na płytce."]},
-   {"cause": "Rozregulowana relacja igła–chwytacz lub płytka przesunięta po uderzeniu", "likelihood": "niskie", "parts": ["hook", "needle_plate", "needle_bar"], "fix_steps": ["Obróć kołem ręcznym powoli i obserwuj, czy igła wchodzi w środek otworu płytki i nie dotyka noska chwytacza.", "Jeśli nie – technik (pozycja chwytacza, wysokość igielnicy)."]}
-  ]},
-  {"id": "marszczenie", "title": "Marszczenie szwu (puckering)", "symptoms": "Materiał wzdłuż szwu fałduje się, ściąga; szew krótszy niż materiał; częste na cienkich i śliskich tkaninach.", "category": "scieg", "diagnose_question": "Czy po rozciągnięciu szwu nić pęka (za mocne naprężenie)?", "causes": [
-   {"cause": "Za duże naprężenie obu nici", "likelihood": "wysokie", "parts": ["tension_assembly", "bobbin_case"], "fix_steps": ["Poluzuj najpierw szpulkę do lekkiego opadania (test opadania – dolna granica).", "Poluzuj górny naprężacz, aż splot jest w środku przy minimalnym naprężeniu."]},
-   {"cause": "Nić i igła za grube do materiału", "likelihood": "wysokie", "parts": ["needle"], "fix_steps": ["Użyj cieńszej nici (tex 18–24) i igły Nm 65–75 na cienkie tkaniny."]},
-   {"cause": "Za długi ścieg lub za duży docisk stopki", "likelihood": "srednie", "parts": ["presser_pressure_screw", "control_panel"], "fix_steps": ["Skróć ścieg do 2,0–2,5 mm.", "Zmniejsz docisk stopki śrubą dociskową (przeciwnie do ruchu wskazówek zegara)."]},
-   {"cause": "Niewłaściwy tryb transportu – warstwy przesuwają się względem siebie", "likelihood": "srednie", "parts": ["feed_dog", "control_panel"], "fix_steps": ["Wybierz tryb 2 (śliskie) dla podszewek i satyny lub 3 dla cienkich/miękkich.", "Prowadź materiał lekko napięty przed i za stopką (bez ciągnięcia)."]},
-   {"cause": "Za wysoko ustawione ząbki transportu (praktyka ogólna)", "likelihood": "niskie", "parts": ["feed_dog"], "fix_steps": ["Technik: wysokość ząbków ok. 0,8 mm nad płytką (A7-D; DH 1,2 mm) – na cienkie tkaniny niżej."]}
-  ]},
-  {"id": "brak_transportu", "title": "Materiał nie przesuwa się / nierówna długość ściegu", "symptoms": "Materiał stoi w miejscu, ściegi się nakładają, długość ściegu różna albo inna niż na wyświetlaczu.", "category": "transport", "diagnose_question": "Czy długość ściegu na wyświetlaczu nie jest ustawiona na 0?", "causes": [
-   {"cause": "Ustawiona długość ściegu 0 lub bardzo mała / aktywne zagęszczanie", "likelihood": "wysokie", "parts": ["control_panel"], "fix_steps": ["Sprawdź wartość mm na panelu i ustaw np. 2,5 mm klawiszem „+”.", "Sprawdź, czy nie jest włączony wzór/zagęszczanie/szew W."]},
-   {"cause": "Ząbki transportu zapchane kłaczkami", "likelihood": "wysokie", "parts": ["feed_dog", "needle_plate"], "fix_steps": ["Wyłącz zasilanie, odkręć płytkę ściegową.", "Wyczyść pędzelkiem przestrzenie między ząbkami i pod płytką.", "Przykręć płytkę – igła musi trafiać w środek otworu."]},
-   {"cause": "Za mały docisk stopki lub stopka podniesiona (kolanownik wciśnięty)", "likelihood": "srednie", "parts": ["presser_pressure_screw", "presser_foot", "knee_lifter"], "fix_steps": ["Zwiększ docisk śrubą dociskową.", "Upewnij się, że kolano nie opiera się o kolanownik."]},
-   {"cause": "Materiał ciężki/lepki – stopka hamuje (ekoskóra, gumowane)", "likelihood": "srednie", "parts": ["presser_foot", "feed_dog"], "fix_steps": ["Tryb transportu 4, stopka teflonowa, mikrouniesienie P08."]},
-   {"cause": "Rozkalibrowany silnik krokowy transportu (ścieg niezgodny z panelem, wsteczny inny niż do przodu)", "likelihood": "niskie", "parts": ["feed_dog", "control_panel"], "fix_steps": ["Ustaw 5 mm, przeszyj kartkę A4 bez nici, zmierz odległość między dziurkami (wzorcowo 4,9–5,1 mm).", "Kompensacja P112/P114/P116/P118 (do przodu) i P113/P115/P117/P119 (wstecz) dla danego toru, zero P123 – najlepiej z technikiem.", "Jeśli pojawia się Err-30/31 – sprawdź, czy transport nie jest zablokowany."]}
-  ]},
-  {"id": "obcinacz_nie_tnie", "title": "Obcinacz nie obcina nici", "symptoms": "Po wciśnięciu pedału piętą nić nie jest obcięta lub obcięta tylko jedna nić.", "category": "mechanika", "diagnose_question": "Czy ikona nożyczek na wyświetlaczu świeci?", "causes": [
-   {"cause": "Automatyczne obcinanie wyłączone", "likelihood": "wysokie", "parts": ["control_panel"], "fix_steps": ["Przytrzymaj przycisk nożyczek (szycie swobodne/obcinacz), aż zaświeci ikona nożyczek."]},
-   {"cause": "Pedał nie jest wciśnięty piętą wystarczająco do tyłu", "likelihood": "srednie", "parts": ["pedal"], "fix_steps": ["Wciśnij pedał piętą mocno do końca.", "Jeśli nadal – pozycje pedału P23/P24 lub regulacja śruby tylnej części pedału (wkręcanie zwiększa opór)."]},
-   {"cause": "Tępe noże obcinacza lub kłaczki w mechanizmie", "likelihood": "srednie", "parts": ["trimmer", "hook"], "fix_steps": ["Wyłącz zasilanie, zdejmij płytkę, wyczyść nóż ruchomy i stały z kłaczków.", "Test: tnie nić cienką, a grubej nie – noże do ostrzenia/wymiany lub zwiększenie P27 (siła) – technik."]},
-   {"cause": "Nić zbyt gruba dla obcinacza standardowego", "likelihood": "niskie", "parts": ["trimmer"], "fix_steps": ["Do nici tex 70+ potrzebna wersja H lub regulacja noży – technik."]},
-   {"cause": "Usterka elektromagnesu obcinacza (zwykle z Err-06)", "likelihood": "niskie", "parts": ["trimmer", "servo_motor"], "fix_steps": ["Sprawdź wtyczki głowicy; serwis."]}
-  ]},
-  {"id": "wyciaganie_nici_po_obcieciu", "title": "Nić wyciąga się z igły po obcięciu / na starcie", "symptoms": "Po obcięciu nici końcówka przy igle jest za krótka i przy pierwszym ściegu nić wyskakuje z igły.", "category": "nic", "diagnose_question": "Czy końcówka nici w igle po obcięciu ma mniej niż 3 cm?", "causes": [
-   {"cause": "Za mocne naprężenie wstępne/główne przy obcinaniu – mała końcówka nici", "likelihood": "wysokie", "parts": ["pretension", "tension_assembly"], "fix_steps": ["Poluzuj naprężacz wstępny (mały) o 1/2 obrotu – to on decyduje głównie o długości końcówki po obcięciu.", "Sprawdź, czy końcówka wynosi ok. 3–5 cm."]},
-   {"cause": "Wyłączony nipper i miękki start – pierwszy ścieg szarpie nić", "likelihood": "wysokie", "parts": ["control_panel"], "fix_steps": ["Włącz nipper przyciskiem docisku nici.", "Włącz soft start P09=1, 2–3 ściegi (P10), prędkość ok. 400 (P11); obniż P35 (1. ścieg)."]},
-   {"cause": "Igła zatrzymuje się w złej pozycji po obcięciu (za nisko) – podciągacz zabiera nić", "likelihood": "srednie", "parts": ["needle_bar", "take_up_lever"], "fix_steps": ["Po obcięciu igła ma stać w górnym położeniu, podciągacz blisko góry.", "Jeśli nie – kąt górnego zatrzymania P58 (technik)."]},
-   {"cause": "Za duży skok sprężynki kompensacyjnej", "likelihood": "niskie", "parts": ["check_spring"], "fix_steps": ["Zmniejsz skok sprężynki wg instrukcji (pokrętło przeciwnie do ruchu wskazówek zegara po poluzowaniu śruby)."]}
-  ]},
-  {"id": "halas_stukanie", "title": "Hałas, stukanie, nierówna praca", "symptoms": "Głośne stukanie, metaliczny dźwięk, wibracje; maszyna chodzi ciężko.", "category": "mechanika", "diagnose_question": "Czy hałas pojawia się także przy obracaniu kołem ręcznym bez nici?", "causes": [
-   {"cause": "Za mało oleju lub olej brudny", "likelihood": "wysokie", "parts": ["oil_window"], "fix_steps": ["Sprawdź poziom oleju (między kreskami) i rozbryzg w okienku podczas pracy.", "Dolej olej biały 10; brudny olej – wymiana (technik/serwis)."]},
-   {"cause": "Igła uderza w płytkę/stopkę lub tępa igła „przebija” z hukiem", "likelihood": "wysokie", "parts": ["needle", "needle_plate", "presser_foot"], "fix_steps": ["Wymień igłę, obróć kołem i sprawdź, czy igła trafia w środek otworu płytki i stopki."]},
-   {"cause": "Nić lub kłaczki w chwytaczu, chwytacz suchy", "likelihood": "srednie", "parts": ["hook", "bobbin_case"], "fix_steps": ["Wyczyść chwytacz, sprawdź, czy bębenek jest dobrze osadzony (zatrzask)."]},
-   {"cause": "Poluzowane śruby (płytka, stopka, osłony) lub maszyna nie wypoziomowana / chwiejny stół", "likelihood": "srednie", "parts": ["table", "needle_plate"], "fix_steps": ["Dokręć śruby płytki i stopki.", "Wypoziomuj stół (instrukcja: wypoziomowanie obniża hałas), sprawdź gumowe podkładki głowicy."]},
-   {"cause": "Luzy mechaniczne (podciągacz, mimośród, łożyska)", "likelihood": "niskie", "parts": ["take_up_lever", "handwheel"], "fix_steps": ["Technik – diagnostyka luzów."]}
-  ]},
-  {"id": "nie_startuje", "title": "Maszyna nie startuje / błąd na panelu", "symptoms": "Panel ciemny, maszyna nie reaguje na pedał lub wyświetla Err-xx / alarm.", "category": "elektronika", "diagnose_question": "Czy panel się świeci po włączeniu wyłącznika?", "causes": [
-   {"cause": "Brak zasilania: wyłącznik, wtyczka, gniazdko, przedłużacz", "likelihood": "wysokie", "parts": ["servo_motor"], "fix_steps": ["Sprawdź wyłącznik główny (zwykle pod blatem/na skrzynce), wtyczkę i inne urządzenie w tym gniazdku.", "Po wyłączeniu odczekaj 30 s przed ponownym włączeniem."]},
-   {"cause": "Głowica przechylona – działa wyłącznik bezpieczeństwa", "likelihood": "wysokie", "parts": ["table"], "fix_steps": ["Opuść głowicę do pozycji roboczej; komunikat alarmu bezpieczeństwa powinien zniknąć."]},
-   {"cause": "Cięgno pedału odczepione lub poluzowany regulator prędkości", "likelihood": "srednie", "parts": ["pedal"], "fix_steps": ["Sprawdź, czy pręt pedału jest zaczepiony do dźwigni regulatora i przykręcony.", "Sprawdź wtyczkę regulatora prędkości (alarm regulatora/Err-10)."]},
-   {"cause": "Zablokowana głowica (nić w chwytaczu, ciało obce) – Err-08/Err-21", "likelihood": "srednie", "parts": ["hook", "handwheel"], "fix_steps": ["Wyłącz zasilanie, obróć kołem ręcznym – jeśli opór, wyczyść chwytacz i usuń nić."]},
-   {"cause": "Zła/za niska sieć – Err-03/04/05", "likelihood": "niskie", "parts": ["servo_motor"], "fix_steps": ["Sprawdź napięcie 176–264 V, podłącz bezpośrednio do gniazdka z uziemieniem."]},
-   {"cause": "Ustawienia rozregulowane (np. tryb P62 ≠ 0) lub błąd pamięci", "likelihood": "niskie", "parts": ["control_panel"], "fix_steps": ["Przytrzymaj Reset ok. 5 s (powrót do ustawień fabrycznych).", "Naciśnij przycisk głosu przy kodzie błędu – maszyna poda podpowiedź.", "Jeśli błąd trwa – zapisz kod i zadzwoń do serwisu."]}
-  ]},
-  {"id": "nawijanie_nierowne", "title": "Nierówne nawijanie szpulki", "symptoms": "Nić nawija się stożkowo (więcej z jednej strony), luźno lub przelewa się przez brzeg; nawijacz nie wyłącza się.", "category": "nic", "diagnose_question": "Czy więcej nici gromadzi się po jednej stronie szpulki?", "causes": [
-   {"cause": "Prowadnik/naprężacz nawijacza ustawiony niecentralnie", "likelihood": "wysokie", "parts": ["bobbin_winder"], "fix_steps": ["Poluzuj śrubę mocującą naprężacz nawijacza.", "Przesuń go w stronę tej krawędzi szpulki, na której nici jest MNIEJ (praktyka ogólna).", "Dokręć i nawiń próbnie."]},
-   {"cause": "Za słabe naprężenie nawijacza – miękki, luźny nawój", "likelihood": "srednie", "parts": ["bobbin_winder"], "fix_steps": ["Dokręć nakrętkę naprężacza nawijacza (zgodnie z ruchem wskazówek zegara)."]},
-   {"cause": "Za dużo nici / nawijacz nie wyłącza się", "likelihood": "srednie", "parts": ["bobbin_winder"], "fix_steps": ["Wyreguluj śrubą na dźwigni nawijacza ilość nawoju (do ok. 80% średnicy szpulki)."]},
-   {"cause": "Szpulka nie dosunięta na trzpień lub pogięta", "likelihood": "niskie", "parts": ["bobbin", "bobbin_winder"], "fix_steps": ["Wciśnij szpulkę do oporu na trzpień; wymień pogiętą."]}
-  ]},
-  {"id": "olej", "title": "Problemy z olejem (alarm Err-20, brak rozbryzgu, wycieki, plamy oleju na materiale)", "symptoms": "Alarm oleju, brak rozbryzgu w okienku, olej kapie pod stół lub brudzi materiał przy igle.", "category": "mechanika", "diagnose_question": "Czy poziom oleju jest między dolną a górną kreską wskaźnika?", "causes": [
-   {"cause": "Za mało oleju w misce", "likelihood": "wysokie", "parts": ["oil_window"], "fix_steps": ["Wyłącz maszynę, dolej olej biały 10 przez otwór wlewowy do poziomu między kreskami.", "Nie przekraczaj górnej kreski."]},
-   {"cause": "Za dużo oleju lub maszyna przechylana z olejem – wycieki i plamy na materiale", "likelihood": "srednie", "parts": ["oil_window", "needle_bar"], "fix_steps": ["Spuść nadmiar do poziomu między kreskami.", "Po olejeniu przeszyj kilka minut skrawek materiału, by zebrać nadmiar z igielnicy.", "Plamy przy igle utrzymują się – technik (regulacja ilości oleju igielnicy/chwytacza)."]},
-   {"cause": "Brak rozbryzgu w okienku przy właściwym poziomie – zatkany knot/filtr pompki", "likelihood": "niskie", "parts": ["oil_window", "hook"], "fix_steps": ["Pozwól maszynie pracować 1–2 min przy 2000 obr/min i obserwuj.", "Brak rozbryzgu – natychmiast przerwij pracę i wezwij technika (ryzyko zatarcia chwytacza)."]},
-   {"cause": "Olej brudny/zużyty", "likelihood": "srednie", "parts": ["oil_window"], "fix_steps": ["Instrukcja: nigdy nie używaj brudnego oleju – wymiana oleju w misce (praktyka ogólna: co 6 miesięcy przy pracy 1-zmianowej)."]}
-  ]},
-  {"id": "luki_grube_szwy", "title": "Szycie na łukach i przez grube szwy (krzyżowe)", "symptoms": "Na łukach ścieg krzywy lub krótszy; na zgrubieniach maszyna staje, ścieg się skraca, igła się łamie, przepuszcza ściegi zaraz za szwem.", "category": "transport", "diagnose_question": "Czy czujnik grubości jest włączony i nauczony (H01/H02)?", "causes": [
-   {"cause": "Brak automatyki zgrubień – stała prędkość i trajektoria", "likelihood": "wysokie", "parts": ["control_panel", "presser_foot"], "fix_steps": ["Krótko naciśnij przycisk sensing – włącz czujnik.", "Długo naciśnij sensing → H01: ustaw igłę w pozycji stop, połóż cienką część pod stopką, przytrzymaj P do „H01 ----” i „OK”.", "H02: to samo dla grubej części (np. szew krzyżowy).", "H03–H07: liczba ściegów (5), prędkość (2000 → np. 1500), kompensacja ściegu (5), czułość, tor (4)."]},
-   {"cause": "Stopka „wspina się” na zgrubienie – brak docisku z tyłu", "likelihood": "srednie", "parts": ["presser_foot", "presser_pressure_screw"], "fix_steps": ["Użyj podkładki wyrównującej (hump jumper) pod tył stopki przy wjeździe na szew.", "Zwiększ docisk stopki."]},
-   {"cause": "Na łukach za długi ścieg i za szybkie szycie", "likelihood": "srednie", "parts": ["control_panel", "needle"], "fix_steps": ["Skróć ścieg o 0,5 mm na łukach o małym promieniu.", "Szyj wolniej, zatrzymuj z igłą w dole (przycisk igły dół) i obracaj materiał na igle przy podniesionej stopce (kolanownik)."]},
-   {"cause": "Igła zbyt cienka na grube szwy", "likelihood": "srednie", "parts": ["needle"], "fix_steps": ["Zwiększ numer igły (nr 16–18; DH do 21)."]}
-  ]},
-  {"id": "rygiel_niedokladny", "title": "Rygle nie trafiają w ścieg (ścieg wsteczny przesunięty)", "symptoms": "Rygiel początkowy/końcowy tworzy „warkocz” obok szwu zamiast nakładać się na ściegi.", "category": "transport", "diagnose_question": "Czy problem występuje tylko w jednym trybie transportu?", "causes": [
-   {"cause": "Za duża prędkość rygla", "likelihood": "wysokie", "parts": ["control_panel"], "fix_steps": ["Obniż P04/P05 z 1800 do 1200–1500."]},
-   {"cause": "Brak kompensacji ściegu wstecznego dla danego toru", "likelihood": "srednie", "parts": ["control_panel", "feed_dog", "reverse_lever"], "fix_steps": ["Kalibracja P113/P115/P117/P119 (wstecz) dla używanego toru 1–4: szyj do przodu, przytrzymaj dźwignię wsteczną, koryguj do pokrycia ściegów."]},
-   {"cause": "Zbyt mała liczba ściegów / niewłaściwe ustawienie A,B,C,D", "likelihood": "niskie", "parts": ["control_panel"], "fix_steps": ["Ustaw np. A=B=3, C=D=3 ściegi (1–F)."]}
-  ]},
-  {"id": "pedal", "title": "Pedał zbyt czuły / za twardy, szarpie przy starcie", "symptoms": "Trudno szyć powoli, maszyna rusza gwałtownie lub pedał wymaga dużej siły; przypadkowe obcinanie piętą.", "category": "elektronika", "diagnose_question": "Czy problem dotyczy przodu pedału (prędkość) czy tyłu (obcinanie/stopka)?", "causes": [
-   {"cause": "Ustawienie sprężyny i cięgna pedału", "likelihood": "wysokie", "parts": ["pedal"], "fix_steps": ["Przód pedału: przestaw sprężynę dociskową w lewo (lżej) lub w prawo (ciężej) – wg instrukcji.", "Tył pedału: śruba regulacyjna – wkręcanie zwiększa opór (mniej przypadkowych obcięć).", "Skok pedału: przełóż pręt łączący do otworu po prawej stronie – większy skok = łatwiejsze dozowanie prędkości."]},
-   {"cause": "Za wysoka prędkość maksymalna", "likelihood": "srednie", "parts": ["control_panel"], "fix_steps": ["Zmniejsz prędkość klawiszem Speed– lub P01 – cały zakres pedału daje wtedy dokładniejszą kontrolę."]},
-   {"cause": "Strefa wolnych obrotów pedału", "likelihood": "niskie", "parts": ["control_panel", "pedal"], "fix_steps": ["P42/P43 (300/600) – technik może poszerzyć strefę wolnego startu; włącz soft start."]}
-  ]},
-  {"id": "stopka_nie_podnosi", "title": "Stopka nie podnosi się automatycznie / opada sama", "symptoms": "Po obcięciu lub zatrzymaniu stopka zostaje na dole albo po kilku sekundach opada.", "category": "elektronika", "diagnose_question": "Czy świeci ikona podnoszenia stopki po obcięciu?", "causes": [
-   {"cause": "Funkcja automatycznego podnoszenia wyłączona", "likelihood": "wysokie", "parts": ["control_panel"], "fix_steps": ["Krótkie naciśnięcie przycisku stopki – podnoszenie po obcięciu; długie – po zatrzymaniu."]},
-   {"cause": "Ochrona elektromagnesu – stopka opada po czasie P57 (domyślnie 10 s)", "likelihood": "srednie", "parts": ["presser_foot"], "fix_steps": ["To normalne zabezpieczenie; podnieś ponownie piętą lub kolanownikiem."]},
-   {"cause": "Usterka elektromagnesu/wtyczki (Err-06)", "likelihood": "niskie", "parts": ["presser_foot", "servo_motor"], "fix_steps": ["Sprawdź wtyczki głowicy; serwis."]}
-  ]}
+  {
+   "id": "petelki_spod",
+   "title": "Pętelki od spodu materiału",
+   "symptoms": "Na spodniej stronie szwu nić górna tworzy luźne pętle lub „gniazdka”; od góry ścieg wygląda prawie poprawnie.",
+   "category": "scieg",
+   "diagnose_question": "Czy nawlekałeś maszynę przy opuszczonej stopce?",
+   "causes": [
+    {
+     "cause": "Nić górna nie weszła między talerzyki naprężacza (nawlekanie przy opuszczonej stopce lub nić „wyskoczyła”) – naprężenie górne praktycznie zerowe",
+     "likelihood": "wysokie",
+     "parts": [
+      "tension_assembly",
+      "presser_foot"
+     ],
+     "fix_steps": [
+      "Wyłącz zasilanie lub upewnij się, że pedał nie jest wciśnięty.",
+      "Podnieś stopkę dźwignią ręczną (talerzyki się rozwierają).",
+      "Wyciągnij nić i nawlecz ponownie całą drogę od stojaka – przeciągnij nić między talerzykami z lekkim oporem w dół, aż wyczujesz, że „siedzi” głęboko.",
+      "Opuść stopkę i pociągnij nić przy igle – musi być wyraźny opór. Jeśli nie ma – nić nie jest w talerzykach.",
+      "Zrób próbę na skrawku."
+     ]
+    },
+    {
+     "cause": "Nić ominęła dźwignię podciągacza nici lub sprężynkę kompensacyjną",
+     "likelihood": "wysokie",
+     "parts": [
+      "take_up_lever",
+      "check_spring"
+     ],
+     "fix_steps": [
+      "Obróć koło ręczne do siebie, aby podciągacz był w górnym położeniu.",
+      "Sprawdź, czy nić przechodzi przez oczko podciągacza (od prawej do lewej) i jest zaczepiona o sprężynkę kompensacyjną.",
+      "Nawlecz ponownie wg kolejności nawlekania."
+     ]
+    },
+    {
+     "cause": "Za słabe naprężenie nici górnej względem dolnej",
+     "likelihood": "srednie",
+     "parts": [
+      "tension_assembly"
+     ],
+     "fix_steps": [
+      "Pokrętło naprężacza głównego obróć zgodnie z ruchem wskazówek zegara o 1/4 obrotu (90°).",
+      "Przeszyj 10 cm próbki i obejrzyj obie strony.",
+      "Powtarzaj co 1/4 obrotu, aż splot schowa się w środku tkaniny."
+     ]
+    },
+    {
+     "cause": "Za mocne naprężenie nici dolnej (bębenek)",
+     "likelihood": "srednie",
+     "parts": [
+      "bobbin_case"
+     ],
+     "fix_steps": [
+      "Wykonaj test opadania bębenka (patrz sekcja wyważenia).",
+      "Jeśli bębenek nie opada wcale – poluzuj śrubkę sprężyny bębenka (przeciwnie do ruchu wskazówek zegara) o 1/8 obrotu (45°) i powtórz test."
+     ]
+    },
+    {
+     "cause": "Szorstki/zadziorowany chwytacz lub płytka – nić zaczepia i nie jest dociągana",
+     "likelihood": "niskie",
+     "parts": [
+      "hook",
+      "needle_plate"
+     ],
+     "fix_steps": [
+      "Oczyść chwytacz z kłaczków i resztek nici.",
+      "Sprawdź palcem/nitką krawędzie otworu płytki i nosek chwytacza – zadziory wygładź drobnym papierem (1200+) lub wymień część (technik)."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "petelki_gora",
+   "title": "Pętelki od góry materiału",
+   "symptoms": "Na wierzchniej stronie widać luźne pętelki nici dolnej lub szew jest „kropkowany” nicią dolną.",
+   "category": "scieg",
+   "diagnose_question": "Czy nić dolna przechodzi pod sprężynką bębenka i stawia opór przy wyciąganiu?",
+   "causes": [
+    {
+     "cause": "Nić dolna nie przechodzi pod sprężyną naprężacza bębenka (wypadła ze szczeliny)",
+     "likelihood": "wysokie",
+     "parts": [
+      "bobbin_case",
+      "bobbin"
+     ],
+     "fix_steps": [
+      "Wyłącz zasilanie, wyjmij bębenek.",
+      "Przeciągnij nić przez szczelinę bębenka i pod sprężynką aż wyjdzie otworem/wycięciem na końcu sprężynki.",
+      "Pociągnij nić – szpulka ma się obracać zgodnie z ruchem wskazówek zegara i nić musi stawiać równy, lekki opór."
+     ]
+    },
+    {
+     "cause": "Za słabe naprężenie nici dolnej",
+     "likelihood": "wysokie",
+     "parts": [
+      "bobbin_case"
+     ],
+     "fix_steps": [
+      "Test opadania: bębenek ze szpulką trzymany za nić opada sam bez szarpnięcia – za luźno.",
+      "Dokręć śrubkę sprężyny bębenka zgodnie z ruchem wskazówek zegara o 1/8 obrotu (45°), maksymalnie 1/4 obrotu naraz.",
+      "Powtórz test opadania i próbę szycia."
+     ]
+    },
+    {
+     "cause": "Za mocne naprężenie nici górnej (ściąga nić dolną do góry)",
+     "likelihood": "srednie",
+     "parts": [
+      "tension_assembly"
+     ],
+     "fix_steps": [
+      "Poluzuj pokrętło naprężacza przeciwnie do ruchu wskazówek zegara o 1/4 obrotu.",
+      "Próba – jeśli szew się marszczy, a nić górna jest napięta jak struna, poluzuj dalej."
+     ]
+    },
+    {
+     "cause": "Szpulka źle nawinięta (luźno, nierówno) lub nie pasuje do bębenka / bębenek zabrudzony",
+     "likelihood": "srednie",
+     "parts": [
+      "bobbin",
+      "bobbin_case",
+      "bobbin_winder"
+     ],
+     "fix_steps": [
+      "Sprawdź, czy nawój jest twardy i równy – miękki nawój daje skoki naprężenia.",
+      "Oczyść bębenek pod sprężyną z kłaczków (pędzelek, kartka papieru przeciągnięta pod sprężyną).",
+      "Używaj oryginalnych szpulek do tego bębenka (nie mieszaj aluminiowych i stalowych bez korekty naprężenia)."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "nic_dolna_na_wierzchu",
+   "title": "Nić dolna widoczna na wierzchu",
+   "symptoms": "Splot nici leży na górnej powierzchni materiału – na wierzchu widać punkciki/kreski nici dolnej (szczególnie przy kontrastowych kolorach).",
+   "category": "scieg",
+   "diagnose_question": "Czy nić górna jest wyraźnie napięta, a szew lekko marszczy materiał?",
+   "causes": [
+    {
+     "cause": "Naprężenie górne za duże w stosunku do dolnego",
+     "likelihood": "wysokie",
+     "parts": [
+      "tension_assembly"
+     ],
+     "fix_steps": [
+      "Poluzuj naprężacz górny o 1/4 obrotu (przeciwnie do ruchu wskazówek zegara).",
+      "Przeszyj próbkę i obejrzyj; powtarzaj aż splot zniknie w środku materiału.",
+      "Jeśli przy luźnym górnym nadal widać nić dolną – przejdź do regulacji bębenka."
+     ]
+    },
+    {
+     "cause": "Naprężenie dolne za małe",
+     "likelihood": "wysokie",
+     "parts": [
+      "bobbin_case"
+     ],
+     "fix_steps": [
+      "Test opadania bębenka.",
+      "Dokręć śrubkę bębenka o 1/8 obrotu (45°) zgodnie z ruchem wskazówek zegara.",
+      "Ponownie wyważ górnym naprężaczem."
+     ]
+    },
+    {
+     "cause": "Nić dolna grubsza niż górna lub różny rodzaj nici",
+     "likelihood": "srednie",
+     "parts": [
+      "bobbin"
+     ],
+     "fix_steps": [
+      "Użyj w szpulce nici tej samej grubości (lub cieńszej o jeden numer) co nić górna.",
+      "Po zmianie nici ponownie wyważ naprężenia."
+     ]
+    },
+    {
+     "cause": "Za duży skok/naprężenie sprężynki kompensacyjnej przy grubej nici górnej",
+     "likelihood": "niskie",
+     "parts": [
+      "check_spring"
+     ],
+     "fix_steps": [
+      "Zmniejsz skok sprężynki (poluzuj śrubę, pokrętło przeciwnie do ruchu wskazówek zegara) – wg instrukcji.",
+      "Zwykle dla materiałów średnich skok 6–8 mm, naprężenie sprężynki 0,1–0,5 N (praktyka ogólna)."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "nic_gorna_na_spodzie",
+   "title": "Nić górna przeciągana na spód",
+   "symptoms": "Na spodzie nić górna leży na powierzchni (proste odcinki nici górnej, splot widoczny od spodu), od góry ścieg płaski i luźny.",
+   "category": "scieg",
+   "diagnose_question": "Czy po pociągnięciu nici przy igle (stopka opuszczona) czujesz wyraźny opór?",
+   "causes": [
+    {
+     "cause": "Naprężenie górne za słabe (lub nić poza talerzykami)",
+     "likelihood": "wysokie",
+     "parts": [
+      "tension_assembly",
+      "pretension"
+     ],
+     "fix_steps": [
+      "Sprawdź nawleczenie przez naprężacz wstępny i główny (przy podniesionej stopce).",
+      "Dokręć naprężacz główny o 1/4 obrotu zgodnie z ruchem wskazówek zegara.",
+      "Próba; powtarzaj aż splot wejdzie w środek tkaniny."
+     ]
+    },
+    {
+     "cause": "Naprężenie dolne za duże",
+     "likelihood": "srednie",
+     "parts": [
+      "bobbin_case"
+     ],
+     "fix_steps": [
+      "Test opadania – bębenek nie zsuwa się nawet przy potrząśnięciu = za mocno.",
+      "Poluzuj śrubkę bębenka o 1/8 obrotu (45°) przeciwnie do ruchu wskazówek zegara.",
+      "Ponownie wyważ górnym."
+     ]
+    },
+    {
+     "cause": "Brud/kłaczki lub nitka pod sprężyną bębenka",
+     "likelihood": "srednie",
+     "parts": [
+      "bobbin_case"
+     ],
+     "fix_steps": [
+      "Wyczyść szczelinę pod sprężyną bębenka (kartka, pędzelek, sprężone powietrze).",
+      "Nie odkręcaj śrubki do końca – sprężyna i śrubka są małe i łatwo je zgubić."
+     ]
+    },
+    {
+     "cause": "Mechanizm luzowania naprężacza (elektromagnes/cięgno od stopki) nie zamyka talerzyków",
+     "likelihood": "niskie",
+     "parts": [
+      "tension_assembly"
+     ],
+     "fix_steps": [
+      "Przy opuszczonej stopce talerzyki muszą być zamknięte .",
+      "Sprawdź, czy nie jest włączone podnoszenie stopki po zatrzymaniu, które blokuje elektromagnes.",
+      "Jeśli talerzyki nie zamykają się – technik (regulacja luzownika)."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "scieg_nierowny",
+   "title": "Ścieg nierówny po obu stronach / naprężenie „pływa”",
+   "symptoms": "Raz pętelki od spodu, raz od góry; splot wędruje; ściegi różnej ścisłości na długości szwu.",
+   "category": "scieg",
+   "diagnose_question": "Czy nić odwija się ze szpuli na stojaku swobodnie, bez szarpnięć?",
+   "causes": [
+    {
+     "cause": "Nić szarpie się na stojaku (prowadnik nie nad szpulą, nić owinięta wokół szpuli, stożek przewrócony)",
+     "likelihood": "wysokie",
+     "parts": [
+      "thread_stand"
+     ],
+     "fix_steps": [
+      "Ustaw ramię stojaka tak, aby prowadnik był dokładnie nad środkiem stożka, ok. 2–3 razy wysokości szpuli nad nią.",
+      "Postaw stożek pionowo na talerzyku, zdejmij siatkę/naklejkę zaczepiającą nić.",
+      "Sprawdź, czy nić nie owinęła się wokół trzpienia."
+     ]
+    },
+    {
+     "cause": "Brud, wosk lub kłaczki między talerzykami naprężacza",
+     "likelihood": "srednie",
+     "parts": [
+      "tension_assembly",
+      "pretension"
+     ],
+     "fix_steps": [
+      "Podnieś stopkę, przeciągnij między talerzykami kawałek gęstego płótna lub nić nasączoną odrobiną spirytusu (bez oleju!).",
+      "Sprawdź, czy talerzyki obracają się i nie mają rowków wyciętych przez nić – rowek = wymiana talerzyków."
+     ]
+    },
+    {
+     "cause": "Nierówno/miękko nawinięta szpulka lub odkształcona szpulka",
+     "likelihood": "srednie",
+     "parts": [
+      "bobbin",
+      "bobbin_winder"
+     ],
+     "fix_steps": [
+      "Nawiń nową szpulkę równo i twardo (patrz nawijanie).",
+      "Wymień szpulki pogięte, porysowane lub z zadziorami."
+     ]
+    },
+    {
+     "cause": "Niska jakość nici (zmienna grubość, supełki) albo nić skręcona",
+     "likelihood": "srednie",
+     "parts": [
+      "thread_stand"
+     ],
+     "fix_steps": [
+      "Spróbuj innej, markowej nici poliestrowej rdzeniowej.",
+      "Ta sama nić i grubość na górze i w szpulce."
+     ]
+    },
+    {
+     "cause": "Igła nieodpowiednia, tępa lub źle założona",
+     "likelihood": "srednie",
+     "parts": [
+      "needle"
+     ],
+     "fix_steps": [
+      "Wymień igłę na nową, właściwego rozmiaru do nici (nić musi mieścić się w długim rowku).",
+      "Załóż do oporu, długi rowek w lewo, wycięcie (oczko szybki) w prawo – w stronę chwytacza."
+     ]
+    },
+    {
+     "cause": "Zbyt duża prędkość na danym materiale / sprężynka kompensacyjna źle ustawiona",
+     "likelihood": "niskie",
+     "parts": [
+      "check_spring",
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Zmniejsz prędkość klawiszem Speed– o 300–500 obr/min i porównaj.",
+      "Ustaw skok i siłę sprężynki kompensacyjnej wg instrukcji (technik)."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ptasie_gniazdo",
+   "title": "Plątanie nici pod materiałem („ptasie gniazdo”)",
+   "symptoms": "Pod materiałem tworzy się kłąb nici górnej, materiał blokuje się, często na początku szwu.",
+   "category": "nic",
+   "diagnose_question": "Czy gniazdo powstaje tylko na pierwszych ściegach?",
+   "causes": [
+    {
+     "cause": "Brak naprężenia górnego – nić poza talerzykami lub ominięty podciągacz (najczęstsze!)",
+     "likelihood": "wysokie",
+     "parts": [
+      "tension_assembly",
+      "take_up_lever",
+      "check_spring"
+     ],
+     "fix_steps": [
+      "Wyłącz zasilanie, wytnij kłąb nici spod materiału (nie wyrywaj!).",
+      "Podnieś stopkę, przewlecz od nowa całą nić górną wg kolejności nawlekania.",
+      "Sprawdź opór nici przy igle przy opuszczonej stopce."
+     ]
+    },
+    {
+     "cause": "Start szwu bez przytrzymania nici / zbyt krótka końcówka nici – nić wciągana pod płytkę",
+     "likelihood": "wysokie",
+     "parts": [
+      "needle_plate",
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Włącz nipper (przycisk docisku nici) i miękki start (P09=1, P10=2–3).",
+      "Przy starcie bez nippera przytrzymaj obie nici palcem za stopką przez 2–3 ściegi.",
+      "Zaczynaj szycie z igłą wbitą w materiał."
+     ]
+    },
+    {
+     "cause": "Szycie bez materiału lub z materiałem nieopuszczoną stopką",
+     "likelihood": "srednie",
+     "parts": [
+      "presser_foot"
+     ],
+     "fix_steps": [
+      "Zawsze opuszczaj stopkę na materiał przed startem.",
+      "Nie uruchamiaj maszyny bez materiału pod stopką z nawleczoną nicią."
+     ]
+    },
+    {
+     "cause": "Nić zaplątana w chwytaczu / zła szpulka lub bębenek źle osadzony",
+     "likelihood": "srednie",
+     "parts": [
+      "hook",
+      "bobbin_case",
+      "bobbin"
+     ],
+     "fix_steps": [
+      "Wyjmij bębenek, oczyść chwytacz z resztek nici (pęseta, pędzelek).",
+      "Włóż bębenek do kliknięcia zatrzasku."
+     ]
+    },
+    {
+     "cause": "Za duży otwór płytki do cienkiego materiału – materiał wciągany",
+     "likelihood": "niskie",
+     "parts": [
+      "needle_plate",
+      "feed_dog"
+     ],
+     "fix_steps": [
+      "Na cienkich tkaninach użyj płytki/stopki z małym otworem i trybu 2 lub 3.",
+      "Podłóż bibułkę na początku szwu."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "przepuszczanie_sciegow",
+   "title": "Przepuszczanie ściegów (opuszczone ściegi)",
+   "symptoms": "W szwie co jakiś czas brakuje splotu – dłuższy „ścieg” z samej nici górnej; częściej na dzianinie, grubych szwach lub przy dużej prędkości.",
+   "category": "scieg",
+   "diagnose_question": "Czy po wymianie igły na nową problem znika?",
+   "causes": [
+    {
+     "cause": "Igła tępa, wygięta, źle założona (rowek nie w lewo, nie do oporu) lub zły system igły",
+     "likelihood": "wysokie",
+     "parts": [
+      "needle",
+      "needle_bar"
+     ],
+     "fix_steps": [
+      "Ustaw igielnicę w górnym położeniu kołem ręcznym.",
+      "Poluzuj śrubę zacisku igły, wyjmij igłę.",
+      "Włóż nową igłę DBx1 (A7-DH: DPx5) do oporu, długim rowkiem w lewo, wycięciem w prawo w stronę chwytacza.",
+      "Dokręć śrubę i przewlecz igłę od lewej do prawej."
+     ]
+    },
+    {
+     "cause": "Igła zbyt cienka do nici lub nieodpowiednie ostrze do materiału (np. ostre na dzianinie)",
+     "likelihood": "wysokie",
+     "parts": [
+      "needle"
+     ],
+     "fix_steps": [
+      "Dobierz igłę do nici (patrz tabela materiałów) – nić ma się chować w długim rowku.",
+      "Na dzianinach i elastycznych: ostrze kulkowe SUK/FFG."
+     ]
+    },
+    {
+     "cause": "Materiał unosi się z igłą (za mały docisk stopki lub flagowanie) – pętla nie tworzy się",
+     "likelihood": "srednie",
+     "parts": [
+      "presser_foot",
+      "presser_pressure_screw"
+     ],
+     "fix_steps": [
+      "Zwiększ docisk stopki śrubą dociskową (zgodnie z ruchem wskazówek zegara) o 1–2 obroty.",
+      "Sprawdź, czy stopka leży płasko na płytce."
+     ]
+    },
+    {
+     "cause": "Za duża prędkość na trudnym materiale",
+     "likelihood": "srednie",
+     "parts": [
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Zmniejsz prędkość (Speed– lub P01) o 500–1000 obr/min.",
+      "Na zgrubieniach włącz czujnik grubości (automatyczne zwolnienie)."
+     ]
+    },
+    {
+     "cause": "Rozregulowanie czasu chwytacza, wysokości igielnicy lub za duża szczelina chwytacz–igła (często po złamaniu igły/uderzeniu)",
+     "likelihood": "niskie",
+     "parts": [
+      "hook",
+      "needle_bar"
+     ],
+     "fix_steps": [
+      "Sprawdź, czy przepuszczanie wystąpiło po złamaniu igły – jeśli tak, prawie na pewno przestawiony chwytacz.",
+      "Wezwij technika: wysokość igielnicy wg znaczników A/B na igielnicy względem dolnej tulei, nosek chwytacza w osi igły przy wznoszeniu igły, szczelina nosek–igła ok. 0,04–0,1 mm (praktyka ogólna; instrukcja: za mała szczelina niszczy nosek, za duża – przepuszczanie ściegów)."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "zrywanie_nici_gornej",
+   "title": "Zrywanie się nici górnej",
+   "symptoms": "Nić igłowa pęka – czasem na starcie, czasem w trakcie szwu; postrzępione końce.",
+   "category": "nic",
+   "diagnose_question": "Czy koniec zerwanej nici jest postrzępiony (przetarcie) czy równo ucięty?",
+   "causes": [
+    {
+     "cause": "Błędne nawleczenie (nić owinięta wokół prowadnika, poza sprężynką, podwójnie w talerzykach)",
+     "likelihood": "wysokie",
+     "parts": [
+      "arm_thread_guide",
+      "tension_assembly",
+      "check_spring",
+      "take_up_lever"
+     ],
+     "fix_steps": [
+      "Wyciągnij nić i nawlecz całość od stojaka krok po kroku.",
+      "Sprawdź, czy nić nie zaplątała się wokół stojaka lub szpuli."
+     ]
+    },
+    {
+     "cause": "Za duże naprężenie górne",
+     "likelihood": "wysokie",
+     "parts": [
+      "tension_assembly",
+      "pretension"
+     ],
+     "fix_steps": [
+      "Poluzuj naprężacz główny o 1/4 obrotu, następnie wstępny.",
+      "Wyważ ścieg ponownie."
+     ]
+    },
+    {
+     "cause": "Igła za cienka do nici, tępa lub z zadziorem w uszku; źle założona",
+     "likelihood": "wysokie",
+     "parts": [
+      "needle"
+     ],
+     "fix_steps": [
+      "Wymień igłę na nową, o 1–2 numery grubszą przy grubej nici.",
+      "Sprawdź założenie: rowek w lewo, nawlekanie od lewej do prawej."
+     ]
+    },
+    {
+     "cause": "Zadziory na płytce, chwytaczu, prowadnikach (często po uderzeniu igłą)",
+     "likelihood": "srednie",
+     "parts": [
+      "needle_plate",
+      "hook",
+      "needle_bar_guide"
+     ],
+     "fix_steps": [
+      "Przesuń palcem/nicią po otworze płytki i nosku chwytacza.",
+      "Wygładź papierem 1200+ lub wymień część."
+     ]
+    },
+    {
+     "cause": "Słaba nić / nić przegrzewa się przy dużej prędkości (syntetyki)",
+     "likelihood": "srednie",
+     "parts": [
+      "needle",
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Zmień nić na lepszą (poliester rdzeniowy).",
+      "Zmniejsz prędkość; przy grubych syntetykach rozważ chłodzenie igły silikonem do nici."
+     ]
+    },
+    {
+     "cause": "Nić rwie się na starcie – za mocny start, nipper/soft start wyłączony",
+     "likelihood": "niskie",
+     "parts": [
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Włącz miękki start (P09), obniż prędkość pierwszych ściegów (P35/P36)."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "zrywanie_nici_dolnej",
+   "title": "Zrywanie się nici dolnej",
+   "symptoms": "Pęka nić ze szpulki; szew urywa się od spodu.",
+   "category": "nic",
+   "diagnose_question": "Czy szpulka obraca się w bębenku lekko i równo?",
+   "causes": [
+    {
+     "cause": "Za mocne naprężenie bębenka lub zła droga nici w bębenku",
+     "likelihood": "wysokie",
+     "parts": [
+      "bobbin_case"
+     ],
+     "fix_steps": [
+      "Nawlecz bębenek ponownie (szczelina → pod sprężynę → wycięcie).",
+      "Test opadania; poluzuj śrubkę o 1/8 obrotu, jeśli bębenek nie opada."
+     ]
+    },
+    {
+     "cause": "Szpulka nawinięta za pełno, nierówno lub zbyt mocno; pogięta szpulka",
+     "likelihood": "wysokie",
+     "parts": [
+      "bobbin",
+      "bobbin_winder"
+     ],
+     "fix_steps": [
+      "Nawijaj do ok. 80% średnicy (0,5–1 mm od brzegu).",
+      "Wymień pogiętą szpulkę."
+     ]
+    },
+    {
+     "cause": "Zadziory w bębenku, na sprężynie lub w otworze płytki",
+     "likelihood": "srednie",
+     "parts": [
+      "bobbin_case",
+      "needle_plate"
+     ],
+     "fix_steps": [
+      "Obejrzyj krawędzie przez lupę, wygładź lub wymień bębenek/płytkę."
+     ]
+    },
+    {
+     "cause": "Kłaczki i resztki nici w chwytaczu",
+     "likelihood": "srednie",
+     "parts": [
+      "hook"
+     ],
+     "fix_steps": [
+      "Wyjmij bębenek, wyczyść chwytacz pędzelkiem i pęsetą; sprawdź, czy nie ma owiniętej nici pod bębenkiem."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lamanie_igly",
+   "title": "Łamanie lub wyginanie igły",
+   "symptoms": "Igła pęka, uderza w płytkę/chwytacz (głośny trzask), wygina się na grubych miejscach.",
+   "category": "igla",
+   "diagnose_question": "Czy pomagasz maszynie, ciągnąc materiał ręką do siebie?",
+   "causes": [
+    {
+     "cause": "Ciągnięcie/pchanie materiału ręką – igła odgina się i uderza w płytkę",
+     "likelihood": "wysokie",
+     "parts": [
+      "needle",
+      "needle_plate",
+      "feed_dog"
+     ],
+     "fix_steps": [
+      "Tylko prowadź materiał – transport ma go przesuwać sam.",
+      "Na grubych materiałach włącz tryb 4 i czujnik grubości."
+     ]
+    },
+    {
+     "cause": "Igła za cienka do grubości/twardości materiału lub nici",
+     "likelihood": "wysokie",
+     "parts": [
+      "needle"
+     ],
+     "fix_steps": [
+      "Zmień na grubszą (denim nr 16–18; DH: DPx5 19–21).",
+      "Nie przekraczaj zakresu systemu igieł maszyny."
+     ]
+    },
+    {
+     "cause": "Za duża prędkość na zgrubieniach i szwach krzyżowych",
+     "likelihood": "srednie",
+     "parts": [
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Włącz czujnik grubości i naucz H01/H02; prędkość w zgrubieniu P19 zmniejsz do 1200–1500.",
+      "Wjeżdżaj na zgrubienie powoli albo kołem ręcznym."
+     ]
+    },
+    {
+     "cause": "Igła źle założona (nie do oporu, obrócona) lub luźna śruba zacisku",
+     "likelihood": "srednie",
+     "parts": [
+      "needle",
+      "needle_bar"
+     ],
+     "fix_steps": [
+      "Załóż igłę od nowa do oporu, rowkiem w lewo, dokręć śrubę."
+     ]
+    },
+    {
+     "cause": "Szpilki w materiale, guziki, zamki pod igłą",
+     "likelihood": "srednie",
+     "parts": [
+      "needle"
+     ],
+     "fix_steps": [
+      "Usuwaj szpilki przed stopką; zawsze zmieniaj igłę po uderzeniu w metal i sprawdź, czy nie ma zadziorów na płytce."
+     ]
+    },
+    {
+     "cause": "Rozregulowana relacja igła–chwytacz lub płytka przesunięta po uderzeniu",
+     "likelihood": "niskie",
+     "parts": [
+      "hook",
+      "needle_plate",
+      "needle_bar"
+     ],
+     "fix_steps": [
+      "Obróć kołem ręcznym powoli i obserwuj, czy igła wchodzi w środek otworu płytki i nie dotyka noska chwytacza.",
+      "Jeśli nie – technik (pozycja chwytacza, wysokość igielnicy)."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "marszczenie",
+   "title": "Marszczenie szwu (puckering)",
+   "symptoms": "Materiał wzdłuż szwu fałduje się, ściąga; szew krótszy niż materiał; częste na cienkich i śliskich tkaninach.",
+   "category": "scieg",
+   "diagnose_question": "Czy po rozciągnięciu szwu nić pęka (za mocne naprężenie)?",
+   "causes": [
+    {
+     "cause": "Za duże naprężenie obu nici",
+     "likelihood": "wysokie",
+     "parts": [
+      "tension_assembly",
+      "bobbin_case"
+     ],
+     "fix_steps": [
+      "Poluzuj najpierw szpulkę do lekkiego opadania (test opadania – dolna granica).",
+      "Poluzuj górny naprężacz, aż splot jest w środku przy minimalnym naprężeniu."
+     ]
+    },
+    {
+     "cause": "Nić i igła za grube do materiału",
+     "likelihood": "wysokie",
+     "parts": [
+      "needle"
+     ],
+     "fix_steps": [
+      "Użyj cieńszej nici (tex 18–24) i igły Nm 65–75 na cienkie tkaniny."
+     ]
+    },
+    {
+     "cause": "Za długi ścieg lub za duży docisk stopki",
+     "likelihood": "srednie",
+     "parts": [
+      "presser_pressure_screw",
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Skróć ścieg do 2,0–2,5 mm.",
+      "Zmniejsz docisk stopki śrubą dociskową (przeciwnie do ruchu wskazówek zegara)."
+     ]
+    },
+    {
+     "cause": "Niewłaściwy tryb transportu – warstwy przesuwają się względem siebie",
+     "likelihood": "srednie",
+     "parts": [
+      "feed_dog",
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Wybierz tryb 2 (śliskie) dla podszewek i satyny lub 3 dla cienkich/miękkich.",
+      "Prowadź materiał lekko napięty przed i za stopką (bez ciągnięcia)."
+     ]
+    },
+    {
+     "cause": "Za wysoko ustawione ząbki transportu (praktyka ogólna)",
+     "likelihood": "niskie",
+     "parts": [
+      "feed_dog"
+     ],
+     "fix_steps": [
+      "Technik: wysokość ząbków ok. 0,8 mm nad płytką (A7-D; DH 1,2 mm) – na cienkie tkaniny niżej."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "brak_transportu",
+   "title": "Materiał nie przesuwa się / nierówna długość ściegu",
+   "symptoms": "Materiał stoi w miejscu, ściegi się nakładają, długość ściegu różna albo inna niż na wyświetlaczu.",
+   "category": "transport",
+   "diagnose_question": "Czy długość ściegu na wyświetlaczu nie jest ustawiona na 0?",
+   "causes": [
+    {
+     "cause": "Ustawiona długość ściegu 0 lub bardzo mała / aktywne zagęszczanie",
+     "likelihood": "wysokie",
+     "parts": [
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Sprawdź wartość mm na panelu i ustaw np. 2,5 mm klawiszem „+”.",
+      "Sprawdź, czy nie jest włączony wzór/zagęszczanie/szew W."
+     ]
+    },
+    {
+     "cause": "Ząbki transportu zapchane kłaczkami",
+     "likelihood": "wysokie",
+     "parts": [
+      "feed_dog",
+      "needle_plate"
+     ],
+     "fix_steps": [
+      "Wyłącz zasilanie, odkręć płytkę ściegową.",
+      "Wyczyść pędzelkiem przestrzenie między ząbkami i pod płytką.",
+      "Przykręć płytkę – igła musi trafiać w środek otworu."
+     ]
+    },
+    {
+     "cause": "Za mały docisk stopki lub stopka podniesiona (dźwignia podnoszenia stopki podniesiona)",
+     "likelihood": "srednie",
+     "parts": [
+      "presser_pressure_screw",
+      "presser_foot"
+     ],
+     "fix_steps": [
+      "Zwiększ docisk śrubą dociskową."
+     ]
+    },
+    {
+     "cause": "Materiał ciężki/lepki – stopka hamuje (ekoskóra, gumowane)",
+     "likelihood": "srednie",
+     "parts": [
+      "presser_foot",
+      "feed_dog"
+     ],
+     "fix_steps": [
+      "Tryb transportu 4, stopka teflonowa, mikrouniesienie P08."
+     ]
+    },
+    {
+     "cause": "Rozkalibrowany silnik krokowy transportu (ścieg niezgodny z panelem, wsteczny inny niż do przodu)",
+     "likelihood": "niskie",
+     "parts": [
+      "feed_dog",
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Ustaw 5 mm, przeszyj kartkę A4 bez nici, zmierz odległość między dziurkami (wzorcowo 4,9–5,1 mm).",
+      "Kompensacja P112/P114/P116/P118 (do przodu) i P113/P115/P117/P119 (wstecz) dla danego toru, zero P123 – najlepiej z technikiem.",
+      "Jeśli pojawia się Err-30/31 – sprawdź, czy transport nie jest zablokowany."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "obcinacz_nie_tnie",
+   "title": "Obcinacz nie obcina nici",
+   "symptoms": "Po wciśnięciu pedału piętą nić nie jest obcięta lub obcięta tylko jedna nić.",
+   "category": "mechanika",
+   "diagnose_question": "Czy ikona nożyczek na wyświetlaczu świeci?",
+   "causes": [
+    {
+     "cause": "Automatyczne obcinanie wyłączone",
+     "likelihood": "wysokie",
+     "parts": [
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Przytrzymaj przycisk nożyczek (szycie swobodne/obcinacz), aż zaświeci ikona nożyczek."
+     ]
+    },
+    {
+     "cause": "Pedał nie jest wciśnięty piętą wystarczająco do tyłu",
+     "likelihood": "srednie",
+     "parts": [
+      "pedal"
+     ],
+     "fix_steps": [
+      "Wciśnij pedał piętą mocno do końca.",
+      "Jeśli nadal – pozycje pedału P23/P24 lub regulacja śruby tylnej części pedału (wkręcanie zwiększa opór)."
+     ]
+    },
+    {
+     "cause": "Tępe noże obcinacza lub kłaczki w mechanizmie",
+     "likelihood": "srednie",
+     "parts": [
+      "trimmer",
+      "hook"
+     ],
+     "fix_steps": [
+      "Wyłącz zasilanie, zdejmij płytkę, wyczyść nóż ruchomy i stały z kłaczków.",
+      "Test: tnie nić cienką, a grubej nie – noże do ostrzenia/wymiany lub zwiększenie P27 (siła) – technik."
+     ]
+    },
+    {
+     "cause": "Nić zbyt gruba dla obcinacza standardowego",
+     "likelihood": "niskie",
+     "parts": [
+      "trimmer"
+     ],
+     "fix_steps": [
+      "Do nici tex 70+ potrzebna wersja H lub regulacja noży – technik."
+     ]
+    },
+    {
+     "cause": "Usterka elektromagnesu obcinacza (zwykle z Err-06)",
+     "likelihood": "niskie",
+     "parts": [
+      "trimmer",
+      "servo_motor"
+     ],
+     "fix_steps": [
+      "Sprawdź wtyczki głowicy; serwis."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "wyciaganie_nici_po_obcieciu",
+   "title": "Nić wyciąga się z igły po obcięciu / na starcie",
+   "symptoms": "Po obcięciu nici końcówka przy igle jest za krótka i przy pierwszym ściegu nić wyskakuje z igły.",
+   "category": "nic",
+   "diagnose_question": "Czy końcówka nici w igle po obcięciu ma mniej niż 3 cm?",
+   "causes": [
+    {
+     "cause": "Za mocne naprężenie wstępne/główne przy obcinaniu – mała końcówka nici",
+     "likelihood": "wysokie",
+     "parts": [
+      "pretension",
+      "tension_assembly"
+     ],
+     "fix_steps": [
+      "Poluzuj naprężacz wstępny (mały) o 1/2 obrotu – to on decyduje głównie o długości końcówki po obcięciu.",
+      "Sprawdź, czy końcówka wynosi ok. 3–5 cm."
+     ]
+    },
+    {
+     "cause": "Wyłączony nipper i miękki start – pierwszy ścieg szarpie nić",
+     "likelihood": "wysokie",
+     "parts": [
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Włącz nipper przyciskiem docisku nici.",
+      "Włącz soft start P09=1, 2–3 ściegi (P10), prędkość ok. 400 (P11); obniż P35 (1. ścieg)."
+     ]
+    },
+    {
+     "cause": "Igła zatrzymuje się w złej pozycji po obcięciu (za nisko) – podciągacz zabiera nić",
+     "likelihood": "srednie",
+     "parts": [
+      "needle_bar",
+      "take_up_lever"
+     ],
+     "fix_steps": [
+      "Po obcięciu igła ma stać w górnym położeniu, podciągacz blisko góry.",
+      "Jeśli nie – kąt górnego zatrzymania P58 (technik)."
+     ]
+    },
+    {
+     "cause": "Za duży skok sprężynki kompensacyjnej",
+     "likelihood": "niskie",
+     "parts": [
+      "check_spring"
+     ],
+     "fix_steps": [
+      "Zmniejsz skok sprężynki wg instrukcji (pokrętło przeciwnie do ruchu wskazówek zegara po poluzowaniu śruby)."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "halas_stukanie",
+   "title": "Hałas, stukanie, nierówna praca",
+   "symptoms": "Głośne stukanie, metaliczny dźwięk, wibracje; maszyna chodzi ciężko.",
+   "category": "mechanika",
+   "diagnose_question": "Czy hałas pojawia się także przy obracaniu kołem ręcznym bez nici?",
+   "causes": [
+    {
+     "cause": "Za mało oleju lub olej brudny",
+     "likelihood": "wysokie",
+     "parts": [
+      "oil_window"
+     ],
+     "fix_steps": [
+      "Sprawdź poziom oleju (między kreskami) i rozbryzg w okienku podczas pracy.",
+      "Dolej olej biały 10; brudny olej – wymiana (technik/serwis)."
+     ]
+    },
+    {
+     "cause": "Igła uderza w płytkę/stopkę lub tępa igła „przebija” z hukiem",
+     "likelihood": "wysokie",
+     "parts": [
+      "needle",
+      "needle_plate",
+      "presser_foot"
+     ],
+     "fix_steps": [
+      "Wymień igłę, obróć kołem i sprawdź, czy igła trafia w środek otworu płytki i stopki."
+     ]
+    },
+    {
+     "cause": "Nić lub kłaczki w chwytaczu, chwytacz suchy",
+     "likelihood": "srednie",
+     "parts": [
+      "hook",
+      "bobbin_case"
+     ],
+     "fix_steps": [
+      "Wyczyść chwytacz, sprawdź, czy bębenek jest dobrze osadzony (zatrzask)."
+     ]
+    },
+    {
+     "cause": "Poluzowane śruby (płytka, stopka, osłony) lub maszyna nie wypoziomowana / chwiejny stół",
+     "likelihood": "srednie",
+     "parts": [
+      "table",
+      "needle_plate"
+     ],
+     "fix_steps": [
+      "Dokręć śruby płytki i stopki.",
+      "Wypoziomuj stół (instrukcja: wypoziomowanie obniża hałas), sprawdź gumowe podkładki głowicy."
+     ]
+    },
+    {
+     "cause": "Luzy mechaniczne (podciągacz, mimośród, łożyska)",
+     "likelihood": "niskie",
+     "parts": [
+      "take_up_lever",
+      "handwheel"
+     ],
+     "fix_steps": [
+      "Technik – diagnostyka luzów."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "nie_startuje",
+   "title": "Maszyna nie startuje / błąd na panelu",
+   "symptoms": "Panel ciemny, maszyna nie reaguje na pedał lub wyświetla Err-xx / alarm.",
+   "category": "elektronika",
+   "diagnose_question": "Czy panel się świeci po włączeniu wyłącznika?",
+   "causes": [
+    {
+     "cause": "Brak zasilania: wyłącznik, wtyczka, gniazdko, przedłużacz",
+     "likelihood": "wysokie",
+     "parts": [
+      "servo_motor"
+     ],
+     "fix_steps": [
+      "Sprawdź wyłącznik główny (zwykle pod blatem/na skrzynce), wtyczkę i inne urządzenie w tym gniazdku.",
+      "Po wyłączeniu odczekaj 30 s przed ponownym włączeniem."
+     ]
+    },
+    {
+     "cause": "Głowica przechylona – działa wyłącznik bezpieczeństwa",
+     "likelihood": "wysokie",
+     "parts": [
+      "table"
+     ],
+     "fix_steps": [
+      "Opuść głowicę do pozycji roboczej; komunikat alarmu bezpieczeństwa powinien zniknąć."
+     ]
+    },
+    {
+     "cause": "Cięgno pedału odczepione lub poluzowany regulator prędkości",
+     "likelihood": "srednie",
+     "parts": [
+      "pedal"
+     ],
+     "fix_steps": [
+      "Sprawdź, czy pręt pedału jest zaczepiony do dźwigni regulatora i przykręcony.",
+      "Sprawdź wtyczkę regulatora prędkości (alarm regulatora/Err-10)."
+     ]
+    },
+    {
+     "cause": "Zablokowana głowica (nić w chwytaczu, ciało obce) – Err-08/Err-21",
+     "likelihood": "srednie",
+     "parts": [
+      "hook",
+      "handwheel"
+     ],
+     "fix_steps": [
+      "Wyłącz zasilanie, obróć kołem ręcznym – jeśli opór, wyczyść chwytacz i usuń nić."
+     ]
+    },
+    {
+     "cause": "Zła/za niska sieć – Err-03/04/05",
+     "likelihood": "niskie",
+     "parts": [
+      "servo_motor"
+     ],
+     "fix_steps": [
+      "Sprawdź napięcie 176–264 V, podłącz bezpośrednio do gniazdka z uziemieniem."
+     ]
+    },
+    {
+     "cause": "Ustawienia rozregulowane (np. tryb P62 ≠ 0) lub błąd pamięci",
+     "likelihood": "niskie",
+     "parts": [
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Przytrzymaj Reset ok. 5 s (powrót do ustawień fabrycznych).",
+      "Naciśnij przycisk głosu przy kodzie błędu – maszyna poda podpowiedź.",
+      "Jeśli błąd trwa – zapisz kod i zadzwoń do serwisu."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "nawijanie_nierowne",
+   "title": "Nierówne nawijanie szpulki",
+   "symptoms": "Nić nawija się stożkowo (więcej z jednej strony), luźno lub przelewa się przez brzeg; nawijacz nie wyłącza się.",
+   "category": "nic",
+   "diagnose_question": "Czy więcej nici gromadzi się po jednej stronie szpulki?",
+   "causes": [
+    {
+     "cause": "Prowadnik/naprężacz nawijacza ustawiony niecentralnie",
+     "likelihood": "wysokie",
+     "parts": [
+      "bobbin_winder"
+     ],
+     "fix_steps": [
+      "Poluzuj śrubę mocującą naprężacz nawijacza.",
+      "Przesuń go w stronę tej krawędzi szpulki, na której nici jest MNIEJ (praktyka ogólna).",
+      "Dokręć i nawiń próbnie."
+     ]
+    },
+    {
+     "cause": "Za słabe naprężenie nawijacza – miękki, luźny nawój",
+     "likelihood": "srednie",
+     "parts": [
+      "bobbin_winder"
+     ],
+     "fix_steps": [
+      "Dokręć nakrętkę naprężacza nawijacza (zgodnie z ruchem wskazówek zegara)."
+     ]
+    },
+    {
+     "cause": "Za dużo nici / nawijacz nie wyłącza się",
+     "likelihood": "srednie",
+     "parts": [
+      "bobbin_winder"
+     ],
+     "fix_steps": [
+      "Wyreguluj śrubą na dźwigni nawijacza ilość nawoju (do ok. 80% średnicy szpulki)."
+     ]
+    },
+    {
+     "cause": "Szpulka nie dosunięta na trzpień lub pogięta",
+     "likelihood": "niskie",
+     "parts": [
+      "bobbin",
+      "bobbin_winder"
+     ],
+     "fix_steps": [
+      "Wciśnij szpulkę do oporu na trzpień; wymień pogiętą."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "olej",
+   "title": "Problemy z olejem (alarm Err-20, brak rozbryzgu, wycieki, plamy oleju na materiale)",
+   "symptoms": "Alarm oleju, brak rozbryzgu w okienku, olej kapie pod stół lub brudzi materiał przy igle.",
+   "category": "mechanika",
+   "diagnose_question": "Czy poziom oleju jest między dolną a górną kreską wskaźnika?",
+   "causes": [
+    {
+     "cause": "Za mało oleju w misce",
+     "likelihood": "wysokie",
+     "parts": [
+      "oil_window"
+     ],
+     "fix_steps": [
+      "Wyłącz maszynę, dolej olej biały 10 przez otwór wlewowy do poziomu między kreskami.",
+      "Nie przekraczaj górnej kreski."
+     ]
+    },
+    {
+     "cause": "Za dużo oleju lub maszyna przechylana z olejem – wycieki i plamy na materiale",
+     "likelihood": "srednie",
+     "parts": [
+      "oil_window",
+      "needle_bar"
+     ],
+     "fix_steps": [
+      "Spuść nadmiar do poziomu między kreskami.",
+      "Po olejeniu przeszyj kilka minut skrawek materiału, by zebrać nadmiar z igielnicy.",
+      "Plamy przy igle utrzymują się – technik (regulacja ilości oleju igielnicy/chwytacza)."
+     ]
+    },
+    {
+     "cause": "Brak rozbryzgu w okienku przy właściwym poziomie – zatkany knot/filtr pompki",
+     "likelihood": "niskie",
+     "parts": [
+      "oil_window",
+      "hook"
+     ],
+     "fix_steps": [
+      "Pozwól maszynie pracować 1–2 min przy 2000 obr/min i obserwuj.",
+      "Brak rozbryzgu – natychmiast przerwij pracę i wezwij technika (ryzyko zatarcia chwytacza)."
+     ]
+    },
+    {
+     "cause": "Olej brudny/zużyty",
+     "likelihood": "srednie",
+     "parts": [
+      "oil_window"
+     ],
+     "fix_steps": [
+      "Instrukcja: nigdy nie używaj brudnego oleju – wymiana oleju w misce (praktyka ogólna: co 6 miesięcy przy pracy 1-zmianowej)."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "luki_grube_szwy",
+   "title": "Szycie na łukach i przez grube szwy (krzyżowe)",
+   "symptoms": "Na łukach ścieg krzywy lub krótszy; na zgrubieniach maszyna staje, ścieg się skraca, igła się łamie, przepuszcza ściegi zaraz za szwem.",
+   "category": "transport",
+   "diagnose_question": "Czy czujnik grubości jest włączony i nauczony (H01/H02)?",
+   "causes": [
+    {
+     "cause": "Brak automatyki zgrubień – stała prędkość i trajektoria",
+     "likelihood": "wysokie",
+     "parts": [
+      "control_panel",
+      "presser_foot"
+     ],
+     "fix_steps": [
+      "Krótko naciśnij przycisk sensing – włącz czujnik.",
+      "Długo naciśnij sensing → H01: ustaw igłę w pozycji stop, połóż cienką część pod stopką, przytrzymaj P do „H01 ----” i „OK”.",
+      "H02: to samo dla grubej części (np. szew krzyżowy).",
+      "H03–H07: liczba ściegów (5), prędkość (2000 → np. 1500), kompensacja ściegu (5), czułość, tor (4)."
+     ]
+    },
+    {
+     "cause": "Stopka „wspina się” na zgrubienie – brak docisku z tyłu",
+     "likelihood": "srednie",
+     "parts": [
+      "presser_foot",
+      "presser_pressure_screw"
+     ],
+     "fix_steps": [
+      "Użyj podkładki wyrównującej (hump jumper) pod tył stopki przy wjeździe na szew.",
+      "Zwiększ docisk stopki."
+     ]
+    },
+    {
+     "cause": "Na łukach za długi ścieg i za szybkie szycie",
+     "likelihood": "srednie",
+     "parts": [
+      "control_panel",
+      "needle"
+     ],
+     "fix_steps": [
+      "Skróć ścieg o 0,5 mm na łukach o małym promieniu.",
+      "Szyj wolniej, zatrzymuj z igłą w dole (przycisk igły dół) i obracaj materiał na igle przy podniesionej stopce (pedał piętą)."
+     ]
+    },
+    {
+     "cause": "Igła zbyt cienka na grube szwy",
+     "likelihood": "srednie",
+     "parts": [
+      "needle"
+     ],
+     "fix_steps": [
+      "Zwiększ numer igły (nr 16–18; DH do 21)."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "rygiel_niedokladny",
+   "title": "Rygle nie trafiają w ścieg (ścieg wsteczny przesunięty)",
+   "symptoms": "Rygiel początkowy/końcowy tworzy „warkocz” obok szwu zamiast nakładać się na ściegi.",
+   "category": "transport",
+   "diagnose_question": "Czy problem występuje tylko w jednym trybie transportu?",
+   "causes": [
+    {
+     "cause": "Za duża prędkość rygla",
+     "likelihood": "wysokie",
+     "parts": [
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Obniż P04/P05 z 1800 do 1200–1500."
+     ]
+    },
+    {
+     "cause": "Brak kompensacji ściegu wstecznego dla danego toru",
+     "likelihood": "srednie",
+     "parts": [
+      "control_panel",
+      "feed_dog",
+      "reverse_lever"
+     ],
+     "fix_steps": [
+      "Kalibracja P113/P115/P117/P119 (wstecz) dla używanego toru 1–4: szyj do przodu, przytrzymaj dźwignię wsteczną, koryguj do pokrycia ściegów."
+     ]
+    },
+    {
+     "cause": "Zbyt mała liczba ściegów / niewłaściwe ustawienie A,B,C,D",
+     "likelihood": "niskie",
+     "parts": [
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Ustaw np. A=B=3, C=D=3 ściegi (1–F)."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pedal",
+   "title": "Pedał zbyt czuły / za twardy, szarpie przy starcie",
+   "symptoms": "Trudno szyć powoli, maszyna rusza gwałtownie lub pedał wymaga dużej siły; przypadkowe obcinanie piętą.",
+   "category": "elektronika",
+   "diagnose_question": "Czy problem dotyczy przodu pedału (prędkość) czy tyłu (obcinanie/stopka)?",
+   "causes": [
+    {
+     "cause": "Ustawienie sprężyny i cięgna pedału",
+     "likelihood": "wysokie",
+     "parts": [
+      "pedal"
+     ],
+     "fix_steps": [
+      "Przód pedału: przestaw sprężynę dociskową w lewo (lżej) lub w prawo (ciężej) – wg instrukcji.",
+      "Tył pedału: śruba regulacyjna – wkręcanie zwiększa opór (mniej przypadkowych obcięć).",
+      "Skok pedału: przełóż pręt łączący do otworu po prawej stronie – większy skok = łatwiejsze dozowanie prędkości."
+     ]
+    },
+    {
+     "cause": "Za wysoka prędkość maksymalna",
+     "likelihood": "srednie",
+     "parts": [
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Zmniejsz prędkość klawiszem Speed– lub P01 – cały zakres pedału daje wtedy dokładniejszą kontrolę."
+     ]
+    },
+    {
+     "cause": "Strefa wolnych obrotów pedału",
+     "likelihood": "niskie",
+     "parts": [
+      "control_panel",
+      "pedal"
+     ],
+     "fix_steps": [
+      "P42/P43 (300/600) – technik może poszerzyć strefę wolnego startu; włącz soft start."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "stopka_nie_podnosi",
+   "title": "Stopka nie podnosi się automatycznie / opada sama",
+   "symptoms": "Po obcięciu lub zatrzymaniu stopka zostaje na dole albo po kilku sekundach opada.",
+   "category": "elektronika",
+   "diagnose_question": "Czy świeci ikona podnoszenia stopki po obcięciu?",
+   "causes": [
+    {
+     "cause": "Funkcja automatycznego podnoszenia wyłączona",
+     "likelihood": "wysokie",
+     "parts": [
+      "control_panel"
+     ],
+     "fix_steps": [
+      "Krótkie naciśnięcie przycisku stopki – podnoszenie po obcięciu; długie – po zatrzymaniu."
+     ]
+    },
+    {
+     "cause": "Ochrona elektromagnesu – stopka opada po czasie P57 (domyślnie 10 s)",
+     "likelihood": "srednie",
+     "parts": [
+      "presser_foot"
+     ],
+     "fix_steps": [
+      "To normalne zabezpieczenie; podnieś ponownie piętą."
+     ]
+    },
+    {
+     "cause": "Usterka elektromagnesu/wtyczki (Err-06)",
+     "likelihood": "niskie",
+     "parts": [
+      "presser_foot",
+      "servo_motor"
+     ],
+     "fix_steps": [
+      "Sprawdź wtyczki głowicy; serwis."
+     ]
+    }
+   ]
+  }
  ],
  "stitch_balance": {
   "explanation": "Ścieg stębnowy powstaje z dwóch nici: górnej (z igły) i dolnej (ze szpulki w bębenku). Prawidłowo splot (miejsce, gdzie nici się przeplatają) leży DOKŁADNIE W ŚRODKU grubości materiału – z obu stron widać tylko równe kreski nici w swoim kolorze, bez kropek drugiej nici i bez pętelek. Naprężenie górne regulujesz pokrętłem naprężacza głównego na przodzie głowicy (zgodnie z ruchem wskazówek zegara = mocniej), dolne – maleńką śrubką na sprężynie bębenka (zgodnie z ruchem wskazówek zegara = mocniej). ZASADA: najpierw ustaw nić dolną testem opadania (ona jest „wzorcem”), potem wyważaj górną; śrubki bębenka dotykaj rzadko i o małe kąty. Przed regulacją zawsze sprawdź nawleczenie – w ok. 80% przypadków „złe naprężenie” to nić poza talerzykami lub pod sprężynką bębenka. Do testu użyj dwóch kontrastowych kolorów nici (np. góra czarna, dół biała) i 2 warstw docelowego materiału.",
   "read_stitch": [
-   {"look": "Z obu stron równe kreski, splotu nie widać, materiał płaski", "meaning": "Naprężenie wyważone", "action": "Nic nie zmieniaj – zanotuj ustawienie dla tego materiału."},
-   {"look": "Pętelki/gniazdka od spodu (nić górna leży luzem na spodzie)", "meaning": "Górna za słaba lub poza talerzykami/podciągaczem (najczęściej) ALBO dolna za mocna", "action": "1) Nawlecz górę od nowa przy podniesionej stopce. 2) Dokręć górny naprężacz o 1/4 obrotu. 3) Jeśli bębenek w teście nie opada – poluzuj go o 1/8 obrotu."},
-   {"look": "Kropki/pętelki nici dolnej na wierzchu", "meaning": "Górna za mocna ALBO dolna za słaba lub nie pod sprężynką", "action": "1) Sprawdź nawleczenie bębenka. 2) Poluzuj górny o 1/4 obrotu. 3) Jeśli bębenek opada sam – dokręć o 1/8 obrotu."},
-   {"look": "Nić dolna leży prosto na spodzie, a nić górna jest z wierzchu prosto i napięta (splot u góry)", "meaning": "Nić dolna wciągana do góry – górna za mocna względem dolnej", "action": "Poluzuj górę; jeżeli przy bardzo luźnej górze dalej tak jest – dokręć dolną."},
-   {"look": "Nić górna widoczna na spodzie jako proste odcinki (splot u dołu)", "meaning": "Górna przeciągana na spód – górna za słaba lub dolna za mocna", "action": "Dokręć górę o 1/4 obrotu; sprawdź test opadania."},
-   {"look": "Szew marszczy materiał, obie nici napięte, pękają przy rozciąganiu", "meaning": "Obie nici za mocno", "action": "Poluzuj bębenek do dolnej granicy testu opadania, potem obniżaj górę aż do wyważenia."},
-   {"look": "Splot raz u góry, raz u dołu, naprężenie „pływa”", "meaning": "Szarpanie nici na stojaku, brud w talerzykach, nierówna szpulka, zła nić", "action": "Sprawdź stojak (prowadnik nad szpulą), wyczyść talerzyki i bębenek, nawiń nową szpulkę, wymień igłę."},
-   {"look": "Pętle tylko na łukach lub przy zmianie prędkości", "meaning": "Sprężynka kompensacyjna źle ustawiona lub zbyt duża prędkość", "action": "Zmniejsz prędkość; technik ustawia skok i siłę sprężynki kompensacyjnej."}
+   {
+    "look": "Z obu stron równe kreski, splotu nie widać, materiał płaski",
+    "meaning": "Naprężenie wyważone",
+    "action": "Nic nie zmieniaj – zanotuj ustawienie dla tego materiału."
+   },
+   {
+    "look": "Pętelki/gniazdka od spodu (nić górna leży luzem na spodzie)",
+    "meaning": "Górna za słaba lub poza talerzykami/podciągaczem (najczęściej) ALBO dolna za mocna",
+    "action": "1) Nawlecz górę od nowa przy podniesionej stopce. 2) Dokręć górny naprężacz o 1/4 obrotu. 3) Jeśli bębenek w teście nie opada – poluzuj go o 1/8 obrotu."
+   },
+   {
+    "look": "Kropki/pętelki nici dolnej na wierzchu",
+    "meaning": "Górna za mocna ALBO dolna za słaba lub nie pod sprężynką",
+    "action": "1) Sprawdź nawleczenie bębenka. 2) Poluzuj górny o 1/4 obrotu. 3) Jeśli bębenek opada sam – dokręć o 1/8 obrotu."
+   },
+   {
+    "look": "Nić dolna leży prosto na spodzie, a nić górna jest z wierzchu prosto i napięta (splot u góry)",
+    "meaning": "Nić dolna wciągana do góry – górna za mocna względem dolnej",
+    "action": "Poluzuj górę; jeżeli przy bardzo luźnej górze dalej tak jest – dokręć dolną."
+   },
+   {
+    "look": "Nić górna widoczna na spodzie jako proste odcinki (splot u dołu)",
+    "meaning": "Górna przeciągana na spód – górna za słaba lub dolna za mocna",
+    "action": "Dokręć górę o 1/4 obrotu; sprawdź test opadania."
+   },
+   {
+    "look": "Szew marszczy materiał, obie nici napięte, pękają przy rozciąganiu",
+    "meaning": "Obie nici za mocno",
+    "action": "Poluzuj bębenek do dolnej granicy testu opadania, potem obniżaj górę aż do wyważenia."
+   },
+   {
+    "look": "Splot raz u góry, raz u dołu, naprężenie „pływa”",
+    "meaning": "Szarpanie nici na stojaku, brud w talerzykach, nierówna szpulka, zła nić",
+    "action": "Sprawdź stojak (prowadnik nad szpulą), wyczyść talerzyki i bębenek, nawiń nową szpulkę, wymień igłę."
+   },
+   {
+    "look": "Pętle tylko na łukach lub przy zmianie prędkości",
+    "meaning": "Sprężynka kompensacyjna źle ustawiona lub zbyt duża prędkość",
+    "action": "Zmniejsz prędkość; technik ustawia skok i siłę sprężynki kompensacyjnej."
+   }
   ],
   "bobbin_drop_test": "Włóż nawiniętą szpulkę do bębenka i przeciągnij nić pod sprężynką. Trzymaj bębenek za koniec nici (ok. 10–15 cm), zawieszony swobodnie. 1) Bębenek opada sam pod własnym ciężarem – naprężenie za słabe: dokręć śrubkę. 2) Bębenek wisi w miejscu, a po lekkim potrząśnięciu (ruch ręką w dół jak przy jo-jo) zsuwa się o ok. 2–5 cm i staje – naprężenie prawidłowe dla większości materiałów (lżejsze materiały – raczej 5 cm, ciężkie – 2–3 cm). 3) Nie zsuwa się nawet po mocnym potrząśnięciu – za mocno: poluzuj śrubkę. Test rób zawsze z tą samą nicią i pełną/połową szpulki, bębenek suchy i czysty. (praktyka ogólna; wartości typowe dla stębnówek przemysłowych)",
   "upper_tension_howto": "Pokrętło (1) naprężacza głównego na przodzie głowicy: obrót zgodnie z ruchem wskazówek zegara (kierunek A) zwiększa naprężenie, przeciwnie (B) – zmniejsza (instrukcja A7). Krok regulacji: 1/4 obrotu (90°) przy dużych błędach, 1/8 obrotu (45°) przy dopracowaniu – po każdej zmianie przeszyj 10–15 cm próbki. Regulację rób przy OPUSZCZONEJ stopce (talerzyki zamknięte). Naprężacz wstępny (mały, przed głównym) wpływa głównie na długość końcówki nici po automatycznym obcięciu: mocniejszy = krótsza końcówka (ryzyko wyskakiwania nici z igły), słabszy = dłuższa końcówka. Sprężynka kompensacyjna: skok reguluje pokrętło (3) po poluzowaniu śruby (2) – zgodnie z ruchem wskazówek zegara większy skok; siłę sprężynki zmienia się po zdjęciu zespołu naprężacza (5) i poluzowaniu śruby (4) – zgodnie z ruchem wskazówek zegara mocniej (instrukcja A7). Sprężynkę kompensacyjną najlepiej powierzyć technikowi.",
@@ -325,46 +2330,211 @@
  },
  "threading": {
   "upper": [
-   {"step": 1, "text": "Wyłącz zasilanie (instrukcja: nie podłączaj wtyczki do końca nawlekania), podnieś stopkę dźwignią ręczną – talerzyki naprężacza się rozchylą. Obróć koło ręczne do siebie, aż podciągacz nici będzie w najwyższym położeniu.", "part": "presser_foot"},
-   {"step": 2, "text": "Postaw stożek nici na talerzyku stojaka i przeprowadź nić przez prowadnik ramienia stojaka, który ma być dokładnie nad szpulą.", "part": "thread_stand"},
-   {"step": 3, "text": "Przeprowadź nić przez prowadnik nici na górze ramienia maszyny (z tyłu do przodu), a następnie przez otwory prowadnika nad naprężaczem (zygzakiem, wg rysunku na głowicy).", "part": "arm_thread_guide"},
-   {"step": 4, "text": "Przeprowadź nić przez naprężacz wstępny (mały).", "part": "pretension"},
-   {"step": 5, "text": "Owiń nić wokół naprężacza głównego między talerzykami – pociągnij lekko w dół, aż poczujesz, że nić weszła głęboko między talerzyki.", "part": "tension_assembly"},
-   {"step": 6, "text": "Pociągnij nić w górę tak, by zaczepiła o sprężynkę kompensacyjną (sprężynka musi się lekko odchylić).", "part": "check_spring"},
-   {"step": 7, "text": "Przeprowadź nić przez prowadnik nad naprężaczem i przez oczko dźwigni podciągacza nici od prawej do lewej.", "part": "take_up_lever"},
-   {"step": 8, "text": "Sprowadź nić w dół przez prowadniki na czołownicy i prowadnik nici na igielnicy (zaczep na dole igielnicy).", "part": "needle_bar_guide"},
-   {"step": 9, "text": "Nawlecz igłę od lewej do prawej (długi rowek igły jest po lewej stronie) i wyciągnij ok. 5 cm końcówki nici za stopkę.", "part": "needle"},
-   {"step": 10, "text": "Kontrola: opuść stopkę i pociągnij nić przy igle – ma być wyraźny, równy opór. Brak oporu = nić poza talerzykami, nawlecz ponownie.", "part": "tension_assembly"}
+   {
+    "step": 1,
+    "text": "Wyłącz zasilanie (instrukcja: nie podłączaj wtyczki do końca nawlekania), podnieś stopkę dźwignią ręczną – talerzyki naprężacza się rozchylą. Obróć koło ręczne do siebie, aż podciągacz nici będzie w najwyższym położeniu.",
+    "part": "presser_foot"
+   },
+   {
+    "step": 2,
+    "text": "Postaw stożek nici na talerzyku stojaka i przeprowadź nić przez prowadnik ramienia stojaka, który ma być dokładnie nad szpulą.",
+    "part": "thread_stand"
+   },
+   {
+    "step": 3,
+    "text": "Przeprowadź nić przez prowadnik nici na górze ramienia maszyny (z tyłu do przodu), a następnie przez otwory prowadnika nad naprężaczem (zygzakiem, wg rysunku na głowicy).",
+    "part": "arm_thread_guide"
+   },
+   {
+    "step": 4,
+    "text": "Przeprowadź nić przez naprężacz wstępny (mały).",
+    "part": "pretension"
+   },
+   {
+    "step": 5,
+    "text": "Owiń nić wokół naprężacza głównego między talerzykami – pociągnij lekko w dół, aż poczujesz, że nić weszła głęboko między talerzyki.",
+    "part": "tension_assembly"
+   },
+   {
+    "step": 6,
+    "text": "Pociągnij nić w górę tak, by zaczepiła o sprężynkę kompensacyjną (sprężynka musi się lekko odchylić).",
+    "part": "check_spring"
+   },
+   {
+    "step": 7,
+    "text": "Przeprowadź nić przez prowadnik nad naprężaczem i przez oczko dźwigni podciągacza nici od prawej do lewej.",
+    "part": "take_up_lever"
+   },
+   {
+    "step": 8,
+    "text": "Sprowadź nić w dół przez prowadniki na czołownicy i prowadnik nici na igielnicy (zaczep na dole igielnicy).",
+    "part": "needle_bar_guide"
+   },
+   {
+    "step": 9,
+    "text": "Nawlecz igłę od lewej do prawej (długi rowek igły jest po lewej stronie) i wyciągnij ok. 5 cm końcówki nici za stopkę.",
+    "part": "needle"
+   },
+   {
+    "step": 10,
+    "text": "Kontrola: opuść stopkę i pociągnij nić przy igle – ma być wyraźny, równy opór. Brak oporu = nić poza talerzykami, nawlecz ponownie.",
+    "part": "tension_assembly"
+   }
   ],
   "bobbin_insert": [
-   {"step": 1, "text": "Wyłącz zasilanie lub upewnij się, że pedał nie jest wciśnięty. Ustaw igłę w górnym położeniu (koło ręczne do siebie).", "part": "handwheel"},
-   {"step": 2, "text": "Odsuń płytkę suwakową (osłonę chwytacza) po lewej stronie płytki ściegowej, odchyl zatrzask bębenka i wyjmij bębenek z chwytacza.", "part": "bobbin_case"},
-   {"step": 3, "text": "Włóż szpulkę do bębenka tak, aby nić odwijała się zgodnie z ruchem wskazówek zegara (patrząc na otwartą stronę bębenka).", "part": "bobbin"},
-   {"step": 4, "text": "Wprowadź nić w szczelinę na brzegu bębenka i przeciągnij pod sprężynę naprężacza, aż wyjdzie wycięciem/otworkiem na końcu sprężyny.", "part": "bobbin_case"},
-   {"step": 5, "text": "Kontrola: pociągnij nić – szpulka ma obracać się zgodnie z ruchem wskazówek zegara (w kierunku strzałki), lekko i równo; nie może kręcić się „sama” po puszczeniu nici. Zostaw ok. 5 cm końcówki.", "part": "bobbin"},
-   {"step": 6, "text": "Trzymając zatrzask, nasadź bębenek na trzpień chwytacza do oporu, aż wyraźnie kliknie, i puść zatrzask. Niedosunięty bębenek = łamanie igły, hałas, plątanie.", "part": "hook"},
-   {"step": 7, "text": "Przytrzymaj nić górną, obróć koło ręczne do siebie o pełny obrót – igła wyciągnie pętlę nici dolnej przez otwór płytki. Wyciągnij obie nici pod stopką do tyłu.", "part": "needle_plate"},
-   {"step": 8, "text": "Zasuń płytkę suwakową. (Przy obcinaczu automatycznym nie trzeba wyciągać nici dolnej ręcznie – wystarczy przytrzymać nić górną na pierwszych ściegach lub włączyć nipper.)", "part": "needle_plate"}
+   {
+    "step": 1,
+    "text": "Wyłącz zasilanie lub upewnij się, że pedał nie jest wciśnięty. Ustaw igłę w górnym położeniu (koło ręczne do siebie).",
+    "part": "handwheel"
+   },
+   {
+    "step": 2,
+    "text": "Odsuń płytkę suwakową (osłonę chwytacza) po lewej stronie płytki ściegowej, odchyl zatrzask bębenka i wyjmij bębenek z chwytacza.",
+    "part": "bobbin_case"
+   },
+   {
+    "step": 3,
+    "text": "Włóż szpulkę do bębenka tak, aby nić odwijała się zgodnie z ruchem wskazówek zegara (patrząc na otwartą stronę bębenka).",
+    "part": "bobbin"
+   },
+   {
+    "step": 4,
+    "text": "Wprowadź nić w szczelinę na brzegu bębenka i przeciągnij pod sprężynę naprężacza, aż wyjdzie wycięciem/otworkiem na końcu sprężyny.",
+    "part": "bobbin_case"
+   },
+   {
+    "step": 5,
+    "text": "Kontrola: pociągnij nić – szpulka ma obracać się zgodnie z ruchem wskazówek zegara (w kierunku strzałki), lekko i równo; nie może kręcić się „sama” po puszczeniu nici. Zostaw ok. 5 cm końcówki.",
+    "part": "bobbin"
+   },
+   {
+    "step": 6,
+    "text": "Trzymając zatrzask, nasadź bębenek na trzpień chwytacza do oporu, aż wyraźnie kliknie, i puść zatrzask. Niedosunięty bębenek = łamanie igły, hałas, plątanie.",
+    "part": "hook"
+   },
+   {
+    "step": 7,
+    "text": "Przytrzymaj nić górną, obróć koło ręczne do siebie o pełny obrót – igła wyciągnie pętlę nici dolnej przez otwór płytki. Wyciągnij obie nici pod stopką do tyłu.",
+    "part": "needle_plate"
+   },
+   {
+    "step": 8,
+    "text": "Zasuń płytkę suwakową. (Przy obcinaczu automatycznym nie trzeba wyciągać nici dolnej ręcznie – wystarczy przytrzymać nić górną na pierwszych ściegach lub włączyć nipper.)",
+    "part": "needle_plate"
+   }
   ],
   "bobbin_winding": [
-   {"step": 1, "text": "Nałóż pustą szpulkę na trzpień nawijacza (po prawej stronie głowicy, przy kole ręcznym) i dociśnij do oporu.", "part": "bobbin_winder"},
-   {"step": 2, "text": "Nić z drugiego stożka na stojaku przeprowadź przez prowadnik stojaka i naprężacz nawijacza na ramieniu maszyny.", "part": "thread_stand"},
-   {"step": 3, "text": "Owiń koniec nici kilka razy (5–6 zwojów) wokół piasty szpulki zgodnie z ruchem wskazówek zegara lub przewlecz przez otworek szpulki.", "part": "bobbin"},
-   {"step": 4, "text": "Dociśnij dźwignię nawijacza do szpulki – kółko nawijacza dotknie napędu.", "part": "bobbin_winder"},
-   {"step": 5, "text": "Podnieś stopkę (lub wyjmij nić z igły i usuń materiał, żeby nie szyć „na sucho” z nicią) i wciśnij pedał – nawijanie odbywa się w czasie pracy maszyny; możesz nawijać równocześnie z szyciem.", "part": "pedal"},
-   {"step": 6, "text": "Nawijacz wyłącza się sam przy pełnej szpulce (ok. 80% średnicy). Ilość nawoju ustawia śruba na dźwigni nawijacza. Odetnij nić na nożyku nawijacza.", "part": "bobbin_winder"},
-   {"step": 7, "text": "Kontrola: nawój twardy i równy. Gdy nici więcej po jednej stronie – przesuń naprężacz/prowadnik nawijacza w stronę krawędzi z mniejszą ilością nici (praktyka ogólna). Gdy nawój miękki – dokręć naprężacz nawijacza.", "part": "bobbin_winder"}
+   {
+    "step": 1,
+    "text": "Nałóż pustą szpulkę na trzpień nawijacza (po prawej stronie głowicy, przy kole ręcznym) i dociśnij do oporu.",
+    "part": "bobbin_winder"
+   },
+   {
+    "step": 2,
+    "text": "Nić z drugiego stożka na stojaku przeprowadź przez prowadnik stojaka i naprężacz nawijacza na ramieniu maszyny.",
+    "part": "thread_stand"
+   },
+   {
+    "step": 3,
+    "text": "Owiń koniec nici kilka razy (5–6 zwojów) wokół piasty szpulki zgodnie z ruchem wskazówek zegara lub przewlecz przez otworek szpulki.",
+    "part": "bobbin"
+   },
+   {
+    "step": 4,
+    "text": "Dociśnij dźwignię nawijacza do szpulki – kółko nawijacza dotknie napędu.",
+    "part": "bobbin_winder"
+   },
+   {
+    "step": 5,
+    "text": "Podnieś stopkę (lub wyjmij nić z igły i usuń materiał, żeby nie szyć „na sucho” z nicią) i wciśnij pedał – nawijanie odbywa się w czasie pracy maszyny; możesz nawijać równocześnie z szyciem.",
+    "part": "pedal"
+   },
+   {
+    "step": 6,
+    "text": "Nawijacz wyłącza się sam przy pełnej szpulce (ok. 80% średnicy). Ilość nawoju ustawia śruba na dźwigni nawijacza. Odetnij nić na nożyku nawijacza.",
+    "part": "bobbin_winder"
+   },
+   {
+    "step": 7,
+    "text": "Kontrola: nawój twardy i równy. Gdy nici więcej po jednej stronie – przesuń naprężacz/prowadnik nawijacza w stronę krawędzi z mniejszą ilością nici (praktyka ogólna). Gdy nawój miękki – dokręć naprężacz nawijacza.",
+    "part": "bobbin_winder"
+   }
   ]
  },
  "maintenance": [
-  {"interval": "Przed pierwszym uruchomieniem / po długim postoju", "task": "Napełnij miskę olejem białym 10 do poziomu między dolną a górną kreską. Pierwsze ok. 10 min pracy przy 1800–2200 obr/min, aby rozprowadzić olej (instrukcja A7).", "parts": ["oil_window", "servo_motor"]},
-  {"interval": "Codziennie przed pracą", "task": "Sprawdź poziom oleju (między kreskami) i rozbryzg w okienku kontrolnym podczas pracy. Usuń kłaczki z okolic chwytacza, bębenka i ząbków (pędzelek – nie wdmuchuj brudu w maszynę sprężonym powietrzem). Sprawdź igłę (prosta, ostra).", "parts": ["oil_window", "hook", "bobbin_case", "feed_dog"]},
-  {"interval": "Co 8 godzin pracy (sygnalizuje Err-20)", "task": "Kontrola poziomu oleju i dolanie, jeśli trzeba.", "parts": ["oil_window"]},
-  {"interval": "Co zmianę / co 1–2 dni szycia albo po każdym uderzeniu w szpilkę", "task": "Wymiana igły (przy syntetykach i denimie częściej). Igłę wymieniaj przy wyłączonej maszynie: igielnica w górze, rowek w lewo, do oporu. (praktyka ogólna)", "parts": ["needle", "needle_bar"]},
-  {"interval": "Co tydzień", "task": "Zdejmij płytkę ściegową, wyczyść ząbki transportu, okolice noży obcinacza i chwytacz z kłaczków; wyczyść bębenek pod sprężyną; przeciągnij płótno między talerzykami naprężacza. Sprawdź noże obcinacza. (praktyka ogólna)", "parts": ["needle_plate", "feed_dog", "trimmer", "hook", "bobbin_case", "tension_assembly"]},
-  {"interval": "Co miesiąc", "task": "Odchyl głowicę (wyłączona!), usuń kurz z okolic miski olejowej i spodu; sprawdź kable, wtyczki, cięgno pedału i kolanownik; oczyść filtr wentylacji silnika/skrzynki z kurzu. (praktyka ogólna)", "parts": ["servo_motor", "pedal", "knee_lifter", "table"]},
-  {"interval": "Co 6 miesięcy (lub gdy olej jest ciemny/brudny)", "task": "Wymiana oleju w misce i czyszczenie filtra/knota olejowego – najlepiej przez technika. Instrukcja: nigdy nie używaj brudnego, zużytego oleju. (interwał – praktyka ogólna)", "parts": ["oil_window"]},
-  {"interval": "Kiedy wzywać technika", "task": "Przepuszczanie ściegów lub łamanie igieł po wymianie igły (zwłaszcza po złamaniu igły/uderzeniu) – regulacja czasu chwytacza, wysokości igielnicy (znaczniki A/B względem dolnej tulei) i szczeliny nosek–igła; uszkodzony nosek chwytacza; wysokość/pozycja ząbków; regulacja noży obcinacza; brak rozbryzgu oleju; powtarzające się Err-xx; każda praca przy elektronice (skrzynka ma wysokie napięcie – odczekaj min. 1 min po wyłączeniu). Instrukcja: przy wymianie chwytacza upewnij się, że nowy jest zgodny z poprzednim.", "parts": ["hook", "needle_bar", "feed_dog", "trimmer", "servo_motor", "control_panel"]}
+  {
+   "interval": "Przed pierwszym uruchomieniem / po długim postoju",
+   "task": "Napełnij miskę olejem białym 10 do poziomu między dolną a górną kreską. Pierwsze ok. 10 min pracy przy 1800–2200 obr/min, aby rozprowadzić olej (instrukcja A7).",
+   "parts": [
+    "oil_window",
+    "servo_motor"
+   ]
+  },
+  {
+   "interval": "Codziennie przed pracą",
+   "task": "Sprawdź poziom oleju (między kreskami) i rozbryzg w okienku kontrolnym podczas pracy. Usuń kłaczki z okolic chwytacza, bębenka i ząbków (pędzelek – nie wdmuchuj brudu w maszynę sprężonym powietrzem). Sprawdź igłę (prosta, ostra).",
+   "parts": [
+    "oil_window",
+    "hook",
+    "bobbin_case",
+    "feed_dog"
+   ]
+  },
+  {
+   "interval": "Co 8 godzin pracy (sygnalizuje Err-20)",
+   "task": "Kontrola poziomu oleju i dolanie, jeśli trzeba.",
+   "parts": [
+    "oil_window"
+   ]
+  },
+  {
+   "interval": "Co zmianę / co 1–2 dni szycia albo po każdym uderzeniu w szpilkę",
+   "task": "Wymiana igły (przy syntetykach i denimie częściej). Igłę wymieniaj przy wyłączonej maszynie: igielnica w górze, rowek w lewo, do oporu. (praktyka ogólna)",
+   "parts": [
+    "needle",
+    "needle_bar"
+   ]
+  },
+  {
+   "interval": "Co tydzień",
+   "task": "Zdejmij płytkę ściegową, wyczyść ząbki transportu, okolice noży obcinacza i chwytacz z kłaczków; wyczyść bębenek pod sprężyną; przeciągnij płótno między talerzykami naprężacza. Sprawdź noże obcinacza. (praktyka ogólna)",
+   "parts": [
+    "needle_plate",
+    "feed_dog",
+    "trimmer",
+    "hook",
+    "bobbin_case",
+    "tension_assembly"
+   ]
+  },
+  {
+   "interval": "Co miesiąc",
+   "task": "Odchyl głowicę (wyłączona!), usuń kurz z okolic miski olejowej i spodu; sprawdź kable, wtyczki i cięgno pedału; oczyść filtr wentylacji silnika/skrzynki z kurzu. (praktyka ogólna)",
+   "parts": [
+    "servo_motor",
+    "pedal",
+    "table"
+   ]
+  },
+  {
+   "interval": "Co 6 miesięcy (lub gdy olej jest ciemny/brudny)",
+   "task": "Wymiana oleju w misce i czyszczenie filtra/knota olejowego – najlepiej przez technika. Instrukcja: nigdy nie używaj brudnego, zużytego oleju. (interwał – praktyka ogólna)",
+   "parts": [
+    "oil_window"
+   ]
+  },
+  {
+   "interval": "Kiedy wzywać technika",
+   "task": "Przepuszczanie ściegów lub łamanie igieł po wymianie igły (zwłaszcza po złamaniu igły/uderzeniu) – regulacja czasu chwytacza, wysokości igielnicy (znaczniki A/B względem dolnej tulei) i szczeliny nosek–igła; uszkodzony nosek chwytacza; wysokość/pozycja ząbków; regulacja noży obcinacza; brak rozbryzgu oleju; powtarzające się Err-xx; każda praca przy elektronice (skrzynka ma wysokie napięcie – odczekaj min. 1 min po wyłączeniu). Instrukcja: przy wymianie chwytacza upewnij się, że nowy jest zgodny z poprzednim.",
+   "parts": [
+    "hook",
+    "needle_bar",
+    "feed_dog",
+    "trimmer",
+    "servo_motor",
+    "control_panel"
+   ]
+  }
  ],
  "safety": [
   "Przed nawlekaniem, wymianą szpulki, igły, stopki, płytki lub ząbków, przed naprawą oraz przy odejściu od maszyny wyłącz zasilanie i upewnij się, że pedał nie jest wciśnięty.",

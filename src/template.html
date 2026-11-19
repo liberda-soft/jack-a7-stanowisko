@@ -1,0 +1,1276 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stanowisko JACK A7</title>
+<meta name="description" content="Interaktywny model 3D stębnówki JACK A7 z diagnostyką ściegu, naprężeniem nici, ustawieniami dla tkanin i nawlekaniem.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,500..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one-screen workbench — 3D stage on the left, tabbed service manual on the right; stacks on phones. */
+:root{
+  --bg:#edf1f3; --surface:#ffffff; --sunk:#f4f7f8; --ink:#13212a; --muted:#566771; --line:#d4dde2;
+  --accent:#0e9ccf; --accent-ink:#0a6f95; --accent-soft:#e0f3fb; --on-accent:#ffffff;
+  --wood:#c27b42; --wood-soft:#f7e8da;
+  --good:#1f7d55; --warn:#a9650a; --bad:#bf3527;
+  --good-soft:#e2f3ea; --warn-soft:#fbefdc; --bad-soft:#f9e4e1;
+  --stage-a:#fbfcfc; --stage-b:#d5dee3;
+  --fabric:#cbd5da; --fabric-2:#aebbc2;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0b1216; --surface:#111b21; --sunk:#0e171c; --ink:#e2ebef; --muted:#8fa1ab; --line:#223139;
+  --accent:#38bfe9; --accent-ink:#86d8f3; --accent-soft:#0f2d39; --on-accent:#03202b;
+  --wood:#dd9e67; --wood-soft:#36271b;
+  --good:#4fc48c; --warn:#e6a443; --bad:#ef7363;
+  --good-soft:#12301f; --warn-soft:#352612; --bad-soft:#3a1915;
+  --stage-a:#1d2a31; --stage-b:#090f12;
+  --fabric:#3b4a51; --fabric-2:#2b383e; color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --bg:#0b1216; --surface:#111b21; --sunk:#0e171c; --ink:#e2ebef; --muted:#8fa1ab; --line:#223139;
+  --accent:#38bfe9; --accent-ink:#86d8f3; --accent-soft:#0f2d39; --on-accent:#03202b;
+  --wood:#dd9e67; --wood-soft:#36271b;
+  --good:#4fc48c; --warn:#e6a443; --bad:#ef7363;
+  --good-soft:#12301f; --warn-soft:#352612; --bad-soft:#3a1915;
+  --stage-a:#1d2a31; --stage-b:#090f12;
+  --fabric:#3b4a51; --fabric-2:#2b383e; color-scheme:dark; }
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--f-body);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.app{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr);gap:10px;
+  padding-block:10px 12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* header */
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px 24px;flex-wrap:wrap}
+.brand h1{margin:0;font-family:var(--f-display);font-weight:800;font-stretch:88%;font-size:clamp(22px,2.4vw,30px);letter-spacing:-.01em;line-height:1.05;text-wrap:balance}
+.brand h1 span{color:var(--accent)}
+.brand p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.spec{font:500 11.5px/1.4 var(--f-mono);color:var(--muted);display:flex;gap:6px 14px;flex-wrap:wrap}
+.spec b{color:var(--ink);font-weight:500}
+.ruler{grid-column:1/-1;height:12px;border-top:1px solid var(--wood);
+  background:
+   repeating-linear-gradient(90deg,var(--wood) 0 1px,transparent 1px 50px) top/100% 11px no-repeat,
+   repeating-linear-gradient(90deg,var(--wood) 0 1px,transparent 1px 10px) top/100% 5px no-repeat;opacity:.75}
+.head-wrap{display:grid;gap:8px}
+.app>*,.work>*,.head-wrap>*{min-width:0}
+
+/* workbench */
+.work{display:grid;grid-template-columns:minmax(0,1fr) minmax(380px,460px);gap:12px;min-height:0}
+.stage{position:relative;min-height:0;border-radius:14px;overflow:hidden;border:1px solid var(--line);
+  background:radial-gradient(120% 90% at 40% 30%,var(--stage-a),var(--stage-b))}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#gl.hot{cursor:pointer}
+.labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.dot{position:absolute;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:2px solid var(--surface);
+  background:var(--accent);box-shadow:0 1px 4px rgba(0,0,0,.35);pointer-events:auto;cursor:pointer;padding:0;transition:transform .15s,opacity .2s}
+.dot:hover,.dot.on{transform:scale(1.35)}
+.dot.dim{opacity:.35}
+.dot.on{background:var(--wood)}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font:500 12px/1.3 var(--f-body);padding:5px 8px;border-radius:6px;white-space:nowrap;transform:translate(12px,-120%);z-index:3}
+.tools{position:absolute;top:10px;left:10px;right:10px;display:flex;gap:6px;flex-wrap:wrap;z-index:2;pointer-events:none}
+.tools button{pointer-events:auto}
+.chip{border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(6px);
+  border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.hint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--muted);pointer-events:none;z-index:1}
+.legend{position:absolute;right:12px;bottom:10px;font:500 11.5px var(--f-mono);color:var(--muted);display:flex;gap:10px;z-index:1}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:4px}
+.partcard{position:absolute;left:12px;bottom:36px;width:min(360px,calc(100% - 24px));max-height:60%;overflow:auto;z-index:4;
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 14px 12px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.partcard h3{margin:0 26px 4px 0;font:700 17px/1.2 var(--f-display);font-stretch:92%}
+.partcard p{margin:0 0 8px;font-size:13.5px;color:var(--muted)}
+.x{position:absolute;top:8px;right:8px;border:0;background:none;font-size:20px;line-height:1;cursor:pointer;color:var(--muted);padding:4px 6px}
+.loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:13px}
+
+/* side */
+.side{min-height:0;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tabs{display:flex;gap:2px;overflow-x:auto;padding:6px 6px 0;border-bottom:1px solid var(--line);scrollbar-width:none;flex:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:0;background:none;padding:9px 11px 10px;font-weight:600;font-size:13.5px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.panes{flex:1;min-height:0;overflow:auto;padding:16px 16px 24px}
+.pane{display:grid;gap:14px;align-content:start}
+h2{margin:0;font:700 20px/1.15 var(--f-display);font-stretch:90%;text-wrap:balance}
+h4{margin:0;font:600 12px/1.2 var(--f-body);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.lead{margin:0;color:var(--muted);font-size:14px;max-width:62ch}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.mono{font-family:var(--f-mono)}
+.stack{display:grid;gap:8px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+input[type=search]{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:var(--sunk);color:var(--ink);font:inherit}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters .chip{background:var(--sunk);backdrop-filter:none}
+.filters .chip[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+
+.feature{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;text-align:left;width:100%;cursor:pointer;
+  border:1px solid color-mix(in srgb,var(--accent) 45%,var(--line));background:var(--accent-soft);border-radius:12px;padding:12px 14px}
+.feature strong{display:block;font:700 15.5px/1.25 var(--f-display);font-stretch:92%}
+.feature span{font-size:13px;color:var(--muted)}
+.feature svg{width:46px;height:46px}
+
+.list{display:grid;gap:6px}
+.item{display:grid;gap:2px;text-align:left;width:100%;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 12px;cursor:pointer}
+.item:hover{border-color:var(--accent)}
+.item b{font-weight:600;font-size:14.5px}
+.item small{color:var(--muted);font-size:12.5px;line-height:1.4}
+.cat{font:500 10.5px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent-ink)}
+
+.back{justify-self:start;border:0;background:none;color:var(--accent-ink);font-weight:600;cursor:pointer;padding:0}
+.symptom{background:var(--sunk);border-radius:10px;padding:10px 12px;font-size:14px}
+.q{border-left:3px solid var(--wood);padding:4px 0 4px 10px;font-size:14px}
+.cause{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px}
+.cause header{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
+.cause header b{font-size:14.5px;line-height:1.35}
+.pill{flex:none;font:600 10.5px/1 var(--f-mono);text-transform:uppercase;letter-spacing:.05em;padding:4px 7px;border-radius:999px}
+.p-hi{background:var(--bad-soft);color:var(--bad)} .p-mid{background:var(--warn-soft);color:var(--warn)} .p-lo{background:var(--sunk);color:var(--muted)}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.steps label{display:grid;grid-template-columns:20px 1fr;gap:8px;align-items:start;font-size:13.8px;cursor:pointer;padding:3px 0}
+.steps input{margin:3px 0 0;accent-color:var(--accent)}
+.steps input:checked + span{color:var(--muted);text-decoration:line-through}
+.show{justify-self:start;border:1px solid var(--line);background:var(--sunk);border-radius:8px;padding:5px 9px;font-size:12.5px;cursor:pointer}
+.show:hover{border-color:var(--accent);color:var(--accent-ink)}
+
+/* tension sim */
+.sim{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.sim svg{display:block;width:100%;height:auto;background:var(--sunk)}
+.sim .ctrls{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
+.ctrl label{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600}
+.ctrl output{font-family:var(--f-mono);font-weight:500;color:var(--muted)}
+.ctrl input{width:100%;accent-color:var(--accent)}
+.ctrl.lower input{accent-color:var(--wood)}
+.verdict{padding:12px;border-top:1px solid var(--line);display:grid;gap:4px;font-size:14px}
+.verdict b{font:700 15px/1.3 var(--f-display);font-stretch:92%}
+.verdict.ok b{color:var(--good)} .verdict.warn b{color:var(--warn)} .verdict.bad b{color:var(--bad)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;vertical-align:top;padding:7px 8px;border-bottom:1px solid var(--line)}
+th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.tw table tr:last-child td{border-bottom:0}
+.box{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:6px;font-size:14px}
+.box p{margin:0}
+
+/* fabrics */
+.fabrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}
+.fab{border:1px solid var(--line);border-radius:10px;padding:9px 10px;text-align:left;background:var(--surface);cursor:pointer;display:grid;gap:2px}
+.fab b{font-size:13.5px;line-height:1.25}
+.fab small{font:500 11px var(--f-mono);color:var(--muted)}
+.fab[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.kv{display:grid;grid-template-columns:minmax(110px,36%) 1fr;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.kv div{padding:8px 10px;border-bottom:1px solid var(--line);font-size:13.8px;min-width:0}
+.kv div:nth-child(odd){background:var(--sunk);color:var(--muted);font-size:12.5px;font-weight:600}
+.kv div:nth-last-child(-n+2){border-bottom:0}
+.btn{border:0;background:var(--accent);color:var(--on-accent);font-weight:600;border-radius:9px;padding:8px 13px;cursor:pointer;font-size:13.5px}
+.btn.ghost{background:var(--sunk);color:var(--ink);border:1px solid var(--line)}
+
+/* threading */
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{flex:1;border:0;background:var(--surface);padding:8px 6px;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--ink)}
+.tsteps{list-style:none;margin:0;padding:0;display:grid;gap:4px;counter-reset:s}
+.tsteps button{width:100%;text-align:left;display:grid;grid-template-columns:28px 1fr;gap:8px;border:1px solid transparent;background:none;border-radius:9px;padding:7px 8px;cursor:pointer;font-size:13.8px;align-items:start}
+.tsteps button:hover{background:var(--sunk)}
+.tsteps button .n{font:600 12px/22px var(--f-mono);width:24px;height:24px;border-radius:50%;text-align:center;background:var(--sunk);border:1px solid var(--line)}
+.tsteps button.done .n{background:var(--wood-soft);border-color:var(--wood);color:var(--wood)}
+.tsteps button.cur{border-color:var(--accent);background:var(--accent-soft)}
+.tsteps button.cur .n{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+
+/* panel buttons */
+.pbtns{display:grid;gap:6px}
+.pb{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:start}
+.pb .ic{font:600 13px/1 var(--f-mono);background:#0c1013;color:#e9eef1;border-radius:8px;height:40px;display:grid;place-items:center;border:1px solid #2a3238}
+.pb b{font-size:14px}
+.pb p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.pb.flash{animation:flash 1.6s ease}
+@keyframes flash{0%,40%{border-color:var(--accent);background:var(--accent-soft)}100%{}}
+code,.code{font-family:var(--f-mono);font-size:.92em;background:var(--sunk);padding:1px 5px;border-radius:4px}
+a{color:var(--accent-ink)}
+.foot{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+
+@media (max-width: 920px){
+  html,body{height:auto}
+  .app{height:auto}
+  .work{grid-template-columns:minmax(0,1fr)}
+  .hint{display:none}
+  .stage{height:60vh;min-height:360px}
+  .side{overflow:visible}
+  .panes{overflow:visible}
+  .tabs{position:sticky;top:env(safe-area-inset-top,0px);background:var(--surface);z-index:5}
+}
+@media (max-width: 480px){ .sim .ctrls{grid-template-columns:1fr} .legend{display:none} }
+@media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="head-wrap">
+    <header class="top">
+      <div class="brand">
+        <h1>Stanowisko <span>JACK A7</span></h1>
+        <p>Stębnówka z elektronicznym transportem — model 3D, diagnostyka i ustawienia</p>
+      </div>
+      <div class="spec" aria-label="Dane maszyny">
+        <span>AC servo <b>550 W</b></span><span>max <b>5000 rpm</b></span><span><b>220 V</b> 50/60 Hz</span><span>S/N <b>1102522P023440165</b></span>
+      </div>
+    </header>
+    <div class="ruler" aria-hidden="true"></div>
+  </div>
+
+  <main class="work">
+    <section class="stage" id="stage" aria-label="Model 3D maszyny">
+      <canvas id="gl" aria-label="Model 3D. Przeciągnij, aby obracać. Kliknij część, aby zobaczyć opis."></canvas>
+      <div class="loading" id="loading">Ładowanie modelu 3D…</div>
+      <div class="labels" id="labels"></div>
+      <div class="tip" id="tip" hidden></div>
+      <div class="tools">
+        <button class="chip" id="v-head" type="button">Głowica</button>
+        <button class="chip" id="v-all" type="button">Całe stanowisko</button>
+        <button class="chip" id="v-hook" type="button">Chwytacz</button>
+        <button class="chip" id="t-xray" type="button" aria-pressed="false">Prześwietlenie</button>
+        <button class="chip" id="t-sew" type="button" aria-pressed="false">Ruch igły</button>
+        <button class="chip" id="t-dots" type="button" aria-pressed="false">Punkty</button>
+      </div>
+      <div class="partcard" id="partcard" hidden>
+        <button class="x" id="pc-x" type="button" aria-label="Zamknij opis części">×</button>
+        <h3 id="pc-name"></h3>
+        <p id="pc-desc"></p>
+        <div id="pc-rel" class="stack"></div>
+      </div>
+      <div class="hint">Przeciągnij: obrót · kółko/szczypanie: zoom · kliknij część</div>
+      <div class="legend"><span><i style="background:#ff5a2e"></i>nić górna</span><span><i style="background:#f2b233"></i>nawijanie</span></div>
+    </section>
+
+    <aside class="side">
+      <nav class="tabs" role="tablist" aria-label="Sekcje">
+        <button class="tab" role="tab" data-tab="diagnoza">Diagnoza</button>
+        <button class="tab" role="tab" data-tab="naprezenie">Naprężenie</button>
+        <button class="tab" role="tab" data-tab="ustawienia">Ustawienia</button>
+        <button class="tab" role="tab" data-tab="nawlekanie">Nawlekanie</button>
+        <button class="tab" role="tab" data-tab="panel">Panel</button>
+        <button class="tab" role="tab" data-tab="serwis">Serwis</button>
+      </nav>
+      <div class="panes" id="panes">
+        <section class="pane" id="pane-diagnoza"></section>
+        <section class="pane" id="pane-naprezenie" hidden></section>
+        <section class="pane" id="pane-ustawienia" hidden></section>
+        <section class="pane" id="pane-nawlekanie" hidden></section>
+        <section class="pane" id="pane-panel" hidden></section>
+        <section class="pane" id="pane-serwis" hidden></section>
+      </div>
+    </aside>
+  </main>
+</div>
+
+<script id="kb" type="application/json">__KB__</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+"use strict";
+const KB = (()=>{ try{ return JSON.parse(document.getElementById('kb').textContent) }catch(e){ console.error(e); return {} } })();
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const store = {
+  get(k,d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d }catch(e){ return d } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)) }catch(e){} }
+};
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ------------------------------------------------------------------ parts */
+const PART = {
+  thread_stand:{n:'Stojak na nici', d:'Teleskopowy stojak z dwoma talerzami na stożki. Górne ramię musi być dokładnie nad stożkiem — inaczej nić skacze i szarpie.', dist:120},
+  arm_thread_guide:{n:'Prowadnik nici na ramieniu', d:'Pionowy pręt z oczkami na górze ramienia. Pierwsze miejsce, przez które nić wchodzi na maszynę.', dist:30},
+  pretension:{n:'Prowadnik / wstępny naprężacz', d:'Prowadnik z otworami na czole głowicy. Uspokaja nić, zanim trafi między talerzyki naprężacza.', dist:24},
+  tension_assembly:{n:'Naprężacz nici górnej', d:'Talerzyki z nakrętką. W prawo (zgodnie z zegarem) = mocniej, w lewo = słabiej. Reguluj ćwierć obrotu naraz.', dist:22},
+  check_spring:{n:'Sprężynka kontrolna', d:'Odbiera luz nici, gdy igła schodzi w dół. Za słaba lub złamana daje pętelki i przepuszczone ściegi.', dist:20},
+  take_up_lever:{n:'Podciągacz nici (niciowód)', d:'Ruchome ramię na czole głowicy, które dociąga supeł. Nić musi przejść przez jego oczko od prawej do lewej.', dist:24},
+  needle_bar_guide:{n:'Prowadniki nad igłą', d:'Oczka na czole głowicy i na igielnicy prowadzące nić do ucha igły.', dist:22},
+  needle_bar:{n:'Igielnica', d:'Pręt, w którym zamocowana jest igła. Jej wysokość ustawia technik razem z momentem chwytacza.', dist:20},
+  needle:{n:'Igła', d:'A7-DH (wersja ciężka): igły DPx5, nr 18–21 (Nm 110–130). Wersja A7-D: DBx1 nr 11–18. Długi rowek igły od strony operatora, ucho nawlekane od lewej do prawej. Wymieniaj po uderzeniu albo gdy ścieg zaczyna przepuszczać.', dist:16},
+  presser_foot:{n:'Stopka', d:'Dociska materiał do ząbków. Podnoszona dźwignią ręczną, kolanownikiem lub automatycznie.', dist:18},
+  presser_pressure_screw:{n:'Śruba docisku stopki', d:'Pokrętło na szczycie głowicy. W prawo = mocniejszy docisk (grube materiały), w lewo = słabszy (cienkie, śliskie).', dist:24},
+  needle_plate:{n:'Płytka ściegowa', d:'Płytka z otworem na igłę i szczelinami na ząbki. Zadziory na otworze strzępią i zrywają nić.', dist:20},
+  feed_dog:{n:'Ząbki transportu', d:'Przesuwają materiał o długość ściegu. W A7 długość ustawia się elektronicznie na panelu.', dist:18},
+  bobbin:{n:'Szpulka', d:'Nić dolna. Nawinięta równo, nie do pełna (ok. 80%), bez luźnych zwojów.', dist:18},
+  bobbin_case:{n:'Bębenek (kapsel)', d:'Trzyma szpulkę. Mała śrubka na sprężynce reguluje naprężenie nici dolnej — obracaj bardzo małymi krokami.', dist:18},
+  hook:{n:'Chwytacz rotacyjny', d:'Chwyta pętlę nici górnej i oplata nią szpulkę. Ustawienie chwytacza względem igły to praca dla technika.', dist:20},
+  bobbin_winder:{n:'Nawijacz szpulek', d:'Na górze ramienia. Nawija szpulkę podczas normalnego szycia; obok ma własny naprężacz nici.', dist:24},
+  control_panel:{n:'Panel sterowania', d:'Długość ściegu, rygle, obcinanie, pozycja igły, tryb transportu i prędkość. Kliknij przycisk na modelu, aby zobaczyć jego funkcję.', dist:30},
+  reverse_lever:{n:'Przycisk szycia wstecz', d:'Niebieski przycisk przy głowicy: przytrzymany szyje wstecz (ręczny rygiel).', dist:20},
+  oil_window:{n:'Wziernik oleju', d:'Okienko z czerwonym wskaźnikiem na kolumnie. Poziom oleju sprawdzaj przed pracą.', dist:22},
+  handwheel:{n:'Koło ręczne', d:'Na boku silnika. Obracaj zawsze do siebie (od góry w stronę operatora).', dist:34},
+  servo_motor:{n:'Silnik serwo i sterownik', d:'Napęd bezpośredni AC 220 V, 550 W, max 5000 obr./min. Nie otwierać obudowy; gniazdo USB do aktualizacji.', dist:40},
+  pedal:{n:'Pedał', d:'Wciśnięcie przodem = szycie, piętą do tyłu = obcięcie nici, lekko piętą = podniesienie stopki.', dist:110},
+  knee_lifter:{n:'Kolanownik', d:'Podnosi stopkę kolanem, gdy obie ręce prowadzą materiał.', dist:70},
+  trimmer:{n:'Obcinacz nici', d:'Nóż pod płytką ściegową, uruchamiany automatycznie po szyciu.', dist:18},
+  table:{n:'Stół', d:'Blat 110 cm z miarką na krawędzi, szuflada i rama z regulacją wysokości.', dist:190}
+};
+const HIDDEN = new Set(['bobbin','bobbin_case','hook','trimmer']);
+
+/* ------------------------------------------------------------------ 3D */
+const stageEl = $('#stage'), canvas = $('#gl');
+let renderer, scene, camera, controls, M, world;
+const parts = {};            // id -> {meshes:[], anchor:Vector3}
+const pickList = [];
+const xrayMats = [];
+let xray = false, sewing = false;
+let selected = null, hoverId = null; const hl = new Set();
+const anim = {};             // moving groups
+const threads = {};
+
+function initGL(){
+  if(!window.THREE){ $('#loading').textContent = 'Nie udało się wczytać biblioteki 3D. Sprawdź połączenie z internetem.'; return false }
+  renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(32, 1, 1, 3000);
+  controls = new THREE.OrbitControls(camera, canvas);
+  controls.enableDamping = true; controls.dampingFactor = .08;
+  controls.minDistance = 10; controls.maxDistance = 480; controls.maxPolarAngle = Math.PI*.93;
+  scene.environment = makeEnv();
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8e99a1, .45));
+  const sun = new THREE.DirectionalLight(0xffffff, .85);
+  sun.position.set(-70,170,120); sun.castShadow = true;
+  sun.shadow.mapSize.set(2048,2048);
+  Object.assign(sun.shadow.camera, {left:-140,right:140,top:140,bottom:-140,near:20,far:500});
+  sun.shadow.bias = -.0004; sun.shadow.normalBias = .02;
+  scene.add(sun);
+  const rim = new THREE.DirectionalLight(0xe4f5ff, .35); rim.position.set(110,70,-90); scene.add(rim);
+  world = new THREE.Group(); scene.add(world);
+  M = new THREE.Group(); M.position.set(8,0,-4); world.add(M);
+  buildAll();
+  return true;
+}
+
+function makeEnv(){
+  const c = document.createElement('canvas'); c.width = 512; c.height = 256; const g = c.getContext('2d');
+  const gr = g.createLinearGradient(0,0,0,256);
+  gr.addColorStop(0,'#ffffff'); gr.addColorStop(.42,'#dfe7ec'); gr.addColorStop(.52,'#7c868e'); gr.addColorStop(1,'#3a4147');
+  g.fillStyle = gr; g.fillRect(0,0,512,256);
+  g.fillStyle = 'rgba(255,255,255,.95)'; g.fillRect(70,46,100,46); g.fillRect(300,36,150,34); g.fillRect(230,100,40,20);
+  const t = new THREE.CanvasTexture(c); t.mapping = THREE.EquirectangularReflectionMapping; t.encoding = THREE.sRGBEncoding;
+  const pm = new THREE.PMREMGenerator(renderer); const env = pm.fromEquirectangular(t).texture; t.dispose(); pm.dispose();
+  return env;
+}
+
+function noiseTex(){
+  const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d');
+  const img = g.createImageData(256,256);
+  for(let i=0;i<img.data.length;i+=4){ const v = 128 + (Math.random()-.5)*90; img.data[i]=img.data[i+1]=img.data[i+2]=v; img.data[i+3]=255 }
+  g.putImageData(img,0,0); g.filter = 'blur(1.6px)'; g.drawImage(c,0,0);
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(.35,.35); return t;
+}
+
+const MAT = {};
+function mats(){
+  const S = (o)=> new THREE.MeshStandardMaterial(o);
+  const bump = noiseTex();
+  MAT.enamel = S({color:0xeef0ec, roughness:.5, metalness:0, bumpMap:bump, bumpScale:.04, envMapIntensity:.5});
+  MAT.cyan = S({color:0x12a3d8, roughness:.35});
+  MAT.grey = S({color:0x8e959b, roughness:.6, envMapIntensity:.45});
+  MAT.dgrey = S({color:0x5b6268, roughness:.6});
+  MAT.chrome = S({color:0xe9ecef, metalness:1, roughness:.16});
+  MAT.steel = S({color:0xb3b9be, metalness:.85, roughness:.34});
+  MAT.black = S({color:0x1a1d20, roughness:.45});
+  MAT.rubber = S({color:0x2a2d30, roughness:.9});
+  MAT.laminate = S({color:0xf3f3f0, roughness:.78});
+  MAT.beech = S({color:0xd4935c, roughness:.65});
+  MAT.frame = S({color:0xebedea, roughness:.48});
+  MAT.cone = S({color:0xf6f6f1, roughness:.92});
+  MAT.clear = S({color:0xdfeff6, roughness:.1, transparent:true, opacity:.55});
+  MAT.red = S({color:0xd8322a, roughness:.4});
+  MAT.casting = S({color:0x8f979d, roughness:.6, metalness:.3});
+  MAT.thread = S({color:0xff5a2e, roughness:.6, emissive:0x6a1c00, emissiveIntensity:.5});
+  MAT.thread2 = S({color:0xf2b233, roughness:.6, emissive:0x5a3b00, emissiveIntensity:.5});
+  MAT.bobbinThread = S({color:0xf6f1e6, roughness:.9});
+}
+
+/* geometry helpers */
+function roundedShape(pts, radii){
+  const s = new THREE.Shape(), n = pts.length;
+  for(let i=0;i<n;i++){
+    const p0 = pts[(i-1+n)%n], p1 = pts[i], p2 = pts[(i+1)%n];
+    const r = Array.isArray(radii) ? radii[i] : radii;
+    const v1x = p0[0]-p1[0], v1y = p0[1]-p1[1], v2x = p2[0]-p1[0], v2y = p2[1]-p1[1];
+    const l1 = Math.hypot(v1x,v1y), l2 = Math.hypot(v2x,v2y), rr = Math.min(r, l1/2, l2/2);
+    const ax = p1[0]+v1x/l1*rr, ay = p1[1]+v1y/l1*rr, bx = p1[0]+v2x/l2*rr, by = p1[1]+v2y/l2*rr;
+    if(i===0) s.moveTo(ax,ay); else s.lineTo(ax,ay);
+    s.quadraticCurveTo(p1[0],p1[1],bx,by);
+  }
+  s.closePath(); return s;
+}
+const roundRect = (w,h,r)=> roundedShape([[-w/2,-h/2],[w/2,-h/2],[w/2,h/2],[-w/2,h/2]], r);
+function extrude(shape, depth, bevel=.6, seg=3){
+  const g = new THREE.ExtrudeGeometry(shape, {depth, bevelEnabled:bevel>0, bevelThickness:bevel, bevelSize:bevel, bevelSegments:seg, curveSegments:12});
+  g.translate(0,0,-depth/2); return g;
+}
+function rbox(w,h,d,b){ b = Math.min(b, w/2.2, h/2.2, d/2.2); return extrude(roundRect(w-2*b, h-2*b, b*.9), Math.max(.01, d-2*b), b, 3) }
+const cyl = (rt,rb,h,seg=24)=> new THREE.CylinderGeometry(rt,rb,h,seg);
+
+function reg(id, mesh){
+  if(!id) return mesh;
+  (parts[id] ||= {meshes:[]}).meshes.push(mesh);
+  mesh.userData.part = id;
+  if(Array.isArray(mesh.material)) mesh.material = mesh.material.map(m=>m.clone()); else mesh.material = mesh.material.clone();
+  return mesh;
+}
+function mk(geo, mat, id, parent, pos, rot, opt={}){
+  const m = new THREE.Mesh(geo, mat);
+  if(pos) m.position.set(pos[0],pos[1],pos[2]);
+  if(rot) m.rotation.set(rot[0]||0,rot[1]||0,rot[2]||0);
+  m.castShadow = opt.cast !== false; m.receiveShadow = true;
+  (parent||M).add(m); reg(id, m);
+  if(!opt.noPick) pickList.push(m); else m.userData.noPick = true;
+  if(opt.xray){ m.userData.xray = true; (Array.isArray(m.material)?m.material:[m.material]).forEach(x=>xrayMats.push(x)) }
+  return m;
+}
+function rod(a, b, r, mat, id, parent){
+  const A = new THREE.Vector3(...a), B = new THREE.Vector3(...b), len = A.distanceTo(B);
+  const m = mk(cyl(r,r,len,12), mat, id, parent);
+  m.position.copy(A).add(B).multiplyScalar(.5);
+  m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), B.clone().sub(A).normalize());
+  return m;
+}
+
+/* canvas textures */
+function cvTex(w,h,draw){
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  const t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; t.anisotropy = 8;
+  t.userData = {c, draw}; draw(c.getContext('2d'), w, h); return t;
+}
+function redraw(t){ const g = t.userData.c.getContext('2d'); g.clearRect(0,0,t.userData.c.width,t.userData.c.height); t.userData.draw(g, t.userData.c.width, t.userData.c.height); t.needsUpdate = true }
+function rr(g,x,y,w,h,r){ g.beginPath(); g.moveTo(x+r,y); g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r); g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r); g.closePath() }
+
+let rulerTex, decalTex, stickerTex, panelTex;
+function drawRuler(g,w,h){
+  const gr = g.createLinearGradient(0,0,0,h); gr.addColorStop(0,'#dc9c66'); gr.addColorStop(1,'#c27c45');
+  g.fillStyle = gr; g.fillRect(0,0,w,h);
+  g.globalAlpha = .12; g.strokeStyle = '#6b3a17';
+  for(let i=0;i<70;i++){ g.lineWidth = Math.random()*2+.5; g.beginPath(); const y = Math.random()*h; g.moveTo(0,y); g.bezierCurveTo(w*.3,y+Math.random()*8-4,w*.6,y+Math.random()*8-4,w,y+Math.random()*6-3); g.stroke() }
+  g.globalAlpha = 1;
+  const pxcm = w/110; g.fillStyle = '#2b1a0e'; g.textAlign = 'center'; g.font = `600 ${h*.3}px Archivo, Arial, sans-serif`;
+  for(let cm=0; cm<=100; cm++){
+    for(let mm=0; mm<10 && !(cm===100 && mm>0); mm+=5){
+      const x = (5 + cm + mm/10)*pxcm; const L = mm ? h*.22 : (cm%10===0 ? h*.62 : cm%5===0 ? h*.48 : h*.34);
+      g.fillRect(x-1.2, h-L, 2.4, L);
+    }
+    if(cm%5===0) g.fillText(String(cm), (5+cm)*pxcm + (cm===0?10:0), h*.34);
+  }
+}
+/* ---- geometry measured from the owner's photos (front view: length ≈ 2× height) ---- */
+const B = .55, ZF = 5.8, TOPY = 26.5, NX = -18.3, NZ = 1.4;
+function drawDecal(g,w,h){
+  // x: -24.5..24 cm, y: 9.5..26.5 cm
+  const X = x => (x+24.5)/48.5*w, Y = y => (26.5-y)/17*h, S = w/48.5;
+  g.fillStyle = '#12a3d8';
+  g.beginPath(); g.moveTo(X(-22.6),Y(20.65)); g.lineTo(X(2.75),Y(20.65)); g.lineTo(X(2.45),Y(20.0)); g.lineTo(X(-22.6),Y(20.0)); g.closePath(); g.fill();
+  g.font = `italic 800 ${S*3.1}px Archivo, "Arial Black", sans-serif`; g.textBaseline = 'middle'; g.textAlign = 'center';
+  g.save(); g.translate(X(-8.4), Y(16.6)); g.scale(1.18,1); g.fillText('JACK', 0, 0); g.restore();
+}
+function drawSticker(g,w,h){
+  const S = w/14;
+  g.fillStyle = 'rgba(250,252,252,.6)'; rr(g,2,2,w-4,h-4,8); g.fill();
+  g.fillStyle = '#12a3d8'; g.font = `italic 800 ${S*1.6}px Archivo, Arial, sans-serif`; g.textBaseline = 'top'; g.fillText('A7', S*.45, S*.3);
+  g.font = `600 ${S*.42}px "IBM Plex Sans", Arial, sans-serif`;
+  ['Stebnówka automatyczna','z elektronicznym systemem','transportu'].forEach((t,i)=>g.fillText(t, S*2.6, S*(.38+i*.47)));
+  g.fillStyle = '#26323a'; g.fillRect(w-S*1.7, S*.35, S*1.2, S*1.2); g.fillStyle = '#fff';
+  for(let i=0;i<22;i++) g.fillRect(w-S*1.7 + (i*37%10)/10*S*1.1, S*.35 + (i*53%10)/10*S*1.1, S*.12, S*.12);
+  g.strokeStyle = '#7a8790'; g.lineWidth = 2; const ty = S*2.05, th = S*3.2; g.strokeRect(S*.45, ty, w-S*.9, th);
+  for(let i=1;i<5;i++){ g.beginPath(); g.moveTo(S*.45, ty+th*i/5); g.lineTo(w-S*.45, ty+th*i/5); g.stroke() }
+  [.33,.62].forEach(f=>{ g.beginPath(); g.moveTo(w*f, ty); g.lineTo(w*f, ty+th); g.stroke() });
+  g.fillStyle = '#12a3d8'; g.font = `600 ${S*.28}px "IBM Plex Sans", Arial, sans-serif`;
+  ['Materiały standardowe','Materiały śliskie','Cienkie i miękkie','Materiały ciężkie'].forEach((t,i)=>g.fillText(t, S*.6, ty+th*(i+1)/5+S*.16));
+  g.fillStyle = '#9aa5ad'; for(let i=0;i<5;i++){ g.fillRect(w*.35, ty+th*i/5+S*.22, w*.24, S*.1); g.fillRect(w*.64, ty+th*i/5+S*.22, w*.3, S*.1) }
+  g.fillStyle = '#5b6770'; g.font = `600 ${S*.26}px "IBM Plex Sans", Arial`; g.fillText('Opis przycisków panelu sterowania:', S*.5, ty+th+S*.25);
+  for(let i=0;i<4;i++){ g.strokeRect(S*(.5+i*3.3), ty+th+S*.75, S*.45, S*.45); g.fillRect(S*(1.1+i*3.3), ty+th+S*.85, S*2.3, S*.08); g.fillRect(S*(1.1+i*3.3), ty+th+S*1.05, S*1.8, S*.08) }
+}
+
+/* control panel canvas: black glass inset of the cyan bezel (21.5 × 7.9 cm) */
+const PW = 1024, PH = 376; const PBTN = [];
+const lcd = {speed:'3500', len:'2.5', mode:'STANDARD'};
+const PB_DEF = [
+  ['len',96,40,120,'+ ⟷ −','sq'],['voice',226,40,54,'◁))','sq'],
+  ['ab',96,130,54,'A/B','sq'],['needle',160,130,54,'↕','sq'],['trim',224,130,54,'✂','sq'],
+  ['cd',96,220,54,'C/D','sq'],['feed',160,220,54,'⬭','sq'],['condense',224,220,54,'⇊','sq'],['multi',288,220,54,'A~D','sq'],
+  ['wn',352,220,54,'W/N','sq'],['clamp',416,220,54,'⊸','sq'],['sense',480,220,54,'⇥','sq'],['lift',544,220,54,'✂↑','sq'],
+  ['plus',770,82,0,'+','c'],['left',700,160,0,'‹','c'],['right',840,160,0,'›','c'],['minus',770,238,0,'−','c'],
+  ['p',940,82,0,'P','C'],['reset',940,246,0,'Reset','C']
+];
+function drawPanel(g,w,h){
+  g.beginPath(); [[0,188],[93,0],[1024,0],[1024,376],[93,376]].forEach((p,i)=> i ? g.lineTo(p[0],p[1]) : g.moveTo(p[0],p[1])); g.closePath();
+  g.fillStyle = '#07090b'; g.fill();
+  const gl = g.createLinearGradient(0,0,w*.4,h); gl.addColorStop(0,'rgba(255,255,255,.12)'); gl.addColorStop(.5,'rgba(255,255,255,.02)'); gl.addColorStop(1,'rgba(255,255,255,0)'); g.fillStyle = gl; g.fill();
+  g.save(); g.clip(); g.fillStyle = 'rgba(255,255,255,.035)';
+  for(let i=0;i<26;i++){ g.beginPath(); g.arc((i*97)%1000, 300+(i*41)%70, 30+(i*13)%40, 0, Math.PI*2); g.fill() } g.restore();
+  PBTN.length = 0; g.textAlign = 'center'; g.textBaseline = 'middle';
+  for(const [id,x,y,bw,label,kind] of PB_DEF){
+    if(kind==='sq'){
+      rr(g,x,y,bw,54,7); g.strokeStyle = '#dfe5e8'; g.lineWidth = 2.5; g.stroke();
+      g.fillStyle = '#eef2f4'; g.font = `600 ${label.length>3?19:24}px "IBM Plex Mono", monospace`; g.fillText(label, x+bw/2, y+(id==='len'?24:28));
+      if(id==='len'){ g.font = '500 13px "IBM Plex Mono", monospace'; g.fillText('mm', x+bw/2, y+45) }
+      PBTN.push({id,x,y,w:bw,h:54});
+    } else {
+      const r = kind==='C' ? 42 : 34;
+      g.beginPath(); g.arc(x,y,r,0,Math.PI*2); g.strokeStyle = '#dfe5e8'; g.lineWidth = 2.5; g.stroke();
+      g.fillStyle = '#eef2f4'; g.font = `500 ${label.length>1?21:(kind==='C'?46:38)}px "IBM Plex Sans", Arial, sans-serif`; g.fillText(label, x, y+2);
+      PBTN.push({id,x:x-r,y:y-r,w:2*r,h:2*r});
+    }
+  }
+  g.font = '500 12px "IBM Plex Sans", Arial'; g.fillStyle = '#9aa5ab';
+  g.fillText('Speed +', 770, 36); g.fillText('Speed −', 770, 286); g.fillText('Left', 700, 208); g.fillText('Right', 840, 208);
+  rr(g,300,30,320,160,6); g.fillStyle = '#020405'; g.fill(); g.strokeStyle = '#1a2328'; g.lineWidth = 2; g.stroke();
+  g.textAlign = 'left'; g.fillStyle = '#7fe3ff'; g.font = '500 22px "IBM Plex Mono", monospace';
+  g.fillText('SPEED', 318, 64); g.fillText('L', 318, 112);
+  g.textAlign = 'right'; g.fillStyle = '#e9fbff'; g.font = '600 36px "IBM Plex Mono", monospace';
+  g.fillText(lcd.speed, 604, 66); g.fillText(lcd.len + ' mm', 604, 114);
+  g.textAlign = 'left'; g.font = '500 18px "IBM Plex Mono", monospace'; g.fillStyle = '#7fe3ff'; g.fillText(lcd.mode.slice(0,24), 318, 166);
+  g.textAlign = 'center'; g.fillStyle = '#5c666c'; g.font = '500 40px "IBM Plex Sans", Arial'; g.fillText('A', 452, 330);
+  g.font = '500 24px "IBM Plex Sans", Arial'; g.fillText('7', 474, 340);
+}
+
+function tube(points, r, mat, id, parent, closed=false){
+  const c = new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)), closed, 'catmullrom', .5);
+  return mk(new THREE.TubeGeometry(c, 64, r, 10, closed), mat, id, parent);
+}
+function knurl(r, h, id, parent, pos, rot){            // knurled nut / cap
+  const g = new THREE.CylinderGeometry(r, r, h, 40, 1);
+  const pa = g.attributes.position;
+  for(let i=0;i<pa.count;i++){ const x = pa.getX(i), z = pa.getZ(i), a = Math.atan2(z,x), rad = Math.hypot(x,z);
+    if(rad > r*.9){ const k = 1 + .045*Math.sign(Math.sin(a*20)); pa.setX(i, Math.cos(a)*r*k); pa.setZ(i, Math.sin(a)*r*k) } }
+  g.computeVertexNormals();
+  return mk(g, MAT.chrome, id, parent, pos, rot);
+}
+
+function buildAll(){
+  mats();
+  /* --- table (105 cm, beech edge with 0–100 cm ruler) */
+  rulerTex = cvTex(4096,112,drawRuler);
+  const tableMats = [MAT.beech, MAT.beech, MAT.laminate, MAT.laminate, new THREE.MeshStandardMaterial({map:rulerTex, roughness:.6}), MAT.beech];
+  mk(new THREE.BoxGeometry(110,3,58), tableMats, 'table', world, [0,-1.5,0], null, {xray:true});
+  [-19,19].forEach(z=> mk(new THREE.BoxGeometry(88,3,3), MAT.frame, 'table', world, [0,-4.5,z]));
+  [-40,40].forEach(x=>{
+    mk(new THREE.BoxGeometry(5.5,3,40), MAT.frame, 'table', world, [x,-4.5,0]);
+    mk(rbox(5,46,4,.6), MAT.frame, 'table', world, [x,-29,0]);
+    mk(rbox(4,26,3.2,.5), MAT.frame, 'table', world, [x,-58,0]);
+    for(let i=0;i<5;i++) mk(cyl(.45,.45,.2,12), MAT.dgrey, null, world, [x,-14-i*4.2,2.05], [Math.PI/2,0,0]);
+    mk(rbox(5.2,3.6,62,1), MAT.frame, 'table', world, [x,-73.2,1]);
+    [-28,29].forEach(z=> mk(cyl(2.3,2.6,1.6,24), MAT.rubber, 'table', world, [x,-74.6,z]));
+  });
+  mk(rbox(80,4.5,2,.5), MAT.frame, 'table', world, [0,-46,-.5]);
+  mk(rbox(26,8,30,.9), MAT.laminate, 'table', world, [-34,-7.4,6]);
+  mk(rbox(9,1.3,1,.35), MAT.grey, 'table', world, [-34,-6.6,21.4]);
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(800,800), new THREE.ShadowMaterial({opacity:.2}));
+  floor.rotation.x = -Math.PI/2; floor.position.y = -75.4; floor.receiveShadow = true; world.add(floor);
+
+  /* pedal on the diagonal slotted bar */
+  const ang = Math.atan2(28,80);
+  mk(rbox(86,2,5,.5), MAT.frame, 'pedal', world, [0,-74.3,10], [0,ang,0]);
+  const ped = new THREE.Group(); ped.position.set(-2,-72.4,10.6); ped.rotation.set(-.09,ang,0); world.add(ped);
+  mk(rbox(24,2.6,26,1.6), MAT.frame, 'pedal', ped);
+  mk(rbox(19,.6,21,.4), MAT.rubber, 'pedal', ped, [0,1.35,0]);
+  rod([-2,-71,2],[10,-7,0],.33,MAT.steel,'pedal',world);
+  mk(rbox(10,4,7,.8), MAT.grey, 'pedal', world, [10,-5.4,0]);
+
+  /* knee lifter */
+  rod([2,-3.5,8],[2,-17,15],.5,MAT.steel,'knee_lifter',world);
+  mk(rbox(8,4,2,.7), MAT.dgrey, 'knee_lifter', world, [2,-18.6,15.6]);
+
+  /* thread stand behind the pillar; arms point left, two cones */
+  const SX = 26, SZ = -24;
+  mk(cyl(2,2.2,.8,24), MAT.grey, 'thread_stand', world, [SX,.4,SZ]);
+  mk(cyl(.72,.72,92,20), MAT.frame, 'thread_stand', world, [SX,46,SZ]);
+  mk(cyl(.86,.86,1.8,20), MAT.black, 'thread_stand', world, [SX,92.8,SZ]);
+  mk(rbox(2.4,4.4,2.4,.5), MAT.frame, 'thread_stand', world, [SX,34,SZ]);
+  mk(rbox(17.5,1.6,2.2,.5), MAT.cyan, 'thread_stand', world, [18.2,44.8,SZ]);
+  mk(rbox(17.5,1.6,1.3,.5), MAT.cyan, 'thread_stand', world, [18.2,89.2,SZ]);
+  [12.6,20.6].forEach(x=>{
+    mk(cyl(4.4,4.2,.25,40), MAT.grey, 'thread_stand', world, [x,45.9,SZ]);
+    mk(cyl(.25,.25,14,8), MAT.steel, 'thread_stand', world, [x,53,SZ]);
+    mk(cyl(1.25,3.1,12.5,40), MAT.cone, 'thread_stand', world, [x,52.4,SZ]);
+    mk(new THREE.TorusGeometry(.45,.1,6,16), MAT.chrome, 'thread_stand', world, [x,88.2,SZ]);
+  });
+
+  /* --- head: one sculpted casting */
+  mk(extrude(roundedShape([[-23.5,10.5],[-14,10.5],[-14,14],[6,14],[6,1.5],[23,1.5],[23,25.5],[-23.5,25.5]],[1.6,1.2,1.2,4.6,.5,.5,3,4.2]), 9.6, 1.0, 5), MAT.enamel, null, M);
+  const bedG = extrude(roundRect(51,17.6,1.4), .5, .1, 2); bedG.rotateX(-Math.PI/2);
+  mk(bedG, MAT.enamel, null, M, [-1.3,.2,1.6], null, {xray:true});
+  [[-26.2,10.2,-.4],[24.6,10.2,.4]].forEach(([x,z,r])=> mk(rbox(4,1,3.2,.45), MAT.grey, null, M, [x,.3,z], [0,r,0]));
+  mk(new THREE.BoxGeometry(46,6.5,15), MAT.casting, null, M, [-1.3,-3.6,1.6], null, {xray:true});
+  for(let i=0;i<8;i++) mk(new THREE.BoxGeometry(1.4,2.2,14), MAT.casting, null, M, [-20.5+i*5.5,-7.9,1.6], null, {xray:true});
+
+  // decals
+  decalTex = cvTex(2048,718,drawDecal);
+  const dec = new THREE.Mesh(new THREE.PlaneGeometry(48.5,17), new THREE.MeshStandardMaterial({map:decalTex, transparent:true, roughness:.4, polygonOffset:true, polygonOffsetFactor:-2, depthWrite:false}));
+  dec.position.set(-.25,18,ZF+.01); dec.userData.noPick = true; M.add(dec);
+  stickerTex = cvTex(1120,560,drawSticker);
+  const st = new THREE.Mesh(new THREE.PlaneGeometry(14,7), new THREE.MeshStandardMaterial({map:stickerTex, transparent:true, roughness:.5, polygonOffset:true, polygonOffsetFactor:-2, depthWrite:false}));
+  st.position.set(14.2,8.2,ZF+.01); st.userData.noPick = true; M.add(st);
+
+  // control panel: raised cyan bezel with a pointed left nose + black glass
+  const bez = mk(extrude(roundedShape([[1.2,17.5],[3.4,21.8],[23.6,21.8],[23.6,13.2],[3.4,13.2]],[.4,.6,.8,.8,.6]), .4, .14, 3), MAT.cyan, 'control_panel', M, [0,0,ZF+.2]);
+  panelTex = cvTex(PW,PH,drawPanel);
+  const pm = new THREE.MeshStandardMaterial({map:panelTex, transparent:true, alphaTest:.5, roughness:.08, metalness:.2});
+  const panel = mk(new THREE.PlaneGeometry(21.5,7.9), pm, 'control_panel', M, [12.5,17.5,ZF+.56], null, {cast:false});
+  panel.userData.isPanel = true;
+
+  // oil sight window under the sticker
+  mk(rbox(1.6,2.6,.5,.4), MAT.clear, 'oil_window', M, [14.2,2.8,ZF+.1]);
+  mk(new THREE.BoxGeometry(.16,1.7,.1), MAT.red, 'oil_window', M, [14.2,2.7,ZF+.38]);
+  mk(new THREE.BoxGeometry(.7,.12,.1), MAT.red, 'oil_window', M, [14.2,3.1,ZF+.38]);
+
+  // motor: tall grey box over the full pillar height, big dark dial on its side
+  mk(rbox(9.4,23.6,15.4,2.2), MAT.grey, 'servo_motor', M, [28.8,12.4,0]);
+  mk(new THREE.BoxGeometry(.2,22,15.6), MAT.dgrey, 'servo_motor', M, [27.2,12.4,0]);
+  mk(rbox(1,1.9,.4,.15), MAT.black, 'servo_motor', M, [31.6,4.2,7.75]);
+  mk(rbox(1.8,1.8,.15,.1), MAT.laminate, 'servo_motor', M, [31.6,7.6,7.72]);
+  const hw = new THREE.Group(); hw.position.set(33.55,14.2,0); hw.rotation.z = -Math.PI/2; M.add(hw); anim.hw = hw;
+  mk(cyl(6,6,.5,64), MAT.dgrey, 'handwheel', hw);
+  [5.2,4.1,3.0].forEach(r=> mk(new THREE.TorusGeometry(r,.2,8,64), MAT.grey, 'handwheel', hw, [0,.25,0], [Math.PI/2,0,0]));
+  for(let i=0;i<12;i++){ const a = i/12*Math.PI*2; mk(new THREE.BoxGeometry(.35,.3,1.1), MAT.grey, 'handwheel', hw, [Math.cos(a)*4.65,.3,Math.sin(a)*4.65], [0,-a,0]) }
+  mk(cyl(1.6,1.8,.7,32), MAT.grey, 'handwheel', hw, [0,.4,0]);
+
+  // top cover details (positions measured on photo 3)
+  knurl(1.15,.55,'presser_pressure_screw',M,[-21,TOPY+.28,.2]);
+  mk(cyl(.5,.5,1.4,16), MAT.steel, 'presser_pressure_screw', M, [-21,TOPY+1.2,.2]);
+  knurl(.95,1.3,'presser_pressure_screw',M,[-21,TOPY+2.4,.2]);
+  [[-17.8,2.4],[-19.9,-2.6],[-15.6,-.6],[-11.8,3.2]].forEach(([x,z])=> mk(cyl(.55,.55,.25,20), MAT.black, null, M, [x,TOPY+.1,z]));
+  mk(cyl(.24,.24,5,12), MAT.chrome, 'arm_thread_guide', M, [-8.5,TOPY+2.5,-1.8]);
+  mk(new THREE.BoxGeometry(.16,1.6,.55), MAT.chrome, 'arm_thread_guide', M, [-8.5,TOPY+4.1,-1.8]);
+  mk(new THREE.TorusGeometry(.32,.08,6,14), MAT.chrome, 'arm_thread_guide', M, [-8.5,TOPY+4.5,-1.5]);
+  mk(cyl(1.85,1.85,.42,40), MAT.chrome, 'bobbin_winder', M, [-2.8,TOPY+.22,.8]);
+  mk(cyl(.25,.25,1.8,10), MAT.steel, 'bobbin_winder', M, [-2.8,TOPY+1.2,.8]);
+  mk(rbox(2.8,.4,.8,.15), MAT.chrome, 'bobbin_winder', M, [-1.3,TOPY+.55,2.4], [0,.55,0]);
+  mk(rbox(1.2,.5,1.4,.2), MAT.chrome, 'bobbin_winder', M, [-4.4,TOPY+.5,-.6], [0,.3,0]);
+  mk(rbox(.7,1.1,.4,.15), MAT.black, null, M, [4.6,TOPY+.55,1.8]);
+  mk(cyl(.75,.85,.5,20), MAT.chrome, 'bobbin_winder', M, [11.2,TOPY+.25,1.5]);
+  mk(cyl(.55,.55,.2,20), MAT.chrome, 'bobbin_winder', M, [11.2,TOPY+.9,1.5]);
+  mk(cyl(.55,.55,.2,20), MAT.chrome, 'bobbin_winder', M, [11.2,TOPY+1.2,1.5]);
+  mk(new THREE.TorusGeometry(.4,.05,6,16), MAT.steel, 'bobbin_winder', M, [11.2,TOPY+1.7,1.5], [Math.PI/2,0,0]);
+  mk(cyl(.3,.3,1.2,10), MAT.chrome, 'bobbin_winder', M, [11.2,TOPY+2.4,1.5]);
+  mk(cyl(.55,.55,1.8,16), MAT.clear, 'bobbin_winder', M, [12.7,TOPY+.9,1.9]);
+  mk(cyl(1.3,1.3,.22,32), MAT.black, null, M, [15.6,TOPY+.11,.6]);
+
+  // needle head front: chrome guard loop (left edge), take-up lever inside it
+  tube([[-22.2,24.9,ZF-.2],[-23.7,24.4,ZF+.8],[-24.25,21.5,ZF+1.15],[-24.25,16.5,ZF+1.15],[-23.7,13.4,ZF+.8],[-22.2,12.8,ZF-.2]], .22, MAT.chrome, 'take_up_lever', M);
+  tube([[-22.6,24.6,ZF-.2],[-23.1,24.1,ZF+.55],[-23.4,21.5,ZF+.75],[-23.4,16.5,ZF+.75],[-23.1,13.8,ZF+.55],[-22.6,13.2,ZF-.2]], .12, MAT.chrome, 'take_up_lever', M);
+  mk(rbox(1.2,10.5,.25,.12), MAT.dgrey, null, M, [-21.8,19,ZF+.02]);
+  const tu = new THREE.Group(); tu.position.set(-19.2,20.6,ZF+.3); M.add(tu); anim.tu = tu;
+  mk(rbox(4.6,.7,.45,.2), MAT.chrome, 'take_up_lever', tu, [-2.2,0,0]);
+  mk(new THREE.TorusGeometry(.36,.11,8,16), MAT.chrome, 'take_up_lever', tu, [-4.15,0,.05]);
+  // upper small disc (thread guide / pre-tension) and S guide
+  mk(cyl(1,1,.35,32), MAT.grey, 'pretension', M, [-19,23.4,ZF+.18], [Math.PI/2,0,0]);
+  mk(cyl(.72,.72,.12,28), MAT.chrome, 'pretension', M, [-19,23.4,ZF+.45], [Math.PI/2,0,0]);
+  mk(cyl(.72,.72,.12,28), MAT.chrome, 'pretension', M, [-19,23.4,ZF+.65], [Math.PI/2,0,0]);
+  knurl(.5,.55,'pretension',M,[-19,23.4,ZF+1.05],[Math.PI/2,0,0]);
+  tube([[-16.4,22.4,ZF+.2],[-16.0,22.0,ZF+.45],[-16.6,21.5,ZF+.5],[-16.1,21.0,ZF+.45],[-16.5,20.6,ZF+.2]], .08, MAT.chrome, 'pretension', M);
+  // main tension (low on the head), check spring, blue reverse paddle
+  const TX = -17.6, TY = 12.5;
+  mk(cyl(1.25,1.25,.35,32), MAT.grey, 'tension_assembly', M, [TX,TY,ZF+.18], [Math.PI/2,0,0]);
+  mk(cyl(.95,.95,.12,32), MAT.chrome, 'tension_assembly', M, [TX,TY,ZF+.5], [Math.PI/2,0,0]);
+  mk(cyl(.95,.95,.12,32), MAT.chrome, 'tension_assembly', M, [TX,TY,ZF+.75], [Math.PI/2,0,0]);
+  const spr = []; for(let i=0;i<=40;i++){ const a = i/40*Math.PI*2*6; spr.push([TX+Math.cos(a)*.42, TY+Math.sin(a)*.42, ZF+.9+i/40*.7]) }
+  tube(spr, .045, MAT.steel, 'tension_assembly', M);
+  knurl(.8,.6,'tension_assembly',M,[TX,TY,ZF+1.9],[Math.PI/2,0,0]);
+  mk(cyl(.2,.2,2.6,10), MAT.steel, 'tension_assembly', M, [TX,TY,ZF+1.3], [Math.PI/2,0,0]);
+  mk(new THREE.TorusGeometry(1.4,.055,6,40,Math.PI*1.3), MAT.steel, 'check_spring', M, [TX,TY,ZF+.62], [0,0,Math.PI*.9]);
+  mk(new THREE.BoxGeometry(.5,1.4,.3), MAT.chrome, 'check_spring', M, [TX-1.6,TY-.6,ZF+.4], [0,0,.4]);
+  mk(rbox(1.7,3,1.3,.45), MAT.cyan, 'reverse_lever', M, [-14.9,12.2,ZF+.45], [0,.25,.35]);
+  mk(new THREE.BoxGeometry(.4,1.5,.4), MAT.chrome, 'needle_bar_guide', M, [-19.7,11,ZF+.2]);
+  mk(new THREE.TorusGeometry(.26,.07,6,12), MAT.chrome, 'needle_bar_guide', M, [-19.7,10.4,ZF+.45]);
+  mk(rbox(10.4,.6,9.8,.3), MAT.enamel, null, M, [-18.75,9.6,0]);
+
+  // needle bar group (animated)
+  const nb = new THREE.Group(); M.add(nb); anim.nb = nb;
+  mk(cyl(.4,.4,4.9,20), MAT.chrome, 'needle_bar', nb, [NX,7.05,NZ]);
+  mk(rbox(1.05,.9,1.05,.2), MAT.steel, 'needle_bar', nb, [NX,4.8,NZ]);
+  mk(new THREE.TorusGeometry(.27,.07,6,12), MAT.chrome, 'needle_bar_guide', nb, [NX,5.6,NZ+.46]);
+  mk(cyl(.11,.045,3.3,12), MAT.chrome, 'needle', nb, [NX,2.95,NZ]);
+  // presser bar + foot
+  mk(cyl(.4,.4,6.7,20), MAT.chrome, 'presser_foot', M, [NX,6.15,NZ-1.7]);
+  mk(rbox(1,1.6,1.2,.22), MAT.chrome, 'presser_foot', M, [NX,2.4,NZ-1.1]);
+  mk(rbox(.45,1.3,.5,.15), MAT.chrome, 'presser_foot', M, [NX,1.5,NZ-.2], [.5,0,0]);
+  mk(rbox(1.9,.32,3.6,.13), MAT.chrome, 'presser_foot', M, [NX,.86,NZ+.4]);
+  mk(rbox(1.9,.3,1,.13), MAT.chrome, 'presser_foot', M, [NX,1.05,NZ+2.4], [-.35,0,0]);
+  // needle plate, feed dog, slide plate, small bed parts
+  mk(rbox(7,.16,5.6,.07), MAT.steel, 'needle_plate', M, [NX-.4,B+.06,NZ+.2]);
+  mk(cyl(.17,.17,.05,12), MAT.black, null, M, [NX,B+.15,NZ]);
+  [[NX-3.4,NZ+2.4],[NX+2.6,NZ-2]].forEach(([x,z])=> mk(cyl(.22,.22,.05,12), MAT.dgrey, null, M, [x,B+.15,z]));
+  const fd = new THREE.Group(); M.add(fd); anim.fd = fd;
+  [-.75,.75].forEach(dx=> mk(new THREE.BoxGeometry(.42,.12,2.4), MAT.dgrey, 'feed_dog', fd, [NX+dx,B+.19,NZ]));
+  mk(rbox(5.6,.12,5.6,.05), MAT.steel, 'bobbin_case', M, [NX-6.6,B+.03,NZ+.2]);
+  mk(cyl(1,1,.08,24), MAT.grey, null, M, [NX+5.4,B+.04,NZ+1.6]);
+  [[NX+5,NZ+1.4],[NX+5.8,NZ+1.8]].forEach(([x,z])=> mk(cyl(.2,.2,.08,10), MAT.black, null, M, [x,B+.08,z]));
+  // under the bed (x-ray)
+  const HY = -2.3, HZ = NZ;
+  mk(cyl(1.8,1.8,1.2,40), MAT.steel, 'hook', M, [NX+.3,HY,HZ], [0,0,Math.PI/2]);
+  mk(new THREE.TorusGeometry(1.85,.15,8,40,Math.PI*1.6), MAT.chrome, 'hook', M, [NX-.35,HY,HZ], [0,Math.PI/2,0]);
+  mk(cyl(.35,.35,6,12), MAT.steel, 'hook', M, [NX+4,HY,HZ], [0,0,Math.PI/2]);
+  mk(cyl(1.35,1.35,1,32), MAT.chrome, 'bobbin_case', M, [NX-.8,HY,HZ], [0,0,Math.PI/2]);
+  mk(new THREE.BoxGeometry(.25,.8,1.3), MAT.steel, 'bobbin_case', M, [NX-1.4,HY+.2,HZ]);
+  mk(cyl(1,1,.7,28), MAT.bobbinThread, 'bobbin', M, [NX-1.8,HY,HZ], [0,0,Math.PI/2]);
+  mk(cyl(1.1,1.1,.08,28), MAT.steel, 'bobbin', M, [NX-2.2,HY,HZ], [0,0,Math.PI/2]);
+  mk(new THREE.BoxGeometry(2.4,.14,.7), MAT.steel, 'trimmer', M, [NX+.9,-.45,NZ-.8], [0,.3,0]);
+  mk(new THREE.BoxGeometry(.6,.14,1.6), MAT.steel, 'trimmer', M, [NX+2.1,-.45,NZ-.2]);
+
+  /* threads */
+  const P = (x,y,z,part)=>({p:[x,y,z],part});
+  threads.upper = buildThread([
+    P(4.6,58.8,-20,'thread_stand'), P(4.6,87.8,-20,'thread_stand'),
+    P(-8.5,31,-1.8,'arm_thread_guide'), P(-8.5,28.6,-1.75,'arm_thread_guide'),
+    P(-19,24.4,ZF+.6,'pretension'), P(-19,22.6,ZF+.6,'pretension'),
+    P(-17.2,13.6,ZF+.65,'tension_assembly'), P(-17.6,11.3,ZF+.65,'tension_assembly'),
+    P(-19.1,12.2,ZF+.7,'check_spring'),
+    P(-23.35,20.6,ZF+.4,'take_up_lever'),
+    P(-19.7,10.4,ZF+.5,'needle_bar_guide'), P(NX,5.6,NZ+.5,'needle_bar_guide'),
+    P(NX,1.75,NZ+.15,'needle'), P(NX,1.75,NZ-.9,'needle')
+  ], MAT.thread);
+  threads.winding = buildThread([
+    P(12.6,58.8,-20,'thread_stand'), P(12.6,87.8,-20,'thread_stand'),
+    P(-8.5,31,-1.8,'arm_thread_guide'), P(11.2,TOPY+2.2,1.5,'bobbin_winder'), P(12.7,TOPY+1.5,1.9,'bobbin_winder'),
+    P(-2.8,TOPY+.9,1.7,'bobbin_winder')
+  ], MAT.thread2);
+
+  /* anchors */
+  for(const id in parts){
+    const box = new THREE.Box3();
+    parts[id].meshes.forEach(m=>{ m.updateWorldMatrix(true,false); box.expandByObject(m) });
+    parts[id].anchor = box.getCenter(new THREE.Vector3());
+  }
+  parts.table.anchor.set(-30,-1.5,29);
+  parts.thread_stand.anchor.set(18,60,-24);
+  parts.pedal.anchor.set(-2,-71,11);
+  parts.take_up_lever.anchor.set(-15.4,20.6,ZF+.6);
+}
+
+function buildThread(pts, mat){
+  const segs = [];
+  for(let i=1;i<pts.length;i++){
+    const a = new THREE.Vector3(...pts[i-1].p), b = new THREE.Vector3(...pts[i].p);
+    const g = new THREE.TubeGeometry(new THREE.LineCurve3(a,b), 16, .075, 6, false);
+    const m = new THREE.Mesh(g, mat); m.userData.noPick = true; m.visible = false; m.castShadow = false; M.add(m);
+    segs.push({m, total:g.index.count, part:pts[i].part});
+  }
+  return {pts, segs, cur:0, target:0};
+}
+function threadReveal(name, n, instant){
+  const t = threads[name]; if(!t) return;
+  t.target = Math.max(0, Math.min(t.segs.length, n)); if(instant || reduceMotion) t.cur = t.target;
+}
+function threadIndexFor(name, part, from){
+  const t = threads[name]; if(!t) return -1;
+  let idx = -1; t.segs.forEach((s,i)=>{ if(s.part===part) idx = i });
+  return idx;   // last segment ending at this part
+}
+function stepThreads(dt){
+  for(const k in threads){
+    const t = threads[k];
+    if(t.cur !== t.target){ const d = t.target - t.cur, sp = 3.2*dt; t.cur = Math.abs(d) < sp ? t.target : t.cur + Math.sign(d)*sp }
+    t.segs.forEach((s,i)=>{
+      const f = Math.max(0, Math.min(1, t.cur - i));
+      s.m.visible = f > 0; s.m.geometry.setDrawRange(0, Math.floor(f*s.total/6)*6);
+    });
+  }
+}
+
+/* camera */
+let camTween = null;
+const VIEWS = {
+  head:{target:[8,13,-2], pos:[-14,44,96]},
+  all:{target:[4,-12,0], pos:[150,70,270]},
+  hook:{target:[-10,-1,-2], pos:[-46,-6,40]}
+};
+function flyTo(target, pos, ms=800){
+  const T = new THREE.Vector3(...target), P = new THREE.Vector3(...pos);
+  if(reduceMotion || !controls){ controls.target.copy(T); camera.position.copy(P); return }
+  camTween = {t0:performance.now(), ms, fromT:controls.target.clone(), fromP:camera.position.clone(), T, P};
+}
+function focusPart(id){
+  const p = parts[id]; if(!p) return;
+  const a = p.anchor.clone(); const dist = (PART[id] && PART[id].dist) || 28;
+  const dir = camera.position.clone().sub(controls.target).normalize();
+  if(HIDDEN.has(id)) dir.set(-.55,.15,.82).normalize();
+  else if(dir.y < .05) dir.y = .25, dir.normalize();
+  if(id==='servo_motor'||id==='handwheel') dir.set(.8,.25,.55).normalize();
+  flyTo(a.toArray(), a.clone().add(dir.multiplyScalar(dist)).toArray());
+}
+
+function setXray(on){
+  xray = on; $('#t-xray').setAttribute('aria-pressed', String(on));
+  xrayMats.forEach(m=>{ m.transparent = on; m.opacity = on ? .16 : 1; m.depthWrite = !on; m.needsUpdate = true });
+}
+function needXrayFor(ids){ if([...ids].some(i=>HIDDEN.has(i)) && !xray) setXray(true) }
+
+function highlight(ids, focus=true){
+  hl.clear(); (ids||[]).forEach(i=>{ if(parts[i]) hl.add(i) });
+  needXrayFor(hl);
+  if(focus && ids && ids.length){
+    const valid = ids.filter(i=>parts[i]);
+    if(valid.length===1) focusPart(valid[0]);
+    else if(valid.length>1){
+      const box = new THREE.Box3(); valid.forEach(i=>box.expandByPoint(parts[i].anchor));
+      const c = box.getCenter(new THREE.Vector3()); const r = Math.max(18, box.getSize(new THREE.Vector3()).length()*1.25);
+      const dir = camera.position.clone().sub(controls.target).normalize();
+      if(valid.some(i=>HIDDEN.has(i))) dir.set(-.55,.15,.82).normalize();
+      flyTo(c.toArray(), c.clone().add(dir.multiplyScalar(r+10)).toArray());
+    }
+  }
+  updateDots();
+}
+
+/* picking */
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+function pick(ev){
+  const r = canvas.getBoundingClientRect();
+  ndc.set(((ev.clientX-r.left)/r.width)*2-1, -((ev.clientY-r.top)/r.height)*2+1);
+  ray.setFromCamera(ndc, camera);
+  const hits = ray.intersectObjects(pickList, false);
+  for(const h of hits){
+    if(xray && h.object.userData.xray) continue;
+    if(!h.object.visible) continue;
+    return h;
+  }
+  return null;
+}
+function panelButtonAt(uv){
+  const x = uv.x*PW, y = (1-uv.y)*PH;
+  return PBTN.find(b => x>=b.x && x<=b.x+b.w && y>=b.y && y<=b.y+b.h);
+}
+
+/* dots */
+const dotEls = {};
+function makeDots(){
+  const box = $('#labels');
+  for(const id in parts){
+    if(id==='table') continue;
+    const b = document.createElement('button'); b.className = 'dot'; b.type = 'button';
+    b.setAttribute('aria-label', PART[id]?.n || id); b.title = PART[id]?.n || id;
+    b.addEventListener('click', e=>{ e.stopPropagation(); selectPart(id) });
+    box.appendChild(b); dotEls[id] = b;
+  }
+}
+let dotsOn = false;
+function updateDots(){ for(const id in dotEls){ dotEls[id].classList.toggle('on', id===selected || hl.has(id)) } }
+const _v = new THREE.Vector3();
+function placeDots(){
+  const w = stageEl.clientWidth, h = stageEl.clientHeight;
+  for(const id in dotEls){
+    const el = dotEls[id];
+    if(!dotsOn && !(id===selected || hl.has(id))){ el.hidden = true; continue }
+    _v.copy(parts[id].anchor); if(id==='needle' || id==='needle_bar') _v.y += anim.nb.position.y;
+    _v.project(camera);
+    if(_v.z > 1 || Math.abs(_v.x) > 1.05 || Math.abs(_v.y) > 1.05){ el.hidden = true; continue }
+    el.hidden = false;
+    el.style.left = ((_v.x*.5+.5)*w).toFixed(1)+'px'; el.style.top = ((-_v.y*.5+.5)*h).toFixed(1)+'px';
+    el.classList.toggle('dim', HIDDEN.has(id) && !xray);
+  }
+}
+
+/* loop */
+let last = performance.now(), phase = 0;
+function frame(now){
+  const dt = Math.min(.05, (now-last)/1000); last = now;
+  if(camTween){
+    const k = Math.min(1, (now-camTween.t0)/camTween.ms), e = k<.5 ? 4*k*k*k : 1-Math.pow(-2*k+2,3)/2;
+    controls.target.lerpVectors(camTween.fromT, camTween.T, e); camera.position.lerpVectors(camTween.fromP, camTween.P, e);
+    if(k>=1) camTween = null;
+  }
+  if(sewing){
+    phase += dt*Math.PI*2*1.1;
+    anim.nb.position.y = -1.55*(1-Math.cos(phase))/2*1.0;
+    anim.tu.rotation.z = .32*Math.sin(phase - .6) - .05;
+    anim.hw.rotation.y = -phase;
+    anim.fd.position.z = -.35*Math.sin(phase+1.2); anim.fd.position.y = .12*Math.max(0,Math.sin(phase+1.2+Math.PI/2));
+  }
+  stepThreads(dt);
+  const pulse = .5 + .3*Math.sin(now/1000*5);
+  for(const id in parts){
+    const on = hl.has(id) || id===selected, hov = id===hoverId;
+    const k = on ? pulse : hov ? .22 : 0;
+    for(const m of parts[id].meshes){ const mm = m.material; if(mm.emissive){ mm.emissive.setHex(0x18b6f0); mm.emissiveIntensity = k } }
+  }
+  controls.update();
+  renderer.render(scene, camera);
+  placeDots();
+  requestAnimationFrame(frame);
+}
+function resize(){
+  const w = stageEl.clientWidth, h = stageEl.clientHeight; if(!w || !h) return;
+  renderer.setSize(w, h, false); camera.aspect = w/h;
+  camera.fov = camera.aspect < 1.25 ? Math.min(60, 32*1.25/camera.aspect) : 32;
+  camera.updateProjectionMatrix();
+}
+
+/* ------------------------------------------------------------------ knowledge helpers */
+const problems = KB.problems || [];
+const likeRank = l => /wysok/i.test(l) ? 0 : /redn|średn/i.test(l) ? 1 : 2;
+const likeCls = l => ['p-hi','p-mid','p-lo'][likeRank(l)];
+const likeTxt = l => ['wysokie','średnie','niskie'][likeRank(l)];
+const partName = id => PART[id]?.n || id;
+function problemsForPart(id){ return problems.filter(p => (p.causes||[]).some(c => (c.parts||[]).includes(id))) }
+
+/* part card */
+function selectPart(id){
+  selected = id; hoverId = null;
+  if(HIDDEN.has(id)) setXray(true);
+  focusPart(id);
+  $('#pc-name').textContent = PART[id]?.n || id;
+  $('#pc-desc').textContent = PART[id]?.d || '';
+  const rel = problemsForPart(id).slice(0,6);
+  $('#pc-rel').innerHTML = rel.length ? '<h4>Problemy związane z tą częścią</h4>' + rel.map(p=>`<button class="item" type="button" data-prob="${esc(p.id)}"><b>${esc(p.title)}</b></button>`).join('') : '';
+  if(id==='control_panel') $('#pc-rel').insertAdjacentHTML('beforeend','<button class="show" type="button" data-goto="panel">Opis wszystkich przycisków →</button>');
+  if(id==='tension_assembly' || id==='bobbin_case') $('#pc-rel').insertAdjacentHTML('afterbegin','<button class="show" type="button" data-goto="naprezenie">Symulator naprężenia nici →</button>');
+  $('#partcard').hidden = false;
+  updateDots();
+}
+function closePart(){ selected = null; $('#partcard').hidden = true; updateDots() }
+$('#pc-x').addEventListener('click', closePart);
+$('#partcard').addEventListener('click', e=>{
+  const p = e.target.closest('[data-prob]'); if(p){ openTab('diagnoza'); openProblem(p.dataset.prob) }
+  const g = e.target.closest('[data-goto]'); if(g) openTab(g.dataset.goto);
+});
+
+/* ------------------------------------------------------------------ tabs */
+const TABS = ['diagnoza','naprezenie','ustawienia','nawlekanie','panel','serwis'];
+function openTab(name, push=true){
+  if(!TABS.includes(name)) name = 'diagnoza';
+  document.querySelectorAll('.tab').forEach(b=> b.setAttribute('aria-selected', String(b.dataset.tab===name)));
+  TABS.forEach(t=> $('#pane-'+t).hidden = t!==name);
+  if(push && location.hash !== '#'+name){ try{ history.replaceState(null,'','#'+name) }catch(e){ location.hash = name } }
+  if(name !== 'nawlekanie'){ threadReveal('upper',0); threadReveal('winding',0) }
+  else renderThreadState();
+  $('#panes').scrollTop = 0;
+}
+document.querySelectorAll('.tab').forEach(b=> b.addEventListener('click', ()=> openTab(b.dataset.tab)));
+window.addEventListener('hashchange', ()=> openTab(location.hash.slice(1), false));
+
+/* ------------------------------------------------------------------ DIAGNOZA */
+const CATS = [['all','Wszystkie'],['scieg','Ścieg'],['nic','Nić'],['igla','Igła'],['transport','Transport'],['elektronika','Elektronika'],['mechanika','Mechanika']];
+let diagCat = 'all', diagQ = '';
+const checks = store.get('a7-checks', {});
+function renderDiag(){
+  const el = $('#pane-diagnoza');
+  el.innerHTML = `
+    <div class="stack"><h2>Co się dzieje z maszyną?</h2>
+    <p class="lead">Wybierz objaw. Przyczyny są ułożone od najbardziej prawdopodobnej, a „Pokaż na maszynie” podświetla część na modelu.</p></div>
+    <button class="feature" type="button" data-goto="naprezenie">
+      <svg viewBox="0 0 46 46" aria-hidden="true"><rect x="2" y="17" width="42" height="12" rx="2" fill="var(--fabric)"/><path d="M2 16h8q4 0 4 7q0-7 4-7h10q4 0 4 7q0-7 4-7h8" fill="none" stroke="var(--accent)" stroke-width="2.4"/><path d="M2 30h8q4 0 4-7q0 7 4 7h10q4 0 4-7q0 7 4 7h8" fill="none" stroke="var(--wood)" stroke-width="2.4"/></svg>
+      <div><strong>Ścieg nierówny z wierzchu i od spodu?</strong><span>Symulator naprężenia pokaże, którą nakrętkę i w którą stronę kręcić.</span></div>
+    </button>
+    <input type="search" id="d-q" placeholder="Szukaj: pętelki, zrywa nić, łamie igłę, Err…" value="${esc(diagQ)}" aria-label="Szukaj problemu">
+    <div class="filters" role="group" aria-label="Kategorie">${CATS.map(([k,l])=>`<button class="chip" type="button" data-cat="${k}" aria-pressed="${k===diagCat}">${l}</button>`).join('')}</div>
+    <div class="list" id="d-list"></div>`;
+  renderDiagList();
+  $('#d-q').addEventListener('input', e=>{ diagQ = e.target.value; renderDiagList() });
+}
+function renderDiagList(){
+  const q = diagQ.trim().toLowerCase();
+  const list = problems.filter(p => (diagCat==='all' || (p.category||'')===diagCat) &&
+    (!q || JSON.stringify(p).toLowerCase().includes(q)));
+  const errs = (KB.errors||[]).filter(e=> q && (String(e.code).toLowerCase().includes(q) || String(e.meaning).toLowerCase().includes(q)));
+  $('#d-list').innerHTML = list.map(p=>`<button class="item" type="button" data-prob="${esc(p.id)}"><span class="cat">${esc(CATS.find(c=>c[0]===p.category)?.[1]||p.category||'')}</span><b>${esc(p.title)}</b><small>${esc(p.symptoms)}</small></button>`).join('')
+    + errs.map(e=>`<div class="item" style="cursor:default"><span class="cat">kod błędu</span><b class="mono">${esc(e.code)}</b><small>${esc(e.meaning)} — ${esc(e.fix)}</small></div>`).join('')
+    || '<p class="muted small">Brak wyników. Spróbuj innego słowa albo kategorii „Wszystkie”.</p>';
+}
+function openProblem(id){
+  const p = problems.find(x=>x.id===id); if(!p) return;
+  const el = $('#pane-diagnoza');
+  const causes = [...(p.causes||[])].map((c,i)=>({...c,i})).sort((a,b)=>likeRank(a.likelihood)-likeRank(b.likelihood));
+  const ck = checks[p.id] || {};
+  el.innerHTML = `
+    <button class="back" type="button" id="d-back">← Wszystkie problemy</button>
+    <div class="stack"><span class="cat">${esc(CATS.find(c=>c[0]===p.category)?.[1]||'')}</span><h2>${esc(p.title)}</h2></div>
+    ${p.symptoms?`<div class="symptom"><h4 style="margin-bottom:4px">Objawy</h4>${esc(p.symptoms)}</div>`:''}
+    ${p.diagnose_question?`<div class="q"><b>Sprawdź najpierw:</b> ${esc(p.diagnose_question)}</div>`:''}
+    ${/naprę|pętel|nierówn|balans|nić dolna|nić górna/i.test(p.title+p.symptoms)?'<button class="show" type="button" data-goto="naprezenie">Otwórz symulator naprężenia →</button>':''}
+    <div class="row" style="justify-content:space-between"><h4>Przyczyny i naprawa</h4><button class="show" type="button" id="d-all">Pokaż wszystkie części</button></div>
+    ${causes.map(c=>`
+      <article class="cause">
+        <header><b>${esc(c.cause)}</b><span class="pill ${likeCls(c.likelihood)}">${likeTxt(c.likelihood)}</span></header>
+        <ul class="steps">${(c.fix_steps||[]).map((s,j)=>{ const key = c.i+'_'+j; return `<li><label><input type="checkbox" data-ck="${key}" ${ck[key]?'checked':''}><span>${esc(s)}</span></label></li>` }).join('')}</ul>
+        ${(c.parts||[]).length?`<button class="show" type="button" data-parts="${esc((c.parts||[]).join(','))}">Pokaż na maszynie: ${esc(c.parts.map(partName).join(', '))}</button>`:''}
+      </article>`).join('')}
+    <button class="btn ghost" type="button" id="d-reset" style="justify-self:start">Wyczyść zaznaczenia</button>`;
+  const allParts = [...new Set(causes.flatMap(c=>c.parts||[]))];
+  highlight(causes[0]?.parts || [], true);
+  $('#d-back').addEventListener('click', ()=>{ highlight([], false); renderDiag() });
+  $('#d-all').addEventListener('click', ()=> highlight(allParts, true));
+  $('#d-reset').addEventListener('click', ()=>{ delete checks[p.id]; store.set('a7-checks', checks); openProblem(p.id) });
+  el.querySelectorAll('[data-ck]').forEach(cb=> cb.addEventListener('change', ()=>{
+    (checks[p.id] ||= {})[cb.dataset.ck] = cb.checked; store.set('a7-checks', checks);
+  }));
+  $('#panes').scrollTop = 0;
+}
+$('#pane-diagnoza').addEventListener('click', e=>{
+  const c = e.target.closest('[data-cat]'); if(c){ diagCat = c.dataset.cat; document.querySelectorAll('[data-cat]').forEach(b=>b.setAttribute('aria-pressed', String(b===c))); renderDiagList() }
+  const p = e.target.closest('[data-prob]'); if(p) openProblem(p.dataset.prob);
+  const s = e.target.closest('[data-parts]'); if(s) highlight(s.dataset.parts.split(','), true);
+  const g = e.target.closest('[data-goto]'); if(g) openTab(g.dataset.goto);
+});
+
+/* ------------------------------------------------------------------ NAPRĘŻENIE */
+function renderTension(){
+  const sb = KB.stitch_balance || {};
+  const el = $('#pane-naprezenie');
+  el.innerHTML = `
+    <div class="stack"><h2>Balans nici górnej i dolnej</h2>
+    <p class="lead">${esc(sb.explanation || 'Dobry ścieg stębnowy ma supeł (przeplot nici) dokładnie w środku grubości materiału. Wygląda tak samo z wierzchu i od spodu.')}</p></div>
+    <div class="sim">
+      <svg id="sim-svg" viewBox="0 0 600 230" role="img" aria-label="Przekrój ściegu w materiale"></svg>
+      <div class="ctrls">
+        <div class="ctrl"><label for="s-up">Nić górna <output id="o-up"></output></label><input id="s-up" type="range" min="-4" max="4" step="1" value="0"></div>
+        <div class="ctrl lower"><label for="s-lo">Nić dolna (bębenek) <output id="o-lo"></output></label><input id="s-lo" type="range" min="-4" max="4" step="1" value="0"></div>
+      </div>
+      <div class="verdict" id="sim-v" aria-live="polite"></div>
+    </div>
+    <p class="small muted" style="margin:0">Przesuń suwaki tak, żeby przekrój wyglądał jak Twój ścieg. Jeden krok to ok. ¼ obrotu nakrętki naprężacza górnego albo ok. 1/16 obrotu śrubki bębenka.</p>
+    <div class="row"><button class="show" type="button" data-parts="tension_assembly">Pokaż naprężacz górny</button><button class="show" type="button" data-parts="bobbin_case,bobbin">Pokaż bębenek</button></div>
+    ${(sb.read_stitch||[]).length?`<h4>Jak czytać ścieg</h4><div class="tw"><table><thead><tr><th>Co widzisz</th><th>Co to znaczy</th><th>Co zrobić</th></tr></thead><tbody>${sb.read_stitch.map(r=>`<tr><td>${esc(r.look)}</td><td>${esc(r.meaning)}</td><td>${esc(r.action)}</td></tr>`).join('')}</tbody></table></div>`:''}
+    ${sb.bobbin_drop_test?`<div class="box"><h4>Test bębenka (jo-jo)</h4><p>${esc(sb.bobbin_drop_test)}</p></div>`:''}
+    ${sb.upper_tension_howto?`<div class="box"><h4>Regulacja nici górnej</h4><p>${esc(sb.upper_tension_howto)}</p></div>`:''}
+    ${sb.bobbin_tension_howto?`<div class="box"><h4>Regulacja nici dolnej</h4><p>${esc(sb.bobbin_tension_howto)}</p></div>`:''}`;
+  const up = $('#s-up'), lo = $('#s-lo');
+  const upd = ()=> drawSim(+up.value, +lo.value);
+  up.addEventListener('input', upd); lo.addEventListener('input', upd); upd();
+  el.addEventListener('click', e=>{ const s = e.target.closest('[data-parts]'); if(s) highlight(s.dataset.parts.split(','), true) });
+}
+function drawSim(u, l){
+  const fmt = v => v===0 ? '0' : (v>0?'+':'') + v;
+  $('#o-up').textContent = fmt(u) + (u>0?' mocniej':u<0?' słabiej':' norma');
+  $('#o-lo').textContent = fmt(l) + (l>0?' mocniej':l<0?' słabiej':' norma');
+  const b = u - l, sum = u + l;
+  const top = 86, bot = 144, mid = 115;
+  const knot = Math.max(top-10, Math.min(bot+10, mid - b*9.5));
+  const holes = [75,175,275,375,475,575];
+  const pucker = Math.max(0, sum-3) * 2.2;
+  const sag = Math.max(0, -sum-3) * 3;
+  const wave = x => pucker ? Math.sin(x/50*Math.PI)*pucker : 0;
+  let fabric = '';
+  ['top','bot'].forEach((layer,li)=>{
+    const y0 = li ? mid : top, y1 = li ? bot : mid;
+    let d = `M0 ${y0+wave(0)}`; for(let x=0;x<=600;x+=20) d += ` L${x} ${y0+wave(x)}`;
+    for(let x=600;x>=0;x-=20) d += ` L${x} ${y1+wave(x)}`;
+    fabric += `<path d="${d}Z" fill="${li?'var(--fabric-2)':'var(--fabric)'}"/>`;
+  });
+  let U = `M0 ${top-2+wave(0)}`, L = `M0 ${bot+2+wave(0)}`, loops = '';
+  let px = 0;
+  holes.forEach((h,i)=>{
+    const prev = i ? holes[i-1] : 0;
+    const mx = (prev+h)/2;
+    const kY = knot + wave(h);
+    U += ` Q${mx} ${top-2-sag*(i?1:0)+wave(mx)} ${h-7} ${top-2+wave(h)} L${h} ${kY}`;
+    L += ` Q${mx} ${bot+2+sag*(i?1:0)+wave(mx)} ${h-7} ${bot+2+wave(h)} L${h} ${kY}`;
+    if(b <= -3){ const ly = bot+wave(h); loops += `<path d="M${h} ${ly} C${h+22} ${ly+38} ${h-22} ${ly+38} ${h} ${ly}" fill="none" stroke="#ff5a2e" stroke-width="3"/>` }
+    if(b >= 3){ const ly = top+wave(h); loops += `<path d="M${h} ${ly} C${h+20} ${ly-34} ${h-20} ${ly-34} ${h} ${ly}" fill="none" stroke="var(--wood)" stroke-width="3"/>` }
+    U += ` L${h+7} ${top-2+wave(h)}`; L += ` L${h+7} ${bot+2+wave(h)}`;
+  });
+  U += ` L600 ${top-2+wave(600)}`; L += ` L600 ${bot+2+wave(600)}`;
+  const knots = holes.map(h=>`<circle cx="${h}" cy="${knot+wave(h)}" r="5" fill="var(--ink)" opacity=".75"/>`).join('');
+  $('#sim-svg').innerHTML = `
+    <text x="12" y="22" font-size="13" font-family="IBM Plex Sans, sans-serif" font-weight="600" fill="var(--muted)">WIERZCH</text>
+    <text x="12" y="222" font-size="13" font-family="IBM Plex Sans, sans-serif" font-weight="600" fill="var(--muted)">SPÓD</text>
+    <line x1="0" x2="600" y1="${mid}" y2="${mid}" stroke="var(--ink)" stroke-opacity=".18" stroke-dasharray="4 5"/>
+    ${fabric}
+    <path d="${L}" fill="none" stroke="var(--wood)" stroke-width="3.2" stroke-linejoin="round"/>
+    <path d="${U}" fill="none" stroke="#ff5a2e" stroke-width="3.2" stroke-linejoin="round"/>
+    ${loops}${knots}
+    <text x="588" y="22" text-anchor="end" font-size="12" font-family="IBM Plex Mono, monospace" fill="#ff5a2e">nić górna</text>
+    <text x="588" y="222" text-anchor="end" font-size="12" font-family="IBM Plex Mono, monospace" fill="var(--wood)">nić dolna</text>`;
+  let cls='ok', head='Ścieg zrównoważony', txt='Supeł leży w środku materiału. Ścieg wygląda tak samo z obu stron. Nic nie zmieniaj.';
+  if(b <= -3){ cls='bad'; head='Pętelki od spodu'; txt='Nić górna jest za luźna i ciągnie się pod materiałem. Dokręć naprężacz górny w prawo, po ¼ obrotu, i szyj próbkę po każdej zmianie. Jeśli pętelki zostają przy dobrym naprężeniu: nić nie siedzi między talerzykami (nawlekaj przy podniesionej stopce) albo sprężynka kontrolna nie działa.' }
+  else if(b <= -1){ cls='warn'; head='Nić górna przeciągana na spód'; txt='Od spodu widać punkciki nici górnej. Dokręć naprężacz górny w prawo o ¼ obrotu albo, jeśli góra jest już mocna, poluzuj bębenek o bardzo mały krok.' }
+  else if(b >= 3){ cls='bad'; head='Nić dolna wyciągana na wierzch'; txt='Na wierzchu leży nić dolna albo jej pętelki. Poluzuj naprężacz górny w lewo po ¼ obrotu. Jeśli górny jest już luźny, a nić dolna dalej wychodzi, dokręć bębenek (śrubka w prawo, ok. 1/16 obrotu) i zrób test jo-jo.' }
+  else if(b >= 1){ cls='warn'; head='Nić dolna lekko widoczna z wierzchu'; txt='Kropki nici dolnej na wierzchu. Poluzuj naprężacz górny o ¼ obrotu albo minimalnie dokręć bębenek.' }
+  if(sum >= 5){ cls = 'bad'; head += ' · oba naprężenia za mocne'; txt += ' Materiał się marszczy, a nić może pękać. Najpierw ustaw bębenek testem jo-jo, potem poluzuj nić górną.' }
+  else if(sum <= -5){ cls = cls==='ok'?'warn':cls; head += ' · oba naprężenia za słabe'; txt += ' Ścieg jest luźny i da się go podważyć paznokciem. Ustaw bębenek testem jo-jo, potem dokręcaj górę.' }
+  const v = $('#sim-v'); v.className = 'verdict '+cls; v.innerHTML = `<b>${esc(head)}</b><span>${esc(txt)}</span>`;
+}
+
+/* ------------------------------------------------------------------ USTAWIENIA */
+let fabSel = store.get('a7-fabric', null);
+function firstNum(s, d){ const m = String(s||'').replace(',', '.').match(/\d+(\.\d+)?/); return m ? m[0] : d }
+function renderSettings(){
+  const fabs = KB.fabrics || [];
+  if(!fabSel && fabs[0]) fabSel = fabs[0].id;
+  const f = fabs.find(x=>x.id===fabSel) || fabs[0];
+  const el = $('#pane-ustawienia');
+  el.innerHTML = `
+    <div class="stack"><h2>Ustawienia dla materiału</h2>
+    <p class="lead">Wybierz tkaninę. Dostaniesz igłę, nić, długość ściegu, prędkość, docisk stopki i tryb transportu z naklejki A7.</p></div>
+    <div class="fabrics" role="group" aria-label="Materiał">${fabs.map(x=>`<button class="fab" type="button" data-fab="${esc(x.id)}" aria-pressed="${x.id===f?.id}"><b>${esc(x.name)}</b><small>${esc(x.needle)}</small></button>`).join('')}</div>
+    ${f?`<div class="kv">
+      <div>Igła</div><div>${esc(f.needle)}</div>
+      <div>Nić</div><div>${esc(f.thread)}</div>
+      <div>Długość ściegu</div><div>${esc(f.stitch_mm)}</div>
+      <div>Prędkość</div><div>${esc(f.speed)}</div>
+      <div>Docisk stopki</div><div>${esc(f.foot_pressure)}</div>
+      <div>Nić górna</div><div>${esc(f.upper_tension)}</div>
+      <div>Tryb transportu</div><div>${esc(f.feed_mode)}</div>
+    </div>
+    ${f.notes?`<p class="small" style="margin:0">${esc(f.notes)}</p>`:''}
+    <div class="row"><button class="btn" type="button" id="to-panel">Pokaż na panelu maszyny</button><button class="show" type="button" data-parts="presser_pressure_screw">Śruba docisku</button><button class="show" type="button" data-parts="needle">Igła</button></div>`:''}
+    ${(KB.feed_modes||[]).length?`<h4>Tryby transportu (naklejka A7)</h4><div class="tw"><table><thead><tr><th>Tryb</th><th>Co robi</th><th>Do czego</th></tr></thead><tbody>${KB.feed_modes.map(m=>`<tr><td><b>${esc(m.name)}</b></td><td>${esc(m.what)}</td><td>${esc(m.use)}</td></tr>`).join('')}</tbody></table></div>`:''}`;
+  el.querySelectorAll('[data-fab]').forEach(b=> b.addEventListener('click', ()=>{ fabSel = b.dataset.fab; store.set('a7-fabric', fabSel); renderSettings(); sendToPanel(false) }));
+  const tp = $('#to-panel'); if(tp) tp.addEventListener('click', ()=> sendToPanel(true));
+  el.querySelectorAll('[data-parts]').forEach(b=> b.addEventListener('click', ()=> highlight(b.dataset.parts.split(','), true)));
+}
+function sendToPanel(focus){
+  const f = (KB.fabrics||[]).find(x=>x.id===fabSel); if(!f || !panelTex) return;
+  lcd.speed = firstNum(f.speed, '3500'); lcd.len = firstNum(f.stitch_mm, '2.5');
+  const fm = String(f.feed_mode||'').toLowerCase();
+  lcd.mode = /śli|sli/.test(fm) ? 'SLISKIE' : /cien|mięk|miek/.test(fm) ? 'CIENKIE/MIEKKIE' : /ciężk|ciezk|grub/.test(fm) ? 'CIEZKIE' : 'STANDARD';
+  redraw(panelTex);
+  if(focus) highlight(['control_panel'], true);
+}
+
+/* ------------------------------------------------------------------ NAWLEKANIE */
+let thMode = 'upper', thStep = -1;
+function thList(){ const t = KB.threading || {}; return thMode==='upper' ? (t.upper||[]) : thMode==='bobbin' ? (t.bobbin_insert||[]) : (t.bobbin_winding||[]) }
+function renderThread(){
+  const el = $('#pane-nawlekanie');
+  const list = thList();
+  el.innerHTML = `
+    <div class="stack"><h2>Nawlekanie krok po kroku</h2>
+    <p class="lead">Kliknij krok albo użyj przycisków. Na modelu nić rysuje się w miarę postępu, a bieżąca część miga.</p></div>
+    <div class="seg" role="group" aria-label="Rodzaj">${[['upper','Nić górna'],['bobbin','Szpulka do bębenka'],['wind','Nawijanie szpulki']].map(([k,l])=>`<button type="button" data-thm="${k}" aria-pressed="${k===thMode}">${l}</button>`).join('')}</div>
+    <div class="row"><button class="btn" type="button" id="th-next">${thStep<0?'Zacznij':'Następny krok'}</button><button class="btn ghost" type="button" id="th-prev">Wstecz</button><button class="btn ghost" type="button" id="th-all">Pokaż całą drogę</button></div>
+    <ol class="tsteps">${list.map((s,i)=>`<li><button type="button" data-st="${i}" class="${i<thStep?'done':i===thStep?'cur':''}"><span class="n">${i+1}</span><span>${esc(s.text)}${s.part?` <span class="muted small">· ${esc(partName(s.part))}</span>`:''}</span></button></li>`).join('')}</ol>
+    <p class="small muted" style="margin:0">Przed nawlekaniem wyłącz zasilanie. Stopka podniesiona — wtedy talerzyki naprężacza są otwarte i nić wchodzi między nie.</p>`;
+  el.querySelectorAll('[data-thm]').forEach(b=> b.addEventListener('click', ()=>{ thMode = b.dataset.thm; thStep = -1; renderThread(); renderThreadState() }));
+  el.querySelectorAll('[data-st]').forEach(b=> b.addEventListener('click', ()=>{ thStep = +b.dataset.st; renderThread(); renderThreadState() }));
+  $('#th-next').addEventListener('click', ()=>{ thStep = Math.min(list.length-1, thStep+1); renderThread(); renderThreadState() });
+  $('#th-prev').addEventListener('click', ()=>{ thStep = Math.max(-1, thStep-1); renderThread(); renderThreadState() });
+  $('#th-all').addEventListener('click', ()=>{ thStep = list.length-1; renderThread(); renderThreadState(true) });
+}
+function renderThreadState(whole){
+  if(!threads.upper) return;
+  const list = thList();
+  const tname = thMode==='upper' ? 'upper' : thMode==='wind' ? 'winding' : null;
+  threadReveal(thMode==='upper'?'winding':'upper', 0, true);
+  if(tname){
+    let n = 0;
+    for(let i=0;i<=thStep && i<list.length;i++){ const idx = threadIndexFor(tname, list[i].part); if(idx+1 > n) n = idx+1 }
+    if(whole) n = threads[tname].segs.length;
+    threadReveal(tname, n);
+  }
+  const s = list[thStep];
+  if(whole){ highlight([], false); flyTo(...(thMode==='upper' ? [[4,40,-10],[-70,70,150]] : [[12,45,-10],[-30,80,120]])) }
+  else if(s && s.part){ if(thMode==='bobbin') setXray(true); highlight([s.part], true) }
+  else if(thStep<0){ highlight([], false) }
+}
+
+/* ------------------------------------------------------------------ PANEL */
+const PB_NAMES = {len:'Długość ściegu',voice:'Komunikaty głosowe',ab:'Rygiel początkowy',needle:'Pozycja igły po zatrzymaniu',trim:'Obcinanie nici',cd:'Rygiel końcowy',feed:'Tryb transportu',condense:'Zagęszczenie ściegu',multi:'Szycie odcinkowe A~D',wn:'W/N',clamp:'Zacisk nici',sense:'Wykrywanie grubości materiału',lift:'Podnoszenie stopki',plus:'Speed +',minus:'Speed −',left:'W lewo',right:'W prawo',p:'P — parametry',reset:'Reset (ustawienia fabryczne)'};
+const PB_RX = [
+  ['reset',/reset|fabryczn/i],['p',/^p\b|parametr|\bP\b/i],['plus',/speed\s*\+|przyspie|zwiększ.*prędk|plus/i],['minus',/speed\s*[-−]|zwolni|zmniejsz.*prędk|minus/i],
+  ['left',/lewo|left/i],['right',/prawo|right/i],['voice',/głos|voice|speak|dźwięk/i],['len',/długo|length|\bmm\b/i],
+  ['sense',/grubo|czujnik|sens|wykryw/i],['lift',/podnies|unies|lift/i],['condense',/zagęszcz|condens/i],['multi',/A\s*~\s*D|odcink|wielo|multi|stał/i],
+  ['wn',/W\s*\/?\s*N/i],['ab',/A\s*\/\s*B|początk/i],['cd',/C\s*\/\s*D|końc/i],['needle',/pozycj|igł.*(gór|dół)|needle/i],['trim',/obcin|trim/i],
+  ['feed',/transport|feed|rodzaj materia/i],['clamp',/zacisk|clamp/i]
+];
+const pbMap = {};
+(function mapButtons(){
+  const kb = KB.panel_buttons || []; const used = new Set();
+  for(const [id, rx] of PB_RX){
+    const hit = kb.find((b,i)=> !used.has(i) && (rx.test(b.id||'') || rx.test(b.name||'') || rx.test(b.icon_hint||'')));
+    if(hit){ used.add(kb.indexOf(hit)); pbMap[id] = hit }
+  }
+  pbMap._rest = kb.filter((b,i)=>!used.has(i));
+})();
+function renderPanel(){
+  const pr = KB.parameters || {}, errs = KB.errors || [];
+  const order = PB_DEF.map(d=>d[0]);
+  const ic = id => PB_DEF.find(d=>d[0]===id)?.[4] || '';
+  const card = (id, b) => `<article class="pb" id="pb-${id}"><div class="ic">${esc(ic(id))}</div><div><b>${esc(b?.name || PB_NAMES[id])}</b>${b?.short?`<p><b>Krótko:</b> ${esc(b.short)}</p>`:''}${b?.long?`<p><b>Długo:</b> ${esc(b.long)}</p>`:''}${!b?'<p>Brak opisu w instrukcji, sprawdź na wyświetlaczu.</p>':''}</div></article>`;
+  const el = $('#pane-panel');
+  el.innerHTML = `
+    <div class="stack"><h2>Panel sterowania</h2><p class="lead">Kliknij przycisk na modelu panelu, a jego opis zostanie tu podświetlony.</p>
+    <div class="row"><button class="show" type="button" id="pp-show">Pokaż panel na modelu</button></div></div>
+    <div class="pbtns">${order.map(id=>card(id, pbMap[id])).join('')}${(pbMap._rest||[]).map((b,i)=>`<article class="pb"><div class="ic">•</div><div><b>${esc(b.name)}</b>${b.short?`<p><b>Krótko:</b> ${esc(b.short)}</p>`:''}${b.long?`<p><b>Długo:</b> ${esc(b.long)}</p>`:''}</div></article>`).join('')}</div>
+    ${(pr.list||[]).length||pr.how_to_enter?`<h4>Parametry</h4>${pr.how_to_enter?`<div class="box"><p>${esc(pr.how_to_enter)}</p></div>`:''}
+      <input type="search" id="pp-q" placeholder="Szukaj parametru" aria-label="Szukaj parametru">
+      <div class="tw"><table><thead><tr><th>Kod</th><th>Nazwa</th><th>Zakres / domyślnie</th></tr></thead><tbody id="pp-body"></tbody></table></div>`:''}
+    ${errs.length?`<h4>Kody błędów</h4><div class="tw"><table><thead><tr><th>Kod</th><th>Znaczenie</th><th>Co zrobić</th></tr></thead><tbody>${errs.map(e=>`<tr><td class="mono"><b>${esc(e.code)}</b></td><td>${esc(e.meaning)}</td><td>${esc(e.fix)}</td></tr>`).join('')}</tbody></table></div>`:''}`;
+  const body = $('#pp-body');
+  const fill = q => { if(!body) return; q = (q||'').toLowerCase(); body.innerHTML = (pr.list||[]).filter(p=>!q || JSON.stringify(p).toLowerCase().includes(q)).map(p=>`<tr><td class="mono"><b>${esc(p.code)}</b></td><td>${esc(p.name)}${p.tip?`<div class="small muted">${esc(p.tip)}</div>`:''}</td><td class="mono small">${esc(p.range)}${p.default?` · <b>${esc(p.default)}</b>`:''}</td></tr>`).join('') };
+  fill(''); const q = $('#pp-q'); if(q) q.addEventListener('input', e=> fill(e.target.value));
+  $('#pp-show').addEventListener('click', ()=> highlight(['control_panel'], true));
+}
+function flashButton(id){
+  openTab('panel');
+  const el = document.getElementById('pb-'+id); if(!el) return;
+  el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+  el.scrollIntoView({block:'center', behavior: reduceMotion?'auto':'smooth'});
+}
+
+/* ------------------------------------------------------------------ SERWIS */
+function renderService(){
+  const m = KB.machine || {};
+  const el = $('#pane-serwis');
+  el.innerHTML = `
+    <div class="stack"><h2>Konserwacja i dane</h2>${m.variant_notes?`<p class="lead">${esc(m.variant_notes)}</p>`:''}</div>
+    ${(KB.maintenance||[]).length?`<h4>Harmonogram</h4><div class="tw"><table><thead><tr><th>Kiedy</th><th>Co zrobić</th></tr></thead><tbody>${KB.maintenance.map(x=>`<tr><td><b>${esc(x.interval)}</b></td><td>${esc(x.task)}${(x.parts||[]).length?`<div><button class="show" type="button" data-parts="${esc(x.parts.join(','))}" style="margin-top:6px">Pokaż: ${esc(x.parts.map(partName).join(', '))}</button></div>`:''}</td></tr>`).join('')}</tbody></table></div>`:''}
+    ${(m.specs||[]).length?`<h4>Dane techniczne</h4><div class="kv">${m.specs.map(s=>`<div>${esc(s.k)}</div><div>${esc(s.v)}</div>`).join('')}</div>`:''}
+    ${(KB.safety||[]).length?`<h4>Bezpieczeństwo</h4><div class="box">${KB.safety.map(s=>`<p>• ${esc(s)}</p>`).join('')}</div>`:''}
+    ${(KB.sources||[]).length?`<h4>Źródła</h4><div class="stack small">${KB.sources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title||s.url)}</a>`).join('')}</div>`:''}
+    <p class="foot">Nieoficjalny pomocnik do własnej maszyny, zbudowany na podstawie instrukcji i ogólnej praktyki szwalniczej. Teksty oznaczone „(praktyka ogólna)” nie pochodzą z instrukcji JACK. Regulację chwytacza, wysokości igielnicy i elektroniki zostaw serwisowi.</p>`;
+  el.addEventListener('click', e=>{ const s = e.target.closest('[data-parts]'); if(s) highlight(s.dataset.parts.split(','), true) });
+}
+
+/* ------------------------------------------------------------------ boot */
+renderDiag(); renderTension(); renderSettings(); renderThread(); renderPanel(); renderService();
+openTab(location.hash.slice(1) || 'diagnoza', false);
+
+if(initGL()){
+  $('#loading').remove();
+  makeDots();
+  const v = VIEWS.head; controls.target.set(...v.target); camera.position.set(...v.pos);
+  new ResizeObserver(resize).observe(stageEl); resize();
+  sendToPanel(false);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{ [decalTex, stickerTex, panelTex, rulerTex].forEach(redraw) });
+  requestAnimationFrame(frame);
+
+  let down = null;
+  canvas.addEventListener('pointerdown', e=>{ down = {x:e.clientX, y:e.clientY}; camTween = null });
+  canvas.addEventListener('pointerup', e=>{
+    if(!down) return; const moved = Math.hypot(e.clientX-down.x, e.clientY-down.y); down = null;
+    if(moved > 6) return;
+    const h = pick(e); const id = h?.object.userData.part;
+    if(!id){ closePart(); return }
+    if(h.object.userData.isPanel && h.uv){ const b = panelButtonAt(h.uv); if(b){ selectPart('control_panel'); flashButton(b.id); return } }
+    selectPart(id);
+  });
+  const tip = $('#tip');
+  canvas.addEventListener('pointermove', e=>{
+    if(e.pointerType !== 'mouse' || e.buttons){ tip.hidden = true; return }
+    const h = pick(e); const id = h?.object.userData.part || null;
+    hoverId = id; canvas.classList.toggle('hot', !!id);
+    if(id){
+      let label = PART[id]?.n || id;
+      if(h.object.userData.isPanel && h.uv){ const b = panelButtonAt(h.uv); if(b) label = (pbMap[b.id]?.name || PB_NAMES[b.id]) }
+      const r = stageEl.getBoundingClientRect(); tip.textContent = label; tip.style.left = (e.clientX-r.left)+'px'; tip.style.top = (e.clientY-r.top)+'px'; tip.hidden = false;
+    } else tip.hidden = true;
+  });
+  canvas.addEventListener('pointerleave', ()=>{ hoverId = null; tip.hidden = true });
+
+  $('#v-head').addEventListener('click', ()=> flyTo(VIEWS.head.target, VIEWS.head.pos));
+  $('#v-all').addEventListener('click', ()=> flyTo(VIEWS.all.target, VIEWS.all.pos));
+  $('#v-hook').addEventListener('click', ()=>{ setXray(true); flyTo(VIEWS.hook.target, VIEWS.hook.pos) });
+  $('#t-xray').addEventListener('click', ()=> setXray(!xray));
+  $('#t-sew').addEventListener('click', e=>{ sewing = !sewing; e.currentTarget.setAttribute('aria-pressed', String(sewing)); if(!sewing){ anim.nb.position.y = 0; anim.tu.rotation.z = 0; anim.fd.position.set(0,0,0) } });
+  $('#t-dots').addEventListener('click', e=>{ dotsOn = !dotsOn; e.currentTarget.setAttribute('aria-pressed', String(dotsOn)) });
+}
+</script>
+</body>
+</html>
